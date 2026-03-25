@@ -356,7 +356,7 @@ function drawCardFrame(cardData){
     let passing = i18next.t('card.caracteristics.passing');
     let strength = i18next.t('card.caracteristics.strength');
     let MA = i18next.t('card.caracteristics.MA');
-    let S = i18next.t('card.caracteristics.S');
+    let ST = i18next.t('card.caracteristics.ST');
     let AG = i18next.t('card.caracteristics.AG');
     let PA = i18next.t('card.caracteristics.PA');
     let AV = i18next.t('card.caracteristics.AV');
@@ -489,14 +489,14 @@ function drawCardFrame(cardData){
     
     if(playerType == "star"){  
         drawCapacity(MA, -108, 208);
-        drawCapacity(S, 43, 208);
+        drawCapacity(ST, 43, 208);
         drawCapacity(AG, 195, 208);
         drawCapacity(PA, 345, 208);
         drawCapacity(AV, 498, 208);
     }else {
 
         drawCapacity(MA, -108, 208);
-        drawCapacity(S, 43, 210);
+        drawCapacity(ST, 43, 210);
         drawCapacity(AG, 195, 208);
         drawCapacity(PA, 347, 208);
         drawCapacity(AV, 500, 208);
