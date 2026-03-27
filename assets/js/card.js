@@ -39,8 +39,8 @@ function defaultCardData() {
 function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
     let context = getContext();
     if(keywords == true){
-        context.font = 'italic 22px brothers-regular';
-        context.fillStyle = '#203c77';
+        context.font = 'italic 24px brothers-regular';
+        context.fillStyle = '#223f7d';
         context.textAlign = "left";
         context.textBaseline = "middle";
     }
@@ -79,8 +79,8 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
     }
     if(keywords == true){
 
-        let fillStyle = '#203c77';
-        context.font = 'italic 22px brothers-regular';
+        let fillStyle = '#223f7d';
+        context.font = 'italic 24px brothers-regular';
         context.fillStyle = fillStyle;
     }
     else{
@@ -183,7 +183,7 @@ drawPositionName = function (value) {
 }
 
 drawKeywords = function (value) {
-    drawCardText(value, 1013, 2, true)
+    drawCardText(value, 1034, 1, true)
 }
 
 drawCapacity = function (value, x, y){
@@ -502,15 +502,15 @@ function drawCardFrame(cardData){
         drawCapacity(AV, 500, 208);
     }
     // MA
-    drawNumber(cardData.ma, 130, 225, false);
+    drawNumber(cardData.ma, 120, 224, false);
     // ST
-    drawNumber(cardData.st, 130, 375, false);
+    drawNumber(cardData.st, 120, 375, false);
     // AG
-    drawNumber(cardData.ag, 130, 530, true);
+    drawNumber(cardData.ag, 120, 527, true);
     // PA
-    drawNumber(cardData.pa, 130, 680, true);
+    drawNumber(cardData.pa, 120, 680, true);
     //AV
-    drawNumber(cardData.av, 130, 825, true);
+    drawNumber(cardData.av, 120, 832, true);
 
 }
 
