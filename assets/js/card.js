@@ -167,11 +167,11 @@ drawTeamName = function (value) {
 }
 
 drawFooter = function (value) {
-    getContext().font = '30px brothers-regular';
+    getContext().font = '28px brothers-regular';
     getContext().fillStyle = 'white';
     getContext().textAlign = "center";
     getContext().textBaseline = "middle";
-    writeScaled(value, { x: 140, y: 1013 });
+    writeScaled(value, { x: 164, y: 1013 });
 }
 
 drawPositionName = function (value) {
@@ -200,7 +200,7 @@ drawCapacity = function (value, x, y){
   
 }
 
-drawSkilstraits = function (value, x=248, y=659){
+drawSkilstraits = function (value, x=261, y=659){
     getContext().font = 'bold 28px brothers-regular';
     getContext().fillStyle = '#b4191e';
     getContext().textAlign = "left";
@@ -213,9 +213,9 @@ drawPlayerDev = function (value, x, y){
     getContext().fillStyle = '#b4191e';
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
-    writeScaled(value, { x: 248, y: 856 });
+    writeScaled(value, { x: 261, y: 856 });
 }
-drawCardBodyTitle =function (value, y=659 ,x=248 ){
+drawCardBodyTitle =function (value, y=659 ,x=261 ){
     getContext().font = 'bold 28px brothers-regular';
     getContext().fillStyle = '#b4191e';
     getContext().textAlign = "left";
@@ -232,7 +232,7 @@ drawGoldPrice = function (value, x, y){
     getContext().shadowBlur = 2
     getContext().shadowOffsetX = 2;
     getContext().shadowOffsetY = 2;
-    writeScaled(value, { x: 142, y: 975 });
+    writeScaled(value, { x: 162, y: 975 });
     getContext().shadowColor = "";
     getContext().shadowBlur = 0
     getContext().shadowOffsetX = 0;
@@ -241,16 +241,16 @@ drawGoldPrice = function (value, x, y){
 
 drawDevelopment = function (primary, secondary) {
 
-    getContext().font = 'bold 26px franklin-gothic-book';
+    getContext().font = 'bold 24px franklin-gothic-book';
     getContext().fillStyle = 'black';
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
-    x = 248;
-    writeScaled(i18next.t('card.caracteristics.primary')+" : ", { x: x, y: 890 });
-    writeScaled(i18next.t('card.caracteristics.secondary')+" : ", { x: x, y: 930 });
-    getContext().font = '26px franklin-gothic-book';
-    writeScaled(primary, { x: x+115, y: 890 });
-    writeScaled(secondary, { x: x+145, y: 930 });
+    x = 261;
+    writeScaled(i18next.t('card.caracteristics.primary')+":", { x: x, y: 890 });
+    writeScaled(i18next.t('card.caracteristics.secondary')+":", { x: x, y: 930 });
+    getContext().font = '24px franklin-gothic-book';
+    writeScaled(primary, { x: x+92, y: 890 });
+    writeScaled(secondary, { x: x+121, y: 930 });
     
     
 }
@@ -489,14 +489,14 @@ function drawCardFrame(cardData){
     
     if(playerType == "star"){  
         drawCapacity(MA, -108, 208);
-        drawCapacity(ST, 43, 208);
+        drawCapacity(ST, 40, 208);
         drawCapacity(AG, 195, 208);
         drawCapacity(PA, 345, 208);
         drawCapacity(AV, 498, 208);
     }else {
 
         drawCapacity(MA, -108, 208);
-        drawCapacity(ST, 43, 210);
+        drawCapacity(ST, 43, 208);
         drawCapacity(AG, 195, 208);
         drawCapacity(PA, 347, 208);
         drawCapacity(AV, 500, 208);
