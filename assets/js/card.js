@@ -155,14 +155,44 @@ drawCardName = function (value) {
 
 
 drawTeamName = function (value) {
-    getContext().font = 'italic 26px brothers-regular';
-    getContext().fillStyle = 'black';
-    getContext().textAlign = "right";
-    getContext().textBaseline = "middle";
+    if(!document.getElementById("showTeamName").checked){
+        return;
+    }
+    const txt = value + ' ';
+    getContext().font = 'italic 32px brothers-regular';
+    getContext().textAlign = "left";
+    getContext().textBaseline = "top";
     getContext().rotate(-5 * Math.PI / 180);
-    writeScaled(value, { x: 720 +4, y: 207+4 });
+
+    const textMetrics = getContext().measureText(txt);
+    const textWidth = textMetrics.width+5;
+    const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent+5;
+
+    const padding = 5;
+    const x = 736-textWidth;
+    const y = 182+textHeight;
+    const rectX = x - padding;
+    const rectY = y - padding;
+    const rectWidth = textWidth + (padding * 2);
+    const rectHeight = textHeight + (padding * 2);
+
+    getContext().beginPath();
+    getContext().moveTo(rectX, rectY); // Top-left
+    getContext().lineTo(rectX + rectWidth, rectY); // Top-right
+    getContext().lineTo(rectX + rectWidth - 4, rectY + rectHeight); // Bottom-right
+    getContext().lineTo(rectX - 4,  rectY + rectHeight); // Bottom-left
+    getContext().closePath();
+
+    getContext().fillStyle = '#b4191e';
+    getContext().fill();
+    getContext().strokeStyle = "white";
+    getContext().lineWidth = 5;
+    getContext().stroke();
+
+    getContext().fillStyle = 'black';
+    writeScaled(txt, { x: x + 4, y: y + 4 });
     getContext().fillStyle = 'white';
-    writeScaled(value, { x: 720, y: 207 });
+    writeScaled(txt, { x: x, y: y });
     getContext().rotate(+5 * Math.PI / 180);
 }
 
@@ -376,12 +406,7 @@ function drawCardFrame(cardData){
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
     }
 
-    if(!document.getElementById("showTeamName").checked){
-        drawTeamName("");
-    }else{
-        drawTeamName(cardData.teamName);
-    }
-
+    drawTeamName(cardData.teamName);
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);
 
