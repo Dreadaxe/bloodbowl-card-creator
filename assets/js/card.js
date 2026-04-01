@@ -158,7 +158,7 @@ drawTeamName = function (value) {
     if(!document.getElementById("showTeamName").checked){
         return;
     }
-    const txt = value + ' ';
+    const txt = " " + value + "  ";
     getContext().font = 'italic 32px brothers-regular';
     getContext().textAlign = "left";
     getContext().textBaseline = "top";
@@ -179,13 +179,13 @@ drawTeamName = function (value) {
     getContext().beginPath();
     getContext().moveTo(rectX, rectY); // Top-left
     getContext().lineTo(rectX + rectWidth, rectY); // Top-right
-    getContext().lineTo(rectX + rectWidth - 4, rectY + rectHeight); // Bottom-right
-    getContext().lineTo(rectX - 4,  rectY + rectHeight); // Bottom-left
+    getContext().lineTo(rectX + rectWidth - 3, rectY + rectHeight); // Bottom-right
+    getContext().lineTo(rectX - 3,  rectY + rectHeight); // Bottom-left
     getContext().closePath();
 
     getContext().fillStyle = '#b4191e';
     getContext().fill();
-    getContext().strokeStyle = "white";
+    (playerType == "star") ? getContext().strokeStyle = "#f0a70b" : getContext().strokeStyle = "white";
     getContext().lineWidth = 5;
     getContext().stroke();
 
