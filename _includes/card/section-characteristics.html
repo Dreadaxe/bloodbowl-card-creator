@@ -4,7 +4,7 @@
         <h2 class="h5 mb-0">
             <button class="btn btn-link" data-toggle="collapse" data-target="#fightersCollapseFive"
                 aria-expanded="false" aria-controls="fightersCollapseFive">
-                <span data-i18n="card.caracteristics.player_stats">
+                <span data-i18n="card.caracteristics.player_stats"></span>
             </button>
         </h2>
     </div>
@@ -25,18 +25,6 @@
                 <input type="checkbox" class="form-check-input" id="showTeamName" onchange="onAnyChange()">
                 <label class="form-check-label" for="sowTeamName" data-i18n="card.action.show_team_name">Show Team Name</label>
             </div>
-
-            <div class="form-group">
-                <label for="playerType" data-i18n="card.caracteristics.player_type"></label>
-                <select class="form-control" id="playerType" name="playerType" onchange="onAnyChange()">
-                    <optgroup label="Card Type">
-                    <option value="roster" selected data-i18n="card.caracteristics.roster_player">Roster Player</option>
-                    <option value="star" data-i18n="card.caracteristics.star_player">Star Player</option>
-                </optgroup>
-                </select>
-            </div>
-           
-
 
             <div class="row">
                 <div class="col-sm-2">
@@ -88,30 +76,11 @@
                     oninput="onAnyChange()">Texte de la carte</textarea>
             </div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <label for="playsFor" data-i18n="card.caracteristics.plays_for">Joue pour</label>
-                    <input class="form-control" type="text" id="playsFor" name="playsFor" value=" " oninput="onAnyChange()">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="specialRules" data-i18n="card.caracteristics.special_rules">Rêgles Spéciales</label>
-                <textarea class="form-control" id="specialRules" name="specialRules" rows="3"
-                    oninput="onAnyChange()"></textarea>
-            </div>
-
             <div class="form-group">
                 <label for="keywords" data-i18n="card.caracteristics.keywords">Mots-clefs</label>
                 <textarea class="form-control" id="keywords" name="keywords" rows="2"
                     oninput="onAnyChange()"></textarea>
             </div>
-
-            <div class="form-group">
-                <label for="positionName" data-i18n="card.caracteristics.position">Position</label>
-                <input class="form-control" type="text" id="positionName" name="positionName" value=" " oninput="onAnyChange()">
-            </div>
-
 
             <div class="row col-12">
                 <span data-i18n="card.caracteristics.primary_skills"></span>
@@ -125,7 +94,7 @@
                         <label for="p_devious" data-i18n="card.caracteristics.devious_box">D</label>
                         <input type="checkbox" id="p_devious" name="p_devious" oninput="onAnyChange()">
                     </div>
-                    <div class="col-sm-1"">
+                    <div class="col-sm-1">
                         <label for="p_general" data-i18n="card.caracteristics.general_box">G</label>
                         <input type="checkbox" id="p_general" name="p_general" oninput="onAnyChange()">
                         
@@ -178,6 +147,4 @@
             </div>
         </div>
     </div>
-</div>
-
 </div>

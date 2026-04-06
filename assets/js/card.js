@@ -5,12 +5,8 @@ function defaultCardData() {
     cardData.name = "BloodBowl_Card";
     cardData.cardName = i18next.t('card.caracteristics.player_name');
     cardData.teamName = i18next.t('card.caracteristics.team_name');
-    cardData.playerType = "roster";
-    cardData.playsFor = "";
-    cardData.specialRules = "";
     cardData.keywords = "";
     cardData.footer = "100,000";
-    cardData.positionName = "";
     cardData.cardText = i18next.t('card.caracteristics.body_text');
     cardData.ma = 6;
     cardData.st = 3;
@@ -52,8 +48,6 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
     let maxCharactersForThreeLines = 140;
     let minFontSize = 24;
 
-    let playerType = document.getElementById("playerType").value;
-    //let yStart = (playerType === "star") ? 680 : 730;
     let xStart = 265;
 
     let fontSize = 32;
@@ -183,7 +177,7 @@ drawTeamName = function (value) {
 
     getContext().fillStyle = '#b4191e';
     getContext().fill();
-    (playerType === "star") ? getContext().strokeStyle = "#f0a70b" : getContext().strokeStyle = "white";
+    getContext().strokeStyle = "white";
     getContext().lineWidth = 5;
     getContext().stroke();
 
@@ -200,14 +194,6 @@ drawFooter = function (value) {
     getContext().textAlign = "center";
     getContext().textBaseline = "middle";
     writeScaled(value, { x: 164, y: 1013 });
-}
-
-drawPositionName = function (value) {
-    getContext().font = '50px brothers-regular';
-    getContext().fillStyle = 'white';
-    getContext().textAlign = "center";
-    getContext().textBaseline = "middle";
-    writeScaled(value, { x: 480, y: 1010 });
 }
 
 drawKeywords = function (value) {
@@ -284,8 +270,6 @@ drawDevelopment = function (primary, secondary) {
 function drawCardFrame(cardData){
     //set texts for translation
     let skills_traits = i18next.t('card.caracteristics.skills_traits');
-    let plays_for=i18next.t('card.caracteristics.plays_for');
-    let special_rules=i18next.t('card.caracteristics.special_rules');
     let player_development =i18next.t('card.caracteristics.player_development');
     let agility = i18next.t('card.caracteristics.agility');
     let devious = i18next.t('card.caracteristics.devious');
@@ -300,12 +284,7 @@ function drawCardFrame(cardData){
     let AV = i18next.t('card.caracteristics.AV');
     let GP = i18next.t('card.caracteristics.GP');
 
-    playerType = document.getElementById("playerType").value;
-    if(playerType == "star"){
-        getContext().drawImage(document.getElementById('star_frame'), 0, 0, getCanvas().width, getCanvas().height);
-    } else {
-        getContext().drawImage(document.getElementById('frame'), 0, 0, getCanvas().width, getCanvas().height);
-    }
+    getContext().drawImage(document.getElementById('frame'), 0, 0, getCanvas().width, getCanvas().height);
 
     if(!document.getElementById("removeBorder").checked){
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
@@ -317,103 +296,86 @@ function drawCardFrame(cardData){
 
     drawGoldPrice(GP);
     
-    yStart = (playerType === "star") ? 550 : 700;
+    yStart = 700;
 
     drawCardText(cardData.cardText, yStart, 3);
     
-    if(playerType == "star"){   
-        
-        drawCardBodyTitle(skills_traits.toUpperCase(), 513);     
-        drawCardBodyTitle(plays_for.toUpperCase(), 650);   
-        playsFor = document.getElementById("playsFor").value;
-        drawCardText(playsFor, 680, 1);
-        drawCardBodyTitle(special_rules.toUpperCase(), 750);   
-        specialRules = document.getElementById("specialRules").value;
-        drawCardText(specialRules, 780, 2);
-    }
-    else{
-        // skills & traits
-        drawCardBodyTitle(skills_traits.toUpperCase());
+    drawCardBodyTitle(skills_traits.toUpperCase());
 
-        drawCardBodyTitle(player_development.toUpperCase(), 856);
-    }
+    drawCardBodyTitle(player_development.toUpperCase(), 856);
 
     drawKeywords(cardData.keywords);
 
-    if(document.getElementById("playerType").value != "star"){
-        drawPositionName(cardData.positionName);
-
-        primary = "";
-        if(cardData.p_agility){
-            primary = primary + agility;
-        }
-        if(primary!="" && cardData.p_devious){
-            primary = primary + ", ";
-        }
-        if(cardData.p_devious){
-            primary = primary + devious;
-        }
-        if(primary!="" && cardData.p_general){
-            primary = primary + ", ";
-        }
-        if(cardData.p_general){
-            primary = primary + general;
-        }
-        if(primary!="" && cardData.p_mutations){
-            primary = primary + ", ";
-        }
-        if(cardData.p_mutations){
-            primary = primary + mutations;
-        }
-        if(primary!="" && cardData.p_passing){
-            primary = primary + ", ";
-        }
-        if(cardData.p_passing){
-            primary = primary + passing;
-        }
-        if(primary!="" && cardData.p_strength){
-            primary = primary + ", ";
-        }
-        if(cardData.p_strength){
-            primary = primary + strength;
-        }
-
-        secondary = "";
-        if(cardData.s_agility){
-            secondary = secondary + agility;
-        }
-        if(secondary!="" && cardData.s_devious){
-            secondary = secondary + ", ";
-        }
-        if(cardData.s_devious){
-            secondary = secondary + devious;
-        }
-        if(secondary!="" && cardData.s_general){
-            secondary = secondary + ", ";
-        }
-        if(cardData.s_general){
-            secondary = secondary + general;
-        }
-        if(secondary!="" && cardData.s_mutations){
-            secondary = secondary + ", ";
-        }
-        if(cardData.s_mutations){
-            secondary = secondary + mutations;
-        }
-        if(secondary!="" && cardData.s_passing){
-            secondary = secondary + ", ";
-        }
-        if(cardData.s_passing){
-            secondary = secondary + passing;
-        }
-        if(secondary!="" && cardData.s_strength){
-            secondary = secondary + ", ";
-        }
-        if(cardData.s_strength){
-            secondary = secondary + strength;
-        }
-        drawDevelopment(primary, secondary);
+    primary = "";
+    if(cardData.p_agility){
+        primary = primary + agility;
     }
+    if(primary!="" && cardData.p_devious){
+        primary = primary + ", ";
+    }
+    if(cardData.p_devious){
+        primary = primary + devious;
+    }
+    if(primary!="" && cardData.p_general){
+        primary = primary + ", ";
+    }
+    if(cardData.p_general){
+        primary = primary + general;
+    }
+    if(primary!="" && cardData.p_mutations){
+        primary = primary + ", ";
+    }
+    if(cardData.p_mutations){
+        primary = primary + mutations;
+    }
+    if(primary!="" && cardData.p_passing){
+        primary = primary + ", ";
+    }
+    if(cardData.p_passing){
+        primary = primary + passing;
+    }
+    if(primary!="" && cardData.p_strength){
+        primary = primary + ", ";
+    }
+    if(cardData.p_strength){
+        primary = primary + strength;
+    }
+
+    secondary = "";
+    if(cardData.s_agility){
+        secondary = secondary + agility;
+    }
+    if(secondary!="" && cardData.s_devious){
+        secondary = secondary + ", ";
+    }
+    if(cardData.s_devious){
+        secondary = secondary + devious;
+    }
+    if(secondary!="" && cardData.s_general){
+        secondary = secondary + ", ";
+    }
+    if(cardData.s_general){
+        secondary = secondary + general;
+    }
+    if(secondary!="" && cardData.s_mutations){
+        secondary = secondary + ", ";
+    }
+    if(cardData.s_mutations){
+        secondary = secondary + mutations;
+    }
+    if(secondary!="" && cardData.s_passing){
+        secondary = secondary + ", ";
+    }
+    if(cardData.s_passing){
+        secondary = secondary + passing;
+    }
+    if(secondary!="" && cardData.s_strength){
+        secondary = secondary + ", ";
+    }
+    if(cardData.s_strength){
+        secondary = secondary + strength;
+    }
+    drawDevelopment(primary, secondary);
 
     drawCapacity(MA, -108, 208);
     drawCapacity(ST, 40, 208);
@@ -434,12 +396,7 @@ function drawCardFrame(cardData){
 }
 
 function drawNumber(num,x, y, plus){
-
-    playerType = document.getElementById("playerType").value;
     suffix = "";
-    if(playerType == 'star'){
-        suffix = "sp"
-    }
 
     if(num<1 || num>11 ) {
         num = '-';
@@ -495,7 +452,6 @@ function readControls() {
     data.teamName = document.getElementById("teamName").value;
     data.footer = document.getElementById("footer").value;
     data.cardText = document.getElementById("cardText").value;
-    data.positionName = document.getElementById("positionName").value;
     data.ma = document.getElementById("ma").value;
     data.st = document.getElementById("st").value;
     data.ag = document.getElementById("ag").value;
@@ -514,16 +470,12 @@ function readControls() {
     data.s_passing = document.getElementById("s_passing").checked;
     data.s_mutations = document.getElementById("s_mutations").checked;
 
-    data.playerType = document.getElementById("playerType").value;
-    data.playsFor = document.getElementById("playsFor").value;
-    data.specialRules = document.getElementById("specialRules").value;
     data.keywords = document.getElementById("keywords").value;
 
     return data;
 }
 
 async function writeControls(cardData) {
-    console.log(cardData.imageProperties)
     // here we check for base64 loaded image and convert it back to imageUrl
     if (cardData.base64Image != null) {
 
@@ -547,7 +499,6 @@ async function writeControls(cardData) {
     $("#cardName")[0].value = cardData.cardName;
     $("#teamName")[0].value = cardData.teamName;
     $("#footer")[0].value = cardData.footer;
-    $("#positionName")[0].value = cardData.positionName;
     $("#ma")[0].value = cardData.ma;
     $("#st")[0].value = cardData.st;
     $("#ag")[0].value = cardData.ag;
@@ -568,10 +519,7 @@ async function writeControls(cardData) {
     document.getElementById('s_mutations').checked = cardData.s_mutations;
     document.getElementById('s_passing').checked = cardData.s_passing;
     document.getElementById('s_strength').checked = cardData.s_strength;
-
-    document.getElementById("playerType").value = cardData.playerType;
-    document.getElementById("playsFor").value = cardData.playsFor;
-    document.getElementById("specialRules").value = cardData.specialRules;
+    
     document.getElementById("keywords").value = cardData.keywords;
 
     // render the updated info
