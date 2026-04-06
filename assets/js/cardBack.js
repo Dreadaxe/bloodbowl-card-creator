@@ -54,10 +54,6 @@ function drawCardText() {
     
 }
 
-getBackgroundImage = function () {
-    return document.getElementById('bg1');
-}
-
 drawBackground = function () {
     getContext().drawImage(
         getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
@@ -100,7 +96,6 @@ drawCardName = function (value) {
     getContext().rotate(6 * Math.PI / 180);
 }
 
-
 drawTeamName = function (value) {
     getContext().font = 'italic 40px brothers-regular';
     getContext().fillStyle = 'black';
@@ -125,26 +120,10 @@ drawFooter = function (value) {
     getContext().rotate(+6 * Math.PI / 180);
 }
 
-
-function setModelImage(image) {
-    console.log("setModelImage:" + image);
-    $("#fighterImageUrl")[0].value = image;
-
-    //  if (image != null) {
-    // TODO: Not sure how to do this. It might not even be possible! Leave it for now...
-    //    imageSelect.value = image;
-    // }
-    // else {
-    //    imageSelect.value = null;
-    // }
-}
-
-
-
 function readControls() {
     var data = new Object;
     data.name = getName();
-    data.imageUrl = getFighterImageUrl();
+    data.imageUrl = getModelImageUrl();
     data.imageProperties = getModelImageProperties();
     data.cardName = document.getElementById("cardName").value;
     data.footer = document.getElementById("footer").value;
@@ -153,8 +132,6 @@ function readControls() {
 
     return data;
 }
-
-
 
 function drawCardFrame(cardData){
 
@@ -190,8 +167,6 @@ render = function (cardData) {
     // next the frame elements
 
     drawCardFrame(cardData);
-
-    
 }
 
 async function writeControls(cardData) {
@@ -217,7 +192,6 @@ async function writeControls(cardData) {
 
     render(cardData);
 }
-
 
 async function onSaveClicked() {
     data = readControls();
@@ -248,10 +222,6 @@ function saveCardAsImage() {
     document.body.removeChild(element);
 }
 
-
-
-
-
 async function fileChange(file) {
     // Function to be triggered when file input changes
     // As readJSONFile is a promise, it must resolve before the contents can be read
@@ -265,20 +235,4 @@ async function fileChange(file) {
         saveJson(json)
     );
 
-}
-
-onFighterImageUpload = function () {
-    image = getModelImage();
-    setModelImage(image);
-    var cardData = readControls();
-    render(cardData);
-    saveLatestCardData();
-}
-
-function getFighterImageUrl() {
-    var imageSelect = $("#fighterImageUrl")[0].value;
-    // if (imageSelect.files.length > 0) {
-    //return URL.createObjectURL(imageSelect.files[0]);
-    // }
-    return imageSelect;
 }

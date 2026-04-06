@@ -1,3 +1,5 @@
+const dataRef = "playCard";
+
 getBackgroundImage= function() {
     const backgroundMap = {
         'bg-07': 'bg-ghur-401',
@@ -42,23 +44,10 @@ drawplayName = function (value) {
     writeScaled(value, { x: startX, y: startY });
 }
 
-function setModelImage(image) {
-    $("#missionImageUrl")[0].value = image;
-}
-
-
-function getFighterImageUrl() {
-    var imageSelect = $("#missionImageUrl")[0].value;
-    // if (imageSelect.files.length > 0) {
-    //return URL.createObjectURL(imageSelect.files[0]);
-    // }
-    return imageSelect;
-}
-
 function readControls() {
     var data = new Object;
     data.name = getName();
-    data.imageUrl = getFighterImageUrl();
+    data.imageUrl = getModelImageUrl();
     data.imageProperties = getModelImageProperties();
     data.customBackgroundUrl = getCustomBackgroundUrl();
     data.customBackgroundProperties = getCustomBackgroundProperties();
@@ -80,17 +69,12 @@ function readControls() {
     return data;
 }
 
-
 const render = function(missionData) {
-    
     if (missionData.customBackgroundUrl) {
       renderCustomBackground(missionData);
     } else {
       renderDefaultBackground(missionData);
     }
-
-
-  
 }
   
 const renderCustomBackground = function(missionData) {
@@ -104,7 +88,7 @@ const renderCustomBackground = function(missionData) {
         const width = backgroundImage.width * scale / 100;
         const height = backgroundImage.height * scale / 100;
         getContext().drawImage(backgroundImage, position.x, position.y, width, height);
-        renderFighterImage(missionData);
+        renderModelImage(missionData);
         drawDeployment();
 
     };
@@ -114,13 +98,12 @@ const renderCustomBackground = function(missionData) {
 const renderDefaultBackground = function(missionData) {
     getContext().drawImage(getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
     drawBorder();
-    renderFighterImage(missionData);
+    renderModelImage(missionData);
     drawDeployment();
     
 };
-  
 
-const renderFighterImage = function(missionData) {
+const renderModelImage = function(missionData) {
     if (missionData.imageUrl) {
         const image = new Image();
         image.onload = function() {
@@ -147,8 +130,6 @@ const renderFighterImage = function(missionData) {
         drawBorder();
     }
 };
-
-
 
 writeControls = async function(data) {
     //setName("Bloodbowl_Play_Card"); // Always default, trying to move away from this
@@ -344,22 +325,6 @@ window.onload = function () {
 
 }
 
-
-
-onAnyChange = function () {
-    var missionData = readControls();
-    render(missionData);
-    saveLatestmissionData();
-}
-
-onFighterImageUpload = function () {
-    image = getModelImage();
-    setModelImage(image);
-    var missionData = readControls();
-    render(missionData);
-    saveLatestmissionData();
-}
-
 function onResetToDefault() {
     var missionData = defaultmissionData();
     writeControls(missionData);
@@ -437,7 +402,6 @@ $(document).ready(function () {
     
 });
 
-
 async function fileChange(file) {
     // Function to be triggered when file input changes
     // As readJSONFile is a promise, it must resolve before the contents can be read
@@ -474,45 +438,6 @@ async function fileChange(file) {
         saveJson(json)
     );
 
-}
-
-function getCustomBackgroundProperties() {
-    return {
-        offsetX: $("#customBackgroundOffsetX")[0].valueAsNumber,
-        offsetY: $("#customBackgroundOffsetY")[0].valueAsNumber,
-        scalePercent: $("#customBackgroundScalePercent")[0].valueAsNumber,
-    };
-}
-
-function setCustomBackgroundProperties(customBackgroundProperties) {
-    $("#customBackgroundOffsetX")[0].value = customBackgroundProperties.offsetX || 0;
-    $("#customBackgroundOffsetY")[0].value = customBackgroundProperties.offsetY || 0;
-    $("#customBackgroundScalePercent")[0].value = customBackgroundProperties.scalePercent || 100;
-}
-
-function getCustomBackground() {
-    var imageSelect = $("#customBackgroundSelect")[0];
-    if (imageSelect.files.length > 0) {
-        return URL.createObjectURL(imageSelect.files[0]);
-    }
-    return null;
-}
-
-function setCustomBackground(image) {
-    $("#customBackgroundUrl")[0].value = image;
-}
-
-onCustomBackgroundUpload = function () {
-    image = getCustomBackground();
-    setCustomBackground(image);
-    var missionData = readControls();
-    render(missionData);
-    saveLatestmissionData();
-}
-
-function getCustomBackgroundUrl() {
-    var imageSelect = $("#customBackgroundUrl")[0].value;
-    return imageSelect;
 }
 
 function drawOverlayTexts(missionData) {
@@ -560,7 +485,6 @@ function convertInchesToPixelsLine(x_inches, y_inches){
     return { x, y };
 }
 
-
 function writeScaledBorder(value, startX, startY) {
     getContext().fillStyle = 'white';
     writeScaled(value, { x: startX+1, y: startY });
@@ -572,11 +496,6 @@ function writeScaledBorder(value, startX, startY) {
     getContext().fillStyle = 'black';
     writeScaled(value, { x: startX, y: startY });
 }
-
-
-
-
-
 
 function drawText() {
     const cardText = document.getElementById("textValue").value;
@@ -611,8 +530,6 @@ function drawText() {
     }
 }
 
-
-
 function drawDeployment(){
 
     var data = [];
@@ -637,8 +554,6 @@ function drawDeployment(){
     }
     drawText();
 }
-
-
 
 function drawCircleWithLetter(x, y, Letter) {
     // Get the canvas element and its 2d context
@@ -696,8 +611,6 @@ function updatePlayListDropdown(data){
     });
 }
 
-
-
 function onImageSelectChange() {
     const imageSelect = document.getElementById("imageSelectList");
     const selectedImagePath = imageSelect.value;
@@ -707,10 +620,6 @@ function onImageSelectChange() {
     render(missionData);
     saveLatestmissionData();
 }
-
-
-
-
 
 function populateImageSelectDropdown() {
     const imageSelect = document.getElementById("imageSelectList");

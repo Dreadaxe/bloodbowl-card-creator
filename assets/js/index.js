@@ -151,20 +151,20 @@ setName = function (name) {
 * image Manipulation
 */
 
-onCardImageUpload = function () {
+onModelImageUpload = function () {
     image = getModelImage();
     setModelImage(image);
     var cardData = readControls();
     render(cardData);
-    saveLatestcardData();
+    saveLatestCardData(dataRef);
 }
 
-function getCardImageUrl(cardImage) {
-    var imageSelect = $("#fighterImageUrl")[0].value;
-    // if (imageSelect.files.length > 0) {
-    //return URL.createObjectURL(imageSelect.files[0]);
-    // }
-    return imageSelect;
+onCustomBackgroundUpload = function () {
+    image = getCustomBackground();
+    setCustomBackground(image);
+    var cardData = readControls();
+    render(cardData);
+    saveLatestmissionData(dataRef);
 }
 
 onload2promise = function(obj) {
@@ -187,21 +187,48 @@ getScalingFactor = function (canvas, image) {
     };
 }
 
-
 getModelImage = function() {
     var imageSelect = $("#imageSelect")[0];
-
     if (imageSelect.files.length > 0) {
         return URL.createObjectURL(imageSelect.files[0]);
     }
-
     return null;
+}
+
+setModelImage = function(image) {
+    $("#modelImageUrl")[0].value = image;
+}
+
+getModelImageUrl = function() {
+    return $("#modelImageUrl")[0].value;
+}
+
+getCustomBackground = function() {
+    var imageSelect = $("#customBackgroundSelect")[0];
+    if (imageSelect.files.length > 0) {
+        return URL.createObjectURL(imageSelect.files[0]);
+    }
+    return null;
+}
+
+setCustomBackground = function(image) {
+    $("#customBackgroundUrl")[0].value = image;
+}
+
+getCustomBackgroundUrl = function() {
+    return $("#customBackgroundUrl")[0].value;
 }
 
 setModelImageProperties = function(modelImageProperties) {
     $("#imageOffsetX")[0].value = modelImageProperties.offsetX;
     $("#imageOffsetY")[0].value = modelImageProperties.offsetY;
     $("#imageScalePercent")[0].value = modelImageProperties.scalePercent;
+}
+
+setCustomBackgroundProperties = function(customBackgroundProperties) {
+    $("#customBackgroundOffsetX")[0].value = customBackgroundProperties.offsetX;
+    $("#customBackgroundOffsetY")[0].value = customBackgroundProperties.offsetY;
+    $("#customBackgroundScalePercent")[0].value = customBackgroundProperties.scalePercent;
 }
 
 getDefaultModelImageProperties = function() {
@@ -217,6 +244,14 @@ getModelImageProperties = function() {
         offsetX: $("#imageOffsetX")[0].valueAsNumber,
         offsetY: $("#imageOffsetY")[0].valueAsNumber,
         scalePercent: $("#imageScalePercent")[0].valueAsNumber
+    };
+}
+
+getCustomBackgroundProperties = function() {
+    return {
+        offsetX: $("#customBackgroundOffsetX")[0].valueAsNumber,
+        offsetY: $("#customBackgroundOffsetY")[0].valueAsNumber,
+        scalePercent: $("#customBackgroundScalePercent")[0].valueAsNumber,
     };
 }
 

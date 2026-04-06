@@ -12,11 +12,11 @@ function defaultCardData() {
     cardData.footer = "100,000";
     cardData.positionName = "";
     cardData.cardText = i18next.t('card.caracteristics.body_text');
-    cardData.ma = 4;
-    cardData.st = 4;
+    cardData.ma = 6;
+    cardData.st = 3;
     cardData.ag = 3;
-    cardData.pa = 3;
-    cardData.av = 9;
+    cardData.pa = 4;
+    cardData.av = 8;
     cardData.base64Image = null;
     cardData.imageUrl = null;
     cardData.imageProperties = getDefaultModelImageProperties();
@@ -94,7 +94,6 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
         context.fillText(line, xStart, yStart + index * lineHeight);
     });
 }
-
 
 /*
 function splitWordWrap(context, text, fitWidth) {
@@ -185,7 +184,7 @@ drawTeamName = function (value) {
 
     getContext().fillStyle = '#b4191e';
     getContext().fill();
-    (playerType == "star") ? getContext().strokeStyle = "#f0a70b" : getContext().strokeStyle = "white";
+    (playerType === "star") ? getContext().strokeStyle = "#f0a70b" : getContext().strokeStyle = "white";
     getContext().lineWidth = 5;
     getContext().stroke();
 
@@ -270,7 +269,6 @@ drawGoldPrice = function (value, x, y){
 }
 
 drawDevelopment = function (primary, secondary) {
-
     getContext().font = 'bold 24px franklin-gothic-book';
     getContext().fillStyle = 'black';
     getContext().textAlign = "left";
@@ -281,8 +279,6 @@ drawDevelopment = function (primary, secondary) {
     getContext().font = '24px franklin-gothic-book';
     writeScaled(primary, { x: x+92, y: 890 });
     writeScaled(secondary, { x: x+121, y: 930 });
-    
-    
 }
 
 function setSelectedRunemark(radioDiv, runemark, radioGroupName, bgColor) {
@@ -321,25 +317,10 @@ function setSelectedRunemark(radioDiv, runemark, radioGroupName, bgColor) {
     }
 }
 
-
-function setModelImage(image) {
-    //console.log("setModelImage:" + image);
-    $("#fighterImageUrl")[0].value = image;
-
-    //  if (image != null) {
-    // TODO: Not sure how to do this. It might not even be possible! Leave it for now...
-    //    imageSelect.value = image;
-    // }
-    // else {
-    //    imageSelect.value = null;
-    // }
-}
-
-
 function readControls() {
     var data = new Object;
     data.name = getName();
-    data.imageUrl = getFighterImageUrl();
+    data.imageUrl = getModelImageUrl();
     data.imageProperties = getModelImageProperties();
     data.cardName = document.getElementById("cardName").value;
     data.teamName = document.getElementById("teamName").value;
@@ -369,7 +350,6 @@ function readControls() {
     data.specialRules = document.getElementById("specialRules").value;
     data.keywords = document.getElementById("keywords").value;
 
-
     return data;
 }
 
@@ -391,9 +371,6 @@ function drawCardFrame(cardData){
     let PA = i18next.t('card.caracteristics.PA');
     let AV = i18next.t('card.caracteristics.AV');
     let GP = i18next.t('card.caracteristics.GP');
-
-
-
 
     playerType = document.getElementById("playerType").value;
     if(playerType == "star"){
@@ -433,9 +410,7 @@ function drawCardFrame(cardData){
         drawCardBodyTitle(player_development.toUpperCase(), 856);
     }
 
-    
     drawKeywords(cardData.keywords);
-        
 
     if(document.getElementById("playerType").value != "star"){
         drawPositionName(cardData.positionName);
@@ -511,21 +486,12 @@ function drawCardFrame(cardData){
         }
         drawDevelopment(primary, secondary);
     }
-    
-    if(playerType == "star"){  
-        drawCapacity(MA, -108, 208);
-        drawCapacity(ST, 40, 208);
-        drawCapacity(AG, 195, 208);
-        drawCapacity(PA, 345, 208);
-        drawCapacity(AV, 498, 208);
-    }else {
 
-        drawCapacity(MA, -108, 208);
-        drawCapacity(ST, 43, 208);
-        drawCapacity(AG, 195, 208);
-        drawCapacity(PA, 347, 208);
-        drawCapacity(AV, 500, 208);
-    }
+    drawCapacity(MA, -108, 208);
+    drawCapacity(ST, 40, 208);
+    drawCapacity(AG, 195, 208);
+    drawCapacity(PA, 345, 208);
+    drawCapacity(AV, 498, 208);
     // MA
     drawNumber(cardData.ma, 120, 224, false);
     // ST
@@ -560,8 +526,6 @@ render = function (cardData) {
     // next the frame elements
 
     drawCardFrame(cardData);
-
-    
 }
 
 function drawNumber(num,x, y, plus){
@@ -648,7 +612,6 @@ async function writeControls(cardData) {
     document.getElementById("specialRules").value = cardData.specialRules;
     document.getElementById("keywords").value = cardData.keywords;
 
-
     // render the updated info
     render(cardData);
 }
@@ -690,7 +653,6 @@ $(document).ready(function () {
     // ctx.stroke();
 });
 
-
 async function fileChange(file) {
     // Function to be triggered when file input changes
     // As readJSONFile is a promise, it must resolve before the contents can be read
@@ -704,20 +666,4 @@ async function fileChange(file) {
         saveJson(json)
     );
 
-}
-
-onFighterImageUpload = function () {
-    image = getModelImage();
-    setModelImage(image);
-    var cardData = readControls();
-    render(cardData);
-    saveLatestCardData();
-}
-
-function getFighterImageUrl() {
-    var imageSelect = $("#fighterImageUrl")[0].value;
-    // if (imageSelect.files.length > 0) {
-    //return URL.createObjectURL(imageSelect.files[0]);
-    // }
-    return imageSelect;
 }
