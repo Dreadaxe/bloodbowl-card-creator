@@ -118,14 +118,6 @@ getBackgroundImage = function () {
     return document.getElementById('bg1');
 }
 
-getSelectedRunemark = function(radioDiv) {
-    var checked = $(radioDiv).find('input:checked');
-    if (checked.length > 0) {
-        return getImage(getLabel(checked[0])).getAttribute("src");
-    }
-    return null;
-}
-
 getName = function() {
     //var textInput = $("#saveNameInput")[0];
     return "BloodBowl_Card";
@@ -311,19 +303,6 @@ handleImageUrlFromDisk =async function (imageUrl) {
     return imageUrl;
 }
 
-addToImageCheckboxSelector = function(imgSrc, grid, bgColor) {
-    var div = document.createElement('div');
-    div.setAttribute('class', 'mr-0');
-    div.innerHTML = `
-    <label for="checkbox-${imgSrc}">
-        <img src="${imgSrc}" width="50" height="50" alt="" style="background-color:${bgColor};">
-    </label>
-    <input type="checkbox" style="display:none;" id="checkbox-${imgSrc}" onchange="onTagRunemarkSelectionChanged(this, '${bgColor}')">
-    `;
-    grid.appendChild(div);
-    return div;
-}
-
 /*
 * Word manipulation
 */
@@ -427,6 +406,10 @@ splitWordWrap = function(context, text, fitWidth) {
     return return_array;
 }
 
+/*
+* Save and Load in files
+ */
+
 readJSONFile = async function (file) {
     // Function will return a new Promise which will resolve or reject based on whether the JSON file is read and parsed successfully
     return new Promise((resolve, reject) => {
@@ -442,4 +425,47 @@ readJSONFile = async function (file) {
         // Read from the file, which will kick-off the onload or onerror events defined above based on the outcome
         fileReader.readAsText(file);
     });
+}
+
+async function fileChange(file) {
+    // Function to be triggered when file input changes
+    // As readJSONFile is a promise, it must resolve before the contents can be read
+    // in this case logged to the console
+
+    var saveJson = function (json) {
+        writeControls(json);
+    };
+
+    readJSONFile(file).then(json =>
+        saveJson(json)
+    );
+
+}
+
+async function onSaveClicked() {
+    data = readControls();
+    // temp null while I work out image saving
+    data.base64Image = await handleImageUrlFromDisk(data.imageUrl)
+
+    // need to be explicit due to sub arrays
+    var exportObj = JSON.stringify(data, null, 4);
+
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "bloodbowl_card_" + data.cardName.replace(/ /g, "_") + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+saveCardAsImage = function () {
+    var element = document.createElement('a');
+    data = readControls();
+    element.setAttribute('href', document.getElementById('canvas').toDataURL('image/png'));
+    element.setAttribute('download', "bloodbowl_card_" + data.cardName + ".png");
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
