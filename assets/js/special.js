@@ -19,14 +19,6 @@ function defaultCardData() {
     return cardData;
 }
 
-$(document).ready(function () {
-    var c = document.getElementById('canvas');
-    var ctx = c.getContext('2d');
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    // ctx.stroke();
-});
-
 function drawCardText() {
     yStart = 250;
     let context = getContext();
@@ -194,25 +186,6 @@ drawFooter = function (value) {
     getContext().rotate(+6 * Math.PI / 180);
 }
 
-function readControls() {
-    var data = new Object;
-    data.name = getName();
-    data.imageUrl = getModelImageUrl();
-    data.imageProperties = getModelImageProperties();
-    data.cardName = document.getElementById("cardName").value;
-    data.footer = document.getElementById("footer").value;
-    data.cardText = document.getElementById("cardText").value;
-    data.effect = document.getElementById("effectCheckbox").checked;
-    data.effectText = document.getElementById("effectText").value;
-    data.duration = document.getElementById("durationCheckbox").checked;
-    data.durationText = document.getElementById("durationText").value;
-    data.timing = document.getElementById("timingCheckbox").checked;
-    data.timingText = document.getElementById("timingText").value;
-    data.fontSizeSelector = document.getElementById("fontSizeSelector").value;
-
-    return data;
-}
-
 function drawCardFrame(cardData){
 
     drawCardName(cardData.cardName);
@@ -247,6 +220,25 @@ render = function (cardData) {
     // next the frame elements
 
     drawCardFrame(cardData);
+}
+
+function readControls() {
+    var data = new Object;
+    data.name = getName();
+    data.imageUrl = getModelImageUrl();
+    data.imageProperties = getModelImageProperties();
+    data.cardName = document.getElementById("cardName").value;
+    data.footer = document.getElementById("footer").value;
+    data.cardText = document.getElementById("cardText").value;
+    data.effect = document.getElementById("effectCheckbox").checked;
+    data.effectText = document.getElementById("effectText").value;
+    data.duration = document.getElementById("durationCheckbox").checked;
+    data.durationText = document.getElementById("durationText").value;
+    data.timing = document.getElementById("timingCheckbox").checked;
+    data.timingText = document.getElementById("timingText").value;
+    data.fontSizeSelector = document.getElementById("fontSizeSelector").value;
+
+    return data;
 }
 
 async function writeControls(cardData) {

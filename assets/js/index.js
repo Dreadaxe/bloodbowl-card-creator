@@ -1,4 +1,3 @@
-
 onAnyChange = function () {
     var cardData = readControls();
     render(cardData);
@@ -16,7 +15,6 @@ saveCardDataMap = function(dataRef, newMap) {
 loadCardDataMap = function(dataRef) {
     var storage = window.localStorage.getItem(dataRef);
     if (storage != null) {
-        console.log('load '+dataRef+' data from storage');
         return JSON.parse(storage);
     }
     // Set up the map.
@@ -25,35 +23,29 @@ loadCardDataMap = function(dataRef) {
     saveCardDataMap(dataRef, map);
     return map;
 }
-/*
+
 loadLatestCardData = function(dataRef) {
     var latestCardName = window.localStorage.getItem(dataRef);
     if (latestCardName == null) {
         latestCardName = dataRef;
     }
-    data = loadCardData(latestCardName);
-    if (data) {
-        console.log("Loaded data:");
-    }
-    else {
-        console.log("Failed to load data, loading defaults.");
+    var data = loadCardData(latestCardName);
+    if (!data) {
         data = defaultCardData();
     }
 
     return data;
 }
-*/
+
 saveLatestCardData = function(dataRef) {
     var cardData = readControls();
     if (!cardData.name) {
         return;
     }
-    window.localStorage.setItem(dataRef, JSON.stringify(cardData));
+    saveCardDataMap(dataRef, cardData);
 }
 
 loadCardData = function(dataRef) {
-    console.log("Loading '" + dataRef + "'...");
-
     if (!dataRef) {
         return null;
     }
@@ -65,7 +57,6 @@ loadCardData = function(dataRef) {
 
     return null;
 }
-
 
 onResetToDefault = function() {
     var cardData = defaultCardData();
@@ -91,11 +82,9 @@ refreshSaveSlots = function() {
     }
 }
 
-
 getCardDataName = function() {
     return dataRef;
 }
-
 
 validateInput = function(input) {
     // Only allow letters, spaces, and hyphens
@@ -164,7 +153,7 @@ onCustomBackgroundUpload = function () {
     setCustomBackground(image);
     var cardData = readControls();
     render(cardData);
-    saveLatestmissionData(dataRef);
+    saveLatestCardData(dataRef);
 }
 
 onload2promise = function(obj) {
@@ -303,7 +292,6 @@ getBase64Image = function(img) {
     return dataURL;
 }
 
-
 getBase64ImgFromUrl = async function (imgUrl) {
     let img = new Image();
     let imgpromise = onload2promise(img); // see comment of T S why you should do it this way.
@@ -336,7 +324,6 @@ addToImageCheckboxSelector = function(imgSrc, grid, bgColor) {
     return div;
 }
 
-
 /*
 * Word manipulation
 */
@@ -364,7 +351,6 @@ drawCardElementFromInput = function (inputElement, pixelPosition) {
 drawCardElementFromInputId = function (inputId, pixelPosition) {
     drawCardElementFromInput(document.getElementById(inputId), pixelPosition);
 }
-
 
 printAtWordWrap = function(context, text, x, y, lineHeight, fitWidth) {
 
@@ -457,4 +443,3 @@ readJSONFile = async function (file) {
         fileReader.readAsText(file);
     });
 }
-

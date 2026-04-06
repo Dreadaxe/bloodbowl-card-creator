@@ -186,7 +186,7 @@ writeControls = async function(data) {
     render(data);
 }
 
-function defaultmissionData() {
+function defaultCardData() {
     var data = new Object;
     data.name = "Bloodbowl_Play_Card";
     data.imageUrl = null;
@@ -246,107 +246,18 @@ function defaultmissionData() {
     return data;
 }
 
-function savemissionDataMap(newMap) {
-    window.localStorage.setItem("missionDataMap", JSON.stringify(newMap));
-}
-
-function loadmissionDataMap() {
-    var storage = window.localStorage.getItem("missionDataMap");
-    if (storage != null) {
-        return JSON.parse(storage);
-    }
-    // Set up the map.
-    var map = new Object;
-    map["Bloodbowl_Play_Card"] = defaultmissionData();
-    savemissionDataMap(map);
-    return map;
-}
-
-function loadLatestmissionData() {
-    var latestFighterName = window.localStorage.getItem("latestFighterName");
-    if (latestFighterName == null) {
-        latestFighterName = "Bloodbowl_Play_Card";
-    }
-
-    var data = loadmissionData(latestFighterName);
-
-    if (data) {
-        console.log("Loaded data:");
-        console.log(data);
-    }
-    else {
-        console.log("Failed to load data - loading default");
-        data = defaultCardData();
-    }
-
-    return data;
-}
-
-function saveLatestmissionData() {
-    var missionData = readControls();
-    if (!missionData.name) {
-        return;
-    }
-
-    window.localStorage.setItem("latestFighterName", missionData.name);
-    //savemissionData(missionData);
-}
-
-function loadmissionData(missionDataName) {
-    if (!missionDataName) {
-        return null;
-    }
-
-    var map = loadmissionDataMap();
-    if (map[missionDataName]) {
-        return map[missionDataName];
-    }
-
-    return null;
-}
-
-function getLatestmissionDataName() {
-    return "latestmissionData";
-}
-
 window.onload = function () {
     //window.localStorage.clear();
 
-    var missionData = loadLatestmissionData();
-    writeControls(missionData);
+    var cardData = loadLatestCardData(dataRef);
+    writeControls(cardData);
     refreshSaveSlots();
 
     getPlayList()
     // log response or catch error of fetch promise
     .then((data) => updatePlayListDropdown(data))
 
-    populateImageSelectDropdown()
-
-
-}
-
-function onResetToDefault() {
-    var missionData = defaultmissionData();
-    writeControls(missionData);
-}
-
-function refreshSaveSlots() {
-    // Remove all
-    $('select').not("#languageSwitcher").children('option').remove();
-
-    var missionDataName = readControls().name;
-
-    var map = loadmissionDataMap();
-
-    for (let [key, value] of Object.entries(map)) {
-        var selected = false;
-        if (missionDataName &&
-            key == missionDataName) {
-            selected = true;
-        }
-        var newOption = new Option(key, key, selected, selected);
-        $('#saveSlotsSelect').append(newOption);
-    }
+    populateImageSelectDropdown();
 }
 
 async function onSaveClicked() {
@@ -392,15 +303,6 @@ function saveCardAsImage() {
     element.click();
     document.body.removeChild(element);
 }
-
-$(document).ready(function () {
-    var c = document.getElementById('canvas');
-    var ctx = c.getContext('2d');
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    // ctx.stroke();
-    
-});
 
 async function fileChange(file) {
     // Function to be triggered when file input changes
@@ -616,9 +518,9 @@ function onImageSelectChange() {
     const selectedImagePath = imageSelect.value;
 
     setModelImage(selectedImagePath);
-    var missionData = readControls();
-    render(missionData);
-    saveLatestmissionData();
+    var cardData = readControls();
+    render(cardData);
+    saveLatestCardData();
 }
 
 function populateImageSelectDropdown() {

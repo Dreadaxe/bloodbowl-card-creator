@@ -152,7 +152,6 @@ drawCardName = function (value) {
     getContext().rotate(5 * Math.PI / 180);
 }
 
-
 drawTeamName = function (value) {
     if(!document.getElementById("showTeamName").checked){
         return;
@@ -244,6 +243,7 @@ drawPlayerDev = function (value, x, y){
     getContext().textBaseline = "middle";
     writeScaled(value, { x: 261, y: 856 });
 }
+
 drawCardBodyTitle =function (value, y=659 ,x=261 ){
     getContext().font = 'bold 28px brothers-regular';
     getContext().fillStyle = '#b4191e';
@@ -279,78 +279,6 @@ drawDevelopment = function (primary, secondary) {
     getContext().font = '24px franklin-gothic-book';
     writeScaled(primary, { x: x+92, y: 890 });
     writeScaled(secondary, { x: x+121, y: 930 });
-}
-
-function setSelectedRunemark(radioDiv, runemark, radioGroupName, bgColor) {
-    // uncheck all
-    {
-        var checked = $(radioDiv).find('input:checked');
-        for (var i = 0; i < checked.length; i++) {
-            checked[i].checked = false;
-        }
-        var icons = $(radioDiv).find('img');
-        for (var i = 0; i < icons.length; i++) {
-            icons[i].style.backgroundColor = bgColor;
-        }
-    }
-
-    if (runemark != null) {
-        var queryString = "img[src='" + runemark + "']";
-        var img = $(radioDiv).find(queryString);
-        if (img.length > 0) {
-            var radioButton = $(img[0].parentNode.parentNode).find("input")[0];
-            radioButton.checked = true;
-            // img[0].style.backgroundColor = "tomato";
-            img[0].style.backgroundColor = "#00bc8c";
-        }
-        else {
-            var newDiv =
-                addToImageRadioSelector(
-                    runemark,
-                    radioDiv,
-                    radioGroupName,
-                    bgColor);
-            // $(newDiv).find("img")[0].style.backgroundColor = "tomato";
-            $(newDiv).find("img")[0].style.backgroundColor = "#00bc8c";
-            $(newDiv).find("input")[0].checked = true;
-        }
-    }
-}
-
-function readControls() {
-    var data = new Object;
-    data.name = getName();
-    data.imageUrl = getModelImageUrl();
-    data.imageProperties = getModelImageProperties();
-    data.cardName = document.getElementById("cardName").value;
-    data.teamName = document.getElementById("teamName").value;
-    data.footer = document.getElementById("footer").value;
-    data.cardText = document.getElementById("cardText").value;
-    data.positionName = document.getElementById("positionName").value;
-    data.ma = document.getElementById("ma").value;
-    data.st = document.getElementById("st").value;
-    data.ag = document.getElementById("ag").value;
-    data.pa = document.getElementById("pa").value;
-    data.av = document.getElementById("av").value;
-    data.p_general = document.getElementById("p_general").checked;
-    data.p_agility = document.getElementById("p_agility").checked;
-    data.p_devious = document.getElementById("p_devious").checked;
-    data.p_strength = document.getElementById("p_strength").checked;
-    data.p_passing = document.getElementById("p_passing").checked;
-    data.p_mutations = document.getElementById("p_mutations").checked;
-    data.s_general = document.getElementById("s_general").checked;
-    data.s_agility = document.getElementById("s_agility").checked;
-    data.s_devious = document.getElementById("s_devious").checked;
-    data.s_strength = document.getElementById("s_strength").checked;
-    data.s_passing = document.getElementById("s_passing").checked;
-    data.s_mutations = document.getElementById("s_mutations").checked;
-
-    data.playerType = document.getElementById("playerType").value;
-    data.playsFor = document.getElementById("playsFor").value;
-    data.specialRules = document.getElementById("specialRules").value;
-    data.keywords = document.getElementById("keywords").value;
-
-    return data;
 }
 
 function drawCardFrame(cardData){
@@ -505,29 +433,6 @@ function drawCardFrame(cardData){
 
 }
 
-render = function (cardData) {
-    //console.log("Render:");
-    //console.log(cardData);
-    // First the textured background
-    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
-
-    if (cardData.imageUrl) {
-        var image = new Image();
-        image.onload = function () {
-        var position = scalePixelPosition({ x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY });
-        var scale = cardData.imageProperties.scalePercent / 100.0;
-        var width = image.width * scale;
-        var height = image.height * scale;
-        getContext().drawImage(image, position.x, position.y, width, height);
-        drawCardFrame(cardData);
-        };
-    image.src = cardData.imageUrl;
-    }
-    // next the frame elements
-
-    drawCardFrame(cardData);
-}
-
 function drawNumber(num,x, y, plus){
 
     playerType = document.getElementById("playerType").value;
@@ -558,6 +463,63 @@ function drawNumber(num,x, y, plus){
     if (plus){
         getContext().drawImage(document.getElementById('sf+'+suffix), x+width, y, 39, 70);
     }
+}
+
+render = function (cardData) {
+    // First the textured background
+    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
+
+    if (cardData.imageUrl) {
+        var image = new Image();
+        image.onload = function () {
+        var position = scalePixelPosition({ x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY });
+        var scale = cardData.imageProperties.scalePercent / 100.0;
+        var width = image.width * scale;
+        var height = image.height * scale;
+        getContext().drawImage(image, position.x, position.y, width, height);
+        drawCardFrame(cardData);
+        };
+    image.src = cardData.imageUrl;
+    }
+    // next the frame elements
+
+    drawCardFrame(cardData);
+}
+
+function readControls() {
+    var data = new Object;
+    data.name = getName();
+    data.imageUrl = getModelImageUrl();
+    data.imageProperties = getModelImageProperties();
+    data.cardName = document.getElementById("cardName").value;
+    data.teamName = document.getElementById("teamName").value;
+    data.footer = document.getElementById("footer").value;
+    data.cardText = document.getElementById("cardText").value;
+    data.positionName = document.getElementById("positionName").value;
+    data.ma = document.getElementById("ma").value;
+    data.st = document.getElementById("st").value;
+    data.ag = document.getElementById("ag").value;
+    data.pa = document.getElementById("pa").value;
+    data.av = document.getElementById("av").value;
+    data.p_general = document.getElementById("p_general").checked;
+    data.p_agility = document.getElementById("p_agility").checked;
+    data.p_devious = document.getElementById("p_devious").checked;
+    data.p_strength = document.getElementById("p_strength").checked;
+    data.p_passing = document.getElementById("p_passing").checked;
+    data.p_mutations = document.getElementById("p_mutations").checked;
+    data.s_general = document.getElementById("s_general").checked;
+    data.s_agility = document.getElementById("s_agility").checked;
+    data.s_devious = document.getElementById("s_devious").checked;
+    data.s_strength = document.getElementById("s_strength").checked;
+    data.s_passing = document.getElementById("s_passing").checked;
+    data.s_mutations = document.getElementById("s_mutations").checked;
+
+    data.playerType = document.getElementById("playerType").value;
+    data.playsFor = document.getElementById("playsFor").value;
+    data.specialRules = document.getElementById("specialRules").value;
+    data.keywords = document.getElementById("keywords").value;
+
+    return data;
 }
 
 async function writeControls(cardData) {
@@ -644,14 +606,6 @@ function saveCardAsImage() {
     element.click();
     document.body.removeChild(element);
 }
-
-$(document).ready(function () {
-    var c = document.getElementById('canvas');
-    var ctx = c.getContext('2d');
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    // ctx.stroke();
-});
 
 async function fileChange(file) {
     // Function to be triggered when file input changes
