@@ -9,12 +9,14 @@ function defaultCardData() {
     cardData.imageUrl = null;
     cardData.imageProperties = getDefaultModelImageProperties();
     cardData.fontSizeSelector = 32; // Set the default font size to 32
+    cardData.centerImage = false;
+    cardData.backgroundType = "bg1";
     
     return cardData;
 }
 
 function drawCardText() {
-    yStart = 250;
+    yStart = 290;
     let context = getContext();
     context.textAlign = "center";
     context.textBaseline = "top";
@@ -46,11 +48,6 @@ function drawCardText() {
     
 }
 
-drawBackground = function () {
-    getContext().drawImage(
-        getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
-}
-
 drawCardName = function (value) {
     getContext().fillStyle = 'black';
     getContext().textAlign = "center";
@@ -79,36 +76,43 @@ drawCardName = function (value) {
 
     // Set the font size and draw the text with black shadow
     getContext().font = 'italic ' + fontSize + 'px brothers-regular';
-    writeScaled(value, { x: getCanvas().width/2 + 4 - 20, y: 180 + 4 });
+    writeScaled(value, { x: getCanvas().width/2 + 4 - 20, y: 205 + 4 });
     
     // Set the font size and draw the text in white
     getContext().fillStyle = 'white';
-    writeScaled(value, { x: getCanvas().width/2 - 20, y: 180 });
+    writeScaled(value, { x: getCanvas().width/2 - 20, y: 205 });
 
     getContext().rotate(6 * Math.PI / 180);
 }
 
-drawTeamName = function (value) {
-    getContext().font = 'italic 40px brothers-regular';
-    getContext().fillStyle = 'black';
-    getContext().textAlign = "left";
-    getContext().textBaseline = "middle";
-    getContext().rotate(-6 * Math.PI / 180);
-    writeScaled(value, { x: 60 +4, y: 125+4 });
-    getContext().fillStyle = 'white';
-    writeScaled(value, { x: 60, y: 125 });
-    getContext().rotate(+6 * Math.PI / 180);
-}
-
 drawFooter = function (value) {
-    getContext().font = 'bold 70px brothers-regular';
     getContext().fillStyle = 'black';
     getContext().textAlign = "center";
     getContext().textBaseline = "middle";
+
+    var fontSize = 70;
+    // Check if the value is 18 characters or more
+    if (value.length >= 18) {
+        // Calculate the maximum width based on the desired length
+        var maxWidth = 650;
+
+        // Calculate the width of the text with the current font size
+        getContext().font = 'italic ' + fontSize + 'px brothers-regular';
+        var textWidth = getContext().measureText(value).width;
+
+        // Reduce font size if the text width exceeds the maximum width
+        while (textWidth > maxWidth && fontSize > 1) {
+            fontSize--;
+            getContext().font = 'italic ' + fontSize + 'px brothers-regular';
+            textWidth = getContext().measureText(value).width;
+        }
+    }
+
+    getContext().font = 'italic ' + fontSize + 'px brothers-regular';
     getContext().rotate(-6 * Math.PI / 180);
-    writeScaled(value, { x: getCanvas().width/3 + 40, y: 1035+4 });
+    writeScaled(value, { x: getCanvas().width/3 + 40, y: 1010+4 });
     getContext().fillStyle = 'white';
-    writeScaled(value, { x: getCanvas().width/3 + 40, y: 1035 });
+    writeScaled(value, { x: getCanvas().width/3 + 40, y: 1010 });
     getContext().rotate(+6 * Math.PI / 180);
 }
 
@@ -126,22 +130,25 @@ function drawCardFrame(cardData){
 }
 
 render = function (cardData) {
-    console.log("Render:");
-    console.log(cardData);
     // First the textured background
-    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
+    getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
 
     if (cardData.imageUrl) {
         var image = new Image();
         image.onload = function () {
-        var position = scalePixelPosition({ x: 225 + cardData.imageProperties.offsetX, y: 350 + cardData.imageProperties.offsetY });
-        var scale = cardData.imageProperties.scalePercent / 100.0;
-        var width = image.width * scale;
-        var height = image.height * scale;
-        getContext().drawImage(image, position.x, position.y, width, height);
-        drawCardFrame(cardData);
+            var scale = cardData.imageProperties.scalePercent / 100.0;
+            var width = image.width * scale;
+            var height = image.height * scale;
+            if (cardData.centerImage) {
+                var position = scalePixelPosition({ x: (getCanvas().width - width)/2, y: (getCanvas().height - height)/2 });
+            }
+            else {
+                var position = scalePixelPosition({ x: 225 + cardData.imageProperties.offsetX, y: 350 + cardData.imageProperties.offsetY });
+            }
+            getContext().drawImage(image, position.x, position.y, width, height);
+            drawCardFrame(cardData);
         };
-    image.src = cardData.imageUrl;
+        image.src = cardData.imageUrl;
     }
     // next the frame elements
 
@@ -157,6 +164,8 @@ function readControls() {
     data.footer = document.getElementById("footer").value;
     data.cardText = document.getElementById("cardText").value;
     data.fontSizeSelector = document.getElementById("fontSizeSelector").value;
+    data.centerImage = document.getElementById("centerImage").checked;
+    data.backgroundType = document.getElementById("backgroundType").value;
 
     return data;
 }
@@ -181,6 +190,8 @@ async function writeControls(cardData) {
     $("#footer")[0].value = cardData.footer;
     $("#cardText")[0].value = cardData.cardText;
     $("#fontSizeSelector")[0].value = cardData.fontSizeSelector; // Set the fontSizeSelector value
+    $("#centerImage")[0].checked = cardData.centerImage;
+    $("#backgroundType")[0].value = cardData.backgroundType;
 
     render(cardData);
 }

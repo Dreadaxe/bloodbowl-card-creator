@@ -164,24 +164,14 @@ drawCardName = function (value) {
     getContext().rotate(6 * Math.PI / 180);
 }
 
-drawTeamName = function (value) {
-    getContext().font = 'italic 40px brothers-regular';
-    getContext().fillStyle = 'black';
-    getContext().textAlign = "left";
-    getContext().textBaseline = "middle";
-    getContext().rotate(-6 * Math.PI / 180);
-    writeScaled(value, { x: 60 +4, y: 125+4 });
-    getContext().fillStyle = 'white';
-    writeScaled(value, { x: 60, y: 125 });
-    getContext().rotate(+6 * Math.PI / 180);
-}
-
 drawFooter = function (value) {
-    getContext().font = 'bold 46px brothers-regular';
-    getContext().fillStyle = 'white';
+    getContext().font = 'italic 46px brothers-regular';
+    getContext().fillStyle = 'black';
     getContext().textAlign = "center";
     getContext().textBaseline = "middle";
     getContext().rotate(-6 * Math.PI / 180);
+    writeScaled(value, { x: getCanvas().width/3 + 40, y: 1035+4 });
+    getContext().fillStyle = 'white';
     writeScaled(value, { x: getCanvas().width/3 + 40, y: 1035 });
     getContext().rotate(+6 * Math.PI / 180);
 }
@@ -200,8 +190,6 @@ function drawCardFrame(cardData){
 }
 
 render = function (cardData) {
-    console.log("Render:");
-    console.log(cardData);
     // First the textured background
     getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
 

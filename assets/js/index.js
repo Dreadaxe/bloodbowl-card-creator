@@ -4,6 +4,11 @@ onAnyChange = function () {
     saveLatestCardData(dataRef);
 }
 
+onClearInput = function (value) {
+    document.getElementById(value).value = '';
+    onAnyChange();
+}
+
 /*
 * data card storage
 */
@@ -65,7 +70,7 @@ onResetToDefault = function() {
 
 refreshSaveSlots = function() {
     // Remove all
-    $('select').not("#languageSwitcher").children('option').remove();
+    //$('select').not("#languageSwitcher").children('option').remove();
 
     //var cardDataName = readControls().name;
 

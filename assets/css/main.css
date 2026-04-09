@@ -13,18 +13,6 @@
 }
 
 @font-face {
-    font-family: "rodchenkoctt";
-    font-style: normal;
-    font-weight: normal;
-    src: url("../fonts/rodchenkoctt.eot");
-    src: url("../fonts/rodchenkoctt.eot?#iefix") format("embedded-opentype"),
-        url("../fonts/rodchenkoctt.woff2") format("woff2"),
-        url("../fonts/rodchenkoctt.woff") format("woff"),
-        url("../fonts/rodchenkoctt.ttf") format("truetype"),
-        url("../fonts/rodchenkoctt.svg#rodchenkoctt") format("svg");
-}
-
-@font-face {
     font-family: "IndieFlower";
     font-style: normal;
     font-weight: normal;
@@ -323,3 +311,11 @@ canvas {
     border-left-color: tomato;
     border-left-color: #00bc8c;
 } */
+
+hr {
+    background-color: white;
+}
+
+input[type="file"] {
+    color: transparent;
+}
