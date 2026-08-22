@@ -89,27 +89,6 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
     });
 }
 
-/*
-function splitWordWrap(context, text, fitWidth) {
-    const words = text.split(' ');
-    const lines = [];
-    let line = '';
-    
-    for (const word of words) {
-        const testLine = line + (line ? ' ' : '') + word;
-        const testWidth = context.measureText(testLine).width;
-        
-        if (testWidth <= fitWidth) {
-            line = testLine;
-        } else {
-            lines.push(line);
-            line = word;
-        }
-    }
-    lines.push(line);
-    return lines;
-}
-*/
 drawCardName = function (value) {
     getContext().fillStyle = 'black';
     getContext().textAlign = "left";
@@ -267,10 +246,11 @@ drawDevelopment = function (primary, secondary) {
     writeScaled(secondary, { x: x+121, y: 930 });
 }
 
-function drawCardFrame(cardData){
+async function drawCardFrame(cardData) {
+    await document.fonts.ready;
     //set texts for translation
     let skills_traits = i18next.t('card.caracteristics.skills_traits');
-    let player_development =i18next.t('card.caracteristics.player_development');
+    let player_development = i18next.t('card.caracteristics.player_development');
     let agility = i18next.t('card.caracteristics.agility');
     let devious = i18next.t('card.caracteristics.devious');
     let general = i18next.t('card.caracteristics.general');
@@ -286,8 +266,14 @@ function drawCardFrame(cardData){
 
     getContext().drawImage(document.getElementById('frame'), 0, 0, getCanvas().width, getCanvas().height);
 
-    if(!document.getElementById("removeBorder").checked){
+    if (!document.getElementById("removeBorder").checked) {
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    }
+    if (document.getElementById("dashLine").checked) {
+        getContext().strokeStyle = 'black';
+        getContext().lineWidth = 1;
+        getContext().setLineDash([4, 4]);
+        getContext().strokeRect(35, 35, 752, 1052);
     }
 
     drawTeamName(cardData.teamName);
@@ -295,11 +281,11 @@ function drawCardFrame(cardData){
     drawFooter(cardData.footer);
 
     drawGoldPrice(GP);
-    
+
     yStart = 700;
 
     drawCardText(cardData.cardText, yStart, 3);
-    
+
     drawCardBodyTitle(skills_traits.toUpperCase());
 
     drawCardBodyTitle(player_development.toUpperCase(), 856);
@@ -307,72 +293,72 @@ function drawCardFrame(cardData){
     drawKeywords(cardData.keywords);
 
     primary = "";
-    if(cardData.p_agility){
+    if (cardData.p_agility) {
         primary = primary + agility;
     }
-    if(primary!="" && cardData.p_devious){
+    if (primary != "" && cardData.p_devious) {
         primary = primary + ", ";
     }
-    if(cardData.p_devious){
+    if (cardData.p_devious) {
         primary = primary + devious;
     }
-    if(primary!="" && cardData.p_general){
+    if (primary != "" && cardData.p_general) {
         primary = primary + ", ";
     }
-    if(cardData.p_general){
+    if (cardData.p_general) {
         primary = primary + general;
     }
-    if(primary!="" && cardData.p_mutations){
+    if (primary != "" && cardData.p_mutations) {
         primary = primary + ", ";
     }
-    if(cardData.p_mutations){
+    if (cardData.p_mutations) {
         primary = primary + mutations;
     }
-    if(primary!="" && cardData.p_passing){
+    if (primary != "" && cardData.p_passing) {
         primary = primary + ", ";
     }
-    if(cardData.p_passing){
+    if (cardData.p_passing) {
         primary = primary + passing;
     }
-    if(primary!="" && cardData.p_strength){
+    if (primary != "" && cardData.p_strength) {
         primary = primary + ", ";
     }
-    if(cardData.p_strength){
+    if (cardData.p_strength) {
         primary = primary + strength;
     }
 
     secondary = "";
-    if(cardData.s_agility){
+    if (cardData.s_agility) {
         secondary = secondary + agility;
     }
-    if(secondary!="" && cardData.s_devious){
+    if (secondary != "" && cardData.s_devious) {
         secondary = secondary + ", ";
     }
-    if(cardData.s_devious){
+    if (cardData.s_devious) {
         secondary = secondary + devious;
     }
-    if(secondary!="" && cardData.s_general){
+    if (secondary != "" && cardData.s_general) {
         secondary = secondary + ", ";
     }
-    if(cardData.s_general){
+    if (cardData.s_general) {
         secondary = secondary + general;
     }
-    if(secondary!="" && cardData.s_mutations){
+    if (secondary != "" && cardData.s_mutations) {
         secondary = secondary + ", ";
     }
-    if(cardData.s_mutations){
+    if (cardData.s_mutations) {
         secondary = secondary + mutations;
     }
-    if(secondary!="" && cardData.s_passing){
+    if (secondary != "" && cardData.s_passing) {
         secondary = secondary + ", ";
     }
-    if(cardData.s_passing){
+    if (cardData.s_passing) {
         secondary = secondary + passing;
     }
-    if(secondary!="" && cardData.s_strength){
+    if (secondary != "" && cardData.s_strength) {
         secondary = secondary + ", ";
     }
-    if(cardData.s_strength){
+    if (cardData.s_strength) {
         secondary = secondary + strength;
     }
     drawDevelopment(primary, secondary);

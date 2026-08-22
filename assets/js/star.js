@@ -6,7 +6,7 @@ function defaultCardData() {
     cardData.cardName = i18next.t('card.caracteristics.player_name');
     cardData.teamName = i18next.t('card.caracteristics.team_name');
     cardData.playsFor = "";
-    cardData.specialRules = "";
+    cardData.specialRules = "Rulename: text";
     cardData.keywords = "";
     cardData.footer = "100,000";
     cardData.cardText = i18next.t('card.caracteristics.body_text');
@@ -22,8 +22,9 @@ function defaultCardData() {
     return cardData;
 }
 
-function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
+function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false, isSpecialRule=false) {
     let context = getContext();
+    context.font = `32px franklin-gothic-book`;
     if(keywords == true){
         context.font = 'italic 24px brothers-regular';
         context.fillStyle = '#223f7d';
@@ -34,33 +35,57 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
         context.textAlign = "left";
         context.textBaseline = "middle";
     }
-
-    let maxCharactersForThreeLines = 140;
-    let minFontSize = 24;
     
     let xStart = 265;
 
+    let minFontSize = 18;
     let fontSize = 32;
     let lineHeight = 28;
-    let fitWidth = 500; // Reduced fitWidth for accommodating 4 lines at smaller font size
 
-    let textLines = splitWordWrap(context, value, fitWidth);
+    let maxWidth = 495;
+    let maxHeight = 225;
 
-    if (value.length > maxCharactersForThreeLines) {
-        maxLinesForNormalFont = 9; // Allow 4 lines if there are more than 300 characters
-    }
+    while (fontSize > minFontSize) {
+        textLines = [];
+        const paragraphs = value.split('\n');
+        for (const paragraph of paragraphs) {
+            if (paragraph === '') {
+                textLines.push('');
+                continue;
+            }
 
-    if (textLines.length > maxLinesForNormalFont) {
-        let fontReductionStep = 2;
-        while (textLines.length > maxLinesForNormalFont) {
-            fontSize -= fontReductionStep;
-            lineHeight = fontSize * 1.2;
-            fitWidth = 350 / (fontSize / 36); // Adjust fit width proportionally to the font size
-            textLines = splitWordWrap(context, value, fitWidth);
+            const words = paragraph.split(' ');
+            let currentLine = words[0] || '';
+
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                const testLine = currentLine + ' ' + word;
+                console.log(context.font);
+                console.log(testLine);
+                const metrics = context.measureText(testLine);
+                console.log(metrics);
+
+                // Если с новым словом строка не влазит в ширину, переносим слово на новую строку
+                if (metrics.width > maxWidth) {
+                    textLines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            textLines.push(currentLine);
         }
-        fontSize = Math.max(fontSize, minFontSize);
-        lineHeight = fontSize * 1.2;
+
+        const totalHeight = textLines.length * (fontSize * 1.2);
+        if (totalHeight <= maxHeight) {
+            break;
+        }
+        if (fontSize > minFontSize) {
+            fontSize -= 2;
+        }
+        context.font = `${fontSize}px franklin-gothic-book`;
     }
+
     if(keywords == true){
 
         let fillStyle = '#223f7d';
@@ -74,8 +99,23 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false) {
         context.fillStyle = fillStyle;
     }
 
+    let isFirstLine = true;
     textLines.forEach((line, index) => {
-        context.fillText(line, xStart, yStart + index * lineHeight);
+        if (isSpecialRule && isFirstLine) {
+            let splitWords = line.split(':');
+            let ruleName = splitWords[0] + ':';
+            let restOfText = splitWords[1];
+            context.font = `bold ${fontSize}px franklin-gothic-book`;
+            context.fillText(ruleName, xStart, yStart + index * lineHeight);
+            
+            let sizeRuleName = context.measureText(ruleName).width;
+            context.font = `${fontSize}px franklin-gothic-book`;
+            context.fillText(restOfText, xStart + sizeRuleName, yStart + index * lineHeight);
+            isFirstLine = false;
+        }
+        else {
+            context.fillText(line, xStart, yStart + index * lineHeight);
+        }
     });
 }
 
@@ -166,7 +206,7 @@ drawFooter = function (value) {
 }
 
 drawKeywords = function (value) {
-    drawCardText(value, 1034, 1, true)
+    drawCardText(value, 1034, 1, true, false)
 }
 
 drawCapacity = function (value, x, y){
@@ -191,7 +231,7 @@ drawSkilstraits = function (value, x=261, y=659){
     writeScaled(value, { x, y });
 }
 
-drawCardBodyTitle =function (value, y=659 ,x=261 ){
+drawCardBodyTitle = function (value, y=659 ,x=261 ){
     getContext().font = 'bold 28px brothers-regular';
     getContext().fillStyle = '#b4191e';
     getContext().textAlign = "left";
@@ -215,11 +255,12 @@ drawGoldPrice = function (value, x, y){
     getContext().shadowOffsetY = 0;
 }
 
-function drawCardFrame(cardData){
+async function drawCardFrame(cardData) {
+    await document.fonts.ready;
     //set texts for translation
     let skills_traits = i18next.t('card.caracteristics.skills_traits');
-    let plays_for=i18next.t('card.caracteristics.plays_for');
-    let special_rules=i18next.t('card.caracteristics.special_rules');
+    let plays_for = i18next.t('card.caracteristics.plays_for');
+    let special_rules = i18next.t('card.caracteristics.special_rules');
     let MA = i18next.t('card.caracteristics.MA');
     let ST = i18next.t('card.caracteristics.ST');
     let AG = i18next.t('card.caracteristics.AG');
@@ -229,8 +270,15 @@ function drawCardFrame(cardData){
 
     getContext().drawImage(document.getElementById('star_frame'), 0, 0, getCanvas().width, getCanvas().height);
 
-    if(!document.getElementById("removeBorder").checked){
+    if (!document.getElementById("removeBorder").checked) {
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    }
+
+    if (document.getElementById("dashLine").checked) {
+        getContext().strokeStyle = 'black';
+        getContext().lineWidth = 1;
+        getContext().setLineDash([4, 4]);
+        getContext().strokeRect(35, 35, 752, 1052);
     }
 
     drawTeamName(cardData.teamName);
@@ -241,15 +289,15 @@ function drawCardFrame(cardData){
 
     yStart = 550;
 
-    drawCardText(cardData.cardText, yStart, 3);
+    drawCardText(cardData.cardText, yStart, 3, false, false);
 
     drawCardBodyTitle(skills_traits.toUpperCase(), 513);
     drawCardBodyTitle(plays_for.toUpperCase(), 650);
     playsFor = document.getElementById("playsFor").value;
-    drawCardText(playsFor, 680, 1);
+    drawCardText(playsFor, 680, 2, false, false);
     drawCardBodyTitle(special_rules.toUpperCase(), 750);
     specialRules = document.getElementById("specialRules").value;
-    drawCardText(specialRules, 780, 2);
+    drawCardText(specialRules, 780, 8, false, true);
 
     drawKeywords(cardData.keywords);
 
@@ -266,7 +314,7 @@ function drawCardFrame(cardData){
     drawNumber(cardData.ag, 120, 527, true);
     // PA
     drawNumber(cardData.pa, 120, 680, true);
-    //AV
+    // AV
     drawNumber(cardData.av, 120, 832, true);
 
 }
@@ -315,7 +363,6 @@ render = function (cardData) {
         image.src = cardData.imageUrl;
     }
     // next the frame elements
-
     drawCardFrame(cardData);
 }
 

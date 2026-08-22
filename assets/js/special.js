@@ -20,7 +20,7 @@ function defaultCardData() {
 }
 
 function drawCardText() {
-    yStart = 250;
+    let yStart = 250;
     let context = getContext();
     context.textAlign = "center";
     context.textBaseline = "top";
@@ -38,7 +38,7 @@ function drawCardText() {
     const img2 = new Image();
     const img3 = new Image();
 
-    maxLength = 700;
+    let maxLength = 680;
 
     // Split input value into lines
     context.font = `italic ${defaultFontSize}px franklin-gothic-book`;
@@ -122,11 +122,6 @@ function drawCardText() {
     
 }
 
-drawBackground = function () {
-    getContext().drawImage(
-        getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
-}
-
 drawCardName = function (value) {
     getContext().fillStyle = 'black';
     getContext().textAlign = "center";
@@ -176,15 +171,57 @@ drawFooter = function (value) {
     getContext().rotate(+6 * Math.PI / 180);
 }
 
-function drawCardFrame(cardData){
+drawFooterIcon = function () {
+    getContext().font = 'italic 32px brothers-regular';
+    getContext().textAlign = "left";
+    getContext().textBaseline = "top";
+    getContext().rotate(-5 * Math.PI / 180);
+
+    //const textMetrics = getContext().measureText(txt);
+    const textWidth = 150;
+    const textHeight = 120;
+
+    const x = 107-textWidth;
+    const y = 780+textHeight;
+    const rectX = x;
+    const rectY = y;
+    const rectWidth = textWidth;
+    const rectHeight = textHeight;
+
+    getContext().beginPath();
+    getContext().moveTo(rectX, rectY); // Top-left
+    getContext().lineTo(rectX + rectWidth, rectY); // Top-right
+    getContext().lineTo(rectX + rectWidth - 10, rectY + rectHeight); // Bottom-right
+    getContext().lineTo(rectX - 10,  rectY + rectHeight); // Bottom-left
+    getContext().closePath();
+
+    getContext().fillStyle = '#223f7d';
+    getContext().fill();
+    //getContext().strokeStyle = "white";
+    //getContext().lineWidth = 5;
+    //getContext().stroke();
+    getContext().rotate(+5 * Math.PI / 180);
+
+    
+}
+
+async function drawCardFrame(cardData) {
+    await document.fonts.ready;
 
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);
+    drawFooterIcon();
 
     drawCardText();
 
-    if(!document.getElementById("removeBorder").checked){
+    if (!document.getElementById("removeBorder").checked) {
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    }
+    if (document.getElementById("dashLine").checked) {
+        getContext().strokeStyle = 'black';
+        getContext().lineWidth = 1;
+        getContext().setLineDash([4, 4]);
+        getContext().strokeRect(35, 35, 752, 1052);
     }
 
 }
@@ -200,8 +237,8 @@ render = function (cardData) {
         var scale = cardData.imageProperties.scalePercent / 100.0;
         var width = image.width * scale;
         var height = image.height * scale;
-        getContext().drawImage(image, position.x, position.y, width, height);
         drawCardFrame(cardData);
+        getContext().drawImage(image, position.x, position.y, width, height);
         };
     image.src = cardData.imageUrl;
     }

@@ -16,7 +16,7 @@ function defaultCardData() {
 }
 
 function drawCardText() {
-    yStart = 290;
+    let yStart = 290;
     let context = getContext();
     context.textAlign = "center";
     context.textBaseline = "top";
@@ -25,16 +25,8 @@ function drawCardText() {
     let xStart = getCanvas().width/2;
     let defaultFontSize = data.fontSizeSelector;
     let lineHeight = defaultFontSize * 1.2;
-    let gapAfterTitle = 60;
 
-    var c = document.getElementById('canvas');
-    var ctx = c.getContext('2d');
-    // Create a new image object
-    const img1 = new Image();
-    const img2 = new Image();
-    const img3 = new Image();
-
-    maxLength = 700;
+    let maxLength = 700;
 
     // Split input value into lines
     context.font = `italic ${defaultFontSize}px franklin-gothic-book`;
@@ -116,15 +108,22 @@ drawFooter = function (value) {
     getContext().rotate(+6 * Math.PI / 180);
 }
 
-function drawCardFrame(cardData){
+async function drawCardFrame(cardData) {
+    await document.fonts.ready;
 
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);
 
     drawCardText();
 
-    if(!document.getElementById("removeBorder").checked){
+    if (!document.getElementById("removeBorder").checked) {
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    }
+    if (document.getElementById("dashLine").checked) {
+        getContext().strokeStyle = 'black';
+        getContext().lineWidth = 1;
+        getContext().setLineDash([4, 4]);
+        getContext().strokeRect(35, 35, 752, 1052);
     }
 
 }
