@@ -5,6 +5,7 @@ function defaultCardData() {
     cardData.name = "BloodBowl_Card";
     cardData.cardName = i18next.t('card.caracteristics.player_name');
     cardData.teamName = i18next.t('card.caracteristics.team_name');
+    cardData.showTeamName = false;
     cardData.playsFor = "";
     cardData.specialRules = "Rulename: text";
     cardData.keywords = "";
@@ -153,8 +154,8 @@ drawCardName = function (value) {
     getContext().rotate(5 * Math.PI / 180);
 }
 
-drawTeamName = function (value) {
-    if(!document.getElementById("showTeamName").checked){
+drawTeamName = function (value, isShowTeamName) {
+    if(isShowTeamName == false){
         return;
     }
     const txt = " " + value + "  ";
@@ -277,9 +278,10 @@ async function drawCardFrame(cardData) {
         getContext().lineWidth = 1;
         getContext().setLineDash([4, 4]);
         getContext().strokeRect(35, 35, 752, 1052);
+        getContext().setLineDash([]);
     }
 
-    drawTeamName(cardData.teamName);
+    drawTeamName(cardData.teamName, cardData.showTeamName);
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);
 
@@ -371,6 +373,7 @@ function readControls() {
     data.imageProperties = getModelImageProperties();
     data.cardName = document.getElementById("cardName").value;
     data.teamName = document.getElementById("teamName").value;
+    data.showTeamName = document.getElementById("showTeamName").checked;
     data.footer = document.getElementById("footer").value;
     data.cardText = document.getElementById("cardText").value;
     data.ma = document.getElementById("ma").value;
@@ -410,6 +413,7 @@ async function writeControls(cardData) {
 
     $("#cardName")[0].value = cardData.cardName;
     $("#teamName")[0].value = cardData.teamName;
+    $("#showTeamName")[0].value = cardData.showTeamName;
     $("#footer")[0].value = cardData.footer;
     $("#ma")[0].value = cardData.ma;
     $("#st")[0].value = cardData.st;
@@ -418,6 +422,8 @@ async function writeControls(cardData) {
     $("#av")[0].value = cardData.av;
     $("#cardText")[0].value = cardData.cardText;
     $("#backgroundType")[0].value = cardData.backgroundType;
+
+    document.getElementById("showTeamName").checked = cardData.showTeamName;
 
     document.getElementById("playsFor").value = cardData.playsFor;
     document.getElementById("specialRules").value = cardData.specialRules;
