@@ -28,6 +28,7 @@ function defaultCardData() {
     cardData.s_passing = false;
     cardData.s_mutations = false;
     cardData.s_strength = false;
+    cardData.backgroundType = "bg1";
 
     return cardData;
 }
@@ -410,7 +411,7 @@ function drawNumber(num,x, y, plus){
 
 render = function (cardData) {
     // First the textured background
-    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
+    getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
 
     if (cardData.imageUrl) {
         var image = new Image();
@@ -458,6 +459,7 @@ function readControls() {
 
     data.keywords = document.getElementById("keywords").value;
 
+    data.backgroundType = document.getElementById("backgroundType").value;
     return data;
 }
 
@@ -491,6 +493,7 @@ async function writeControls(cardData) {
     $("#pa")[0].value = cardData.pa;
     $("#av")[0].value = cardData.av;
     $("#cardText")[0].value = cardData.cardText;
+    $("#backgroundType")[0].value = cardData.backgroundType;
 
     document.getElementById('p_agility').checked = cardData.p_agility;
     document.getElementById('p_devious').checked = cardData.p_devious;

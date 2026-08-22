@@ -18,6 +18,7 @@ function defaultCardData() {
     cardData.base64Image = null;
     cardData.imageUrl = null;
     cardData.imageProperties = getDefaultModelImageProperties();
+    cardData.backgroundType = "bg1";
 
     return cardData;
 }
@@ -60,10 +61,7 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false, isSp
             for (let i = 1; i < words.length; i++) {
                 const word = words[i];
                 const testLine = currentLine + ' ' + word;
-                console.log(context.font);
-                console.log(testLine);
                 const metrics = context.measureText(testLine);
-                console.log(metrics);
 
                 // Если с новым словом строка не влазит в ширину, переносим слово на новую строку
                 if (metrics.width > maxWidth) {
@@ -348,7 +346,7 @@ function drawNumber(num,x, y, plus){
 
 render = function (cardData) {
     // First the textured background
-    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
+    getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
 
     if (cardData.imageUrl) {
         var image = new Image();
@@ -385,6 +383,7 @@ function readControls() {
     data.specialRules = document.getElementById("specialRules").value;
     data.keywords = document.getElementById("keywords").value;
 
+    data.backgroundType = document.getElementById("backgroundType").value;
     return data;
 }
 
@@ -418,6 +417,7 @@ async function writeControls(cardData) {
     $("#pa")[0].value = cardData.pa;
     $("#av")[0].value = cardData.av;
     $("#cardText")[0].value = cardData.cardText;
+    $("#backgroundType")[0].value = cardData.backgroundType;
 
     document.getElementById("playsFor").value = cardData.playsFor;
     document.getElementById("specialRules").value = cardData.specialRules;

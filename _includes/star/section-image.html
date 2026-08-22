@@ -13,6 +13,18 @@
         <div class="card-body">
 
             <div class="form-group">
+                <label for="backgroundType">Background</label>
+                <select class="form-control" id="backgroundType" name="backgroundType" oninput="onAnyChange()">
+                    <option value="bg1" selected="selected">Blue textured</option>
+                    <option value="bg2">Light blue</option>
+                    <option value="bg3">Blue-gray textured</option>
+                    <option value="bg4">White textured</option>
+                    <option value="bg5">Simple dark blue</option>
+                    <option value="bg6">Simple white</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="imageSelect" data-i18n="card.image.load_image">Load image</label>
                 <input class="form-control-file" id="imageSelect" oninput="onModelImageUpload()" type="file">
             </div>
