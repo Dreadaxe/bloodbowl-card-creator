@@ -103,7 +103,7 @@ drawCardName = function (value) {
     // Check if the value is 18 characters or more
     if (value.length >= 18) {
         // Calculate the maximum width based on the desired length
-        var maxWidth = 500;
+        var maxWidth = 600;
 
         // Calculate the width of the text with the current font size
         getContext().font = 'italic ' + fontSize + 'px brothers-regular';
