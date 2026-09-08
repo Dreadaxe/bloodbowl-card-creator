@@ -45,8 +45,7 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false, isSp
     let lineHeight = 28;
 
     let maxWidth = 495;
-    let maxHeight = 225;
-
+    let maxHeight = keywords === false && isSpecialRule === false ? 130 : 305;
     while (fontSize > minFontSize) {
         textLines = [];
         const paragraphs = value.split('\n');
@@ -105,15 +104,15 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false, isSp
             let ruleName = splitWords[0] + ':';
             let restOfText = splitWords[1];
             context.font = `bold ${fontSize}px franklin-gothic-book`;
-            context.fillText(ruleName, xStart, yStart + index * lineHeight);
-            
+            context.fillText(ruleName, xStart, yStart + index * fontSize);
+
             let sizeRuleName = context.measureText(ruleName).width;
             context.font = `${fontSize}px franklin-gothic-book`;
-            context.fillText(restOfText, xStart + sizeRuleName, yStart + index * lineHeight);
+            context.fillText(restOfText, xStart + sizeRuleName, yStart + index * fontSize);
             isFirstLine = false;
         }
         else {
-            context.fillText(line, xStart, yStart + index * lineHeight);
+            context.fillText(line, xStart, yStart + index * fontSize);
         }
     });
 }
@@ -256,6 +255,7 @@ drawGoldPrice = function (value, x, y){
 
 async function drawCardFrame(cardData) {
     await document.fonts.ready;
+    await pageReady();
     //set texts for translation
     let skills_traits = i18next.t('card.caracteristics.skills_traits');
     let plays_for = i18next.t('card.caracteristics.plays_for');

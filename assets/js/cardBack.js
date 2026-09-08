@@ -110,6 +110,7 @@ drawFooter = function (value) {
 
 async function drawCardFrame(cardData) {
     await document.fonts.ready;
+    await pageReady();
 
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);

@@ -9,6 +9,16 @@ onClearInput = function (value) {
     onAnyChange();
 }
 
+pageReady = function (){
+    return new Promise(resolve => {
+        if (document.readyState === 'complete') {
+            resolve();
+        } else {
+            window.addEventListener('load', resolve, { once: true });
+        }
+    });
+}
+
 /*
 * data card storage
 */
@@ -430,6 +440,12 @@ readJSONFile = async function (file) {
         // Read from the file, which will kick-off the onload or onerror events defined above based on the outcome
         fileReader.readAsText(file);
     });
+}
+
+async function loadPreset(url) {
+    const response = await fetch("assets/star/" + url);
+    const json = await response.json();
+    writeControls(json);
 }
 
 async function fileChange(file) {

@@ -24,6 +24,84 @@
     <input class="form-control-file" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
 </div>
 
+<div class="form-group">
+    <label for="preset">Choose preset</label>
+    <select class="form-control" id="preset" name="preset" oninput="">
+        <option value="Akhorne_The_Squirrel.json">Akhorne The Squirrel</option>
+        <option value="Anqi_Panqi.json">Anqi Panqi</option>
+        <option value="Barik_Farblast.json">Barik Farblast</option>
+        <option value="Bilerot_Vomitflesh.json">Bilerot Vomitflesh</option>
+        <option value="Boa_Kon’ssstriktr.json">Boa Kon’ssstriktr</option>
+        <option value="Bomber_Dribblesnot.json">Bomber Dribblesnot</option>
+        <option value="Captain_Karina_von_Riesz.json">Captain Karina von Riesz</option>
+        <option value="Cindy_Piewhistle.json">Cindy Piewhistle</option>
+        <option value="Count_Luthor_von_Drakenborg.json">Count Luthor von Drakenborg</option>
+        <option value="Crumbleberry.json">Crumbleberry</option>
+        <option value="Deeproot_Strongbranch.json">Deeproot Strongbranch</option>
+        <option value="Dribl.json">Dribl</option>
+        <option value="Drull.json">Drull</option>
+        <option value="Eldril_Sidewinder.json">Eldril Sidewinder</option>
+        <option value="Estelle_la_Veneaux.json">Estelle la Veneaux</option>
+        <option value="Fungus_the_Loon.json">Fungus the Loon</option>
+        <option value="Glart_Smashrip.json">Glart Smashrip</option>
+        <option value="Gloriel_Summerbloom.json">Gloriel Summerbloom</option>
+        <option value="Glotl_Stop.json">Glotl Stop</option>
+        <option value="Grak.json">Grak</option>
+        <option value="Grashnak_Blackhoof.json">Grashnak Blackhoof</option>
+        <option value="Gretchen_Wächter.json">Gretchen Wächter</option>
+        <option value="Griff_Oberwald.json">Griff Oberwald</option>
+        <option value="Grim_Ironjaw.json">Grim Ironjaw</option>
+        <option value="Grombrindal.json">Grombrindal</option>
+        <option value="Guffle_Pusmaw.json">Guffle Pusmaw</option>
+        <option value="H’thark_the_Unstoppable.json">H’thark the Unstoppable</option>
+        <option value="Hakflem_Skuttlespike.json">Hakflem Skuttlespike</option>
+        <option value="Helmut_Wolf.json">Helmut Wolf</option>
+        <option value="Ivan_‘the_Animal’_Deathshroud.json">Ivan ‘the Animal’ Deathshroud</option>
+        <option value="Ivar_Eriksson.json">Ivar Eriksson</option>
+        <option value="Jeremiah_Kool.json">Jeremiah Kool</option>
+        <option value="Jordell_Freshbreeze.json">Jordell Freshbreeze</option>
+        <option value="Josef_Bugman.json">Josef Bugman</option>
+        <option value="Karla_von_Kill.json">Karla von Kill</option>
+        <option value="Kiroth_Krakeneye.json">Kiroth Krakeneye</option>
+        <option value="Kreek_Rustgouger.json">Kreek Rustgouger</option>
+        <option value="Lord_Borak_the_Despoiler.json">Lord Borak the Despoiler</option>
+        <option value="Lucian_Swift.json">Lucian Swift</option>
+        <option value="Maple_Highgrove.json">Maple Highgrove</option>
+        <option value="Max_Spleenripper.json">Max Spleenripper</option>
+        <option value="Morg_‘n’_Thorg.json">Morg ‘n’ Thorg</option>
+        <option value="Nobbla_Blackwart.json">Nobbla Blackwart</option>
+        <option value="Puggy_Baconbreath.json">Puggy Baconbreath</option>
+        <option value="Rashnak_Backstabber.json">Rashnak Backstabber</option>
+        <option value="Ripper_Bolgrot.json">Ripper Bolgrot</option>
+        <option value="Rodney_Roachbait.json">Rodney Roachbait</option>
+        <option value="Rowana_Forestfoot.json">Rowana Forestfoot</option>
+        <option value="Roxanna_Darknail.json">Roxanna Darknail</option>
+        <option value="Rumbelow_Sheepskin.json">Rumbelow Sheepskin</option>
+        <option value="Scrappa_Sorehead.json">Scrappa Sorehead</option>
+        <option value="Scyla_Anfingrimm.json">Scyla Anfingrimm</option>
+        <option value="Skitter_Stab-Stab.json">Skitter Stab-Stab</option>
+        <option value="Skrorg_Snowpelt.json">Skrorg Snowpelt</option>
+        <option value="Skrull_Halfheight.json">Skrull Halfheight</option>
+        <option value="Swiftvine_Glimmershard.json">Swiftvine Glimmershard</option>
+        <option value="The_Black_Gobbo.json">The Black Gobbo</option>
+        <option value="The_Mighty_Zug.json">The Mighty Zug</option>
+        <option value="Thorsson_Stoutmead.json">Thorsson Stoutmead</option>
+        <option value="Valen_Swift.json">Valen Swift</option>
+        <option value="Varag_Ghoul-Chewer.json">Varag Ghoul-Chewer</option>
+        <option value="Wilhelm_Chaney.json">Wilhelm Chaney</option>
+        <option value="Willow_Rosebark.json">Willow Rosebark</option>
+        <option value="Withergrasp_Doubledrool.json">Withergrasp Doubledrool</option>
+        <option value="Zolcath_the_Zoat.json">Zolcath the Zoat</option>
+        <option value="Zzharg_Madeye.json">Zzharg Madeye</option>
+    </select>
+</div>
+
+<div class="mt-4">
+    <button type="submit" class="btn btn-success" id="loadPreset" onclick="loadPreset(preset.value)">
+        Load preset
+    </button>
+</div>
+
 <div class="mt-4">
     <button type="submit" class="btn btn-success" id="clearCacheButton" onclick="onClearCache()">
         <span data-i18n="card.action.reset_all"/>

@@ -207,6 +207,7 @@ drawFooterIcon = function () {
 
 async function drawCardFrame(cardData) {
     await document.fonts.ready;
+    await pageReady();
 
     drawCardName(cardData.cardName);
     drawFooter(cardData.footer);
@@ -237,14 +238,14 @@ render = function (cardData) {
         var scale = cardData.imageProperties.scalePercent / 100.0;
         var width = image.width * scale;
         var height = image.height * scale;
-        drawCardFrame(cardData);
-        getContext().drawImage(image, position.x, position.y, width, height);
+        drawCardFrame(cardData).then(r => getContext().drawImage(image, position.x, position.y, width, height));
         };
     image.src = cardData.imageUrl;
     }
-    // next the frame elements
-
-    drawCardFrame(cardData);
+    else {
+        // next the frame elements
+        drawCardFrame(cardData);
+    }
 }
 
 function readControls() {

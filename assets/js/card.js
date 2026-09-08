@@ -250,6 +250,7 @@ drawDevelopment = function (primary, secondary) {
 
 async function drawCardFrame(cardData) {
     await document.fonts.ready;
+    await pageReady();
     //set texts for translation
     let skills_traits = i18next.t('card.caracteristics.skills_traits');
     let player_development = i18next.t('card.caracteristics.player_development');
