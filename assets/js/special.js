@@ -15,6 +15,7 @@ function defaultCardData() {
     cardData.imageUrl = null;
     cardData.imageProperties = getDefaultModelImageProperties();
     cardData.fontSizeSelector = 32; // Set the default font size to 32
+    cardData.centerImage = true;
     
     return cardData;
 }
@@ -234,11 +235,16 @@ render = function (cardData) {
     if (cardData.imageUrl) {
         var image = new Image();
         image.onload = function () {
-        var position = scalePixelPosition({ x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY });
-        var scale = cardData.imageProperties.scalePercent / 100.0;
-        var width = image.width * scale;
-        var height = image.height * scale;
-        drawCardFrame(cardData).then(r => getContext().drawImage(image, position.x, position.y, width, height));
+            var scale = cardData.imageProperties.scalePercent / 100.0;
+            var width = image.width * scale;
+            var height = image.height * scale;
+            if (cardData.centerImage) {          // 62 902
+                var position = scalePixelPosition({x: 61 + cardData.imageProperties.offsetX, y: 904 + cardData.imageProperties.offsetY});
+            }
+            else {
+                var position = scalePixelPosition({x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY});
+            }
+            drawCardFrame(cardData).then(r => getContext().drawImage(image, position.x, position.y, width, height));
         };
     image.src = cardData.imageUrl;
     }
@@ -263,6 +269,7 @@ function readControls() {
     data.timing = document.getElementById("timingCheckbox").checked;
     data.timingText = document.getElementById("timingText").value;
     data.fontSizeSelector = document.getElementById("fontSizeSelector").value;
+    data.centerImage = document.getElementById("centerImage").checked;
 
     return data;
 }
@@ -293,6 +300,7 @@ async function writeControls(cardData) {
     $("#timingCheckbox")[0].checked = cardData.timing;
     $("#timingText")[0].value = cardData.timingText;
     $("#fontSizeSelector")[0].value = cardData.fontSizeSelector; // Set the fontSizeSelector value
+    $("#centerImage")[0].checked = cardData.centerImage;
 
     render(cardData);
 }

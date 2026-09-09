@@ -147,6 +147,15 @@ setName = function (name) {
 * image Manipulation
 */
 
+onChooseIcon = async function (url) {
+    const response = await fetch("assets/img/icons/" + url);
+    let image = URL.createObjectURL(await response.blob());
+    setModelImage(image);
+    var cardData = readControls();
+    render(cardData);
+    saveLatestCardData(dataRef);
+}
+
 onModelImageUpload = function () {
     image = getModelImage();
     setModelImage(image);

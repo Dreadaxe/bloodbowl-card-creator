@@ -11,9 +11,42 @@
 
     <div class="collapse" id="fightersCollapseTwo">
         <div class="card-body">
+            
+            <div class="form-group">
+                <label for="chooseIcon">Choose icon</label>
+                <select class="form-control" id="chooseIcon" name="chooseIcon" oninput="onChooseIcon(chooseIcon.value)">
+                    <option value="" disabled selected hidden>Choose icon</option>
+                    <option value="agility_skill_icon_100x100.png">Agility</option>
+                    <option value="blood_bowl_icon.png">Blood Bowl</option>
+                    <option value="BOTH DOWN.png">BOTH DOWN</option>
+                    <option value="devious_skill_icon_100x100.png">Devious</option>
+                    <option value="dice.png">Dice</option>
+                    <option value="elite_skill_icon_100x100.png">Elite</option>
+                    <option value="general_skill_icon_100x100.png">General</option>
+                    <option value="mutation_skill_icon_100x100.png">Mutation</option>
+                    <option value="Nuffle-Zone-Ball.png">Ball</option>
+                    <option value="passing_skill_icon_100x100.png">Passing</option>
+                    <option value="PLAYER DOWN.png">PLAYER DOWN</option>
+                    <option value="POW.png">POW</option>
+                    <option value="PUSH BACK.png">PUSH BACK</option>
+                    <option value="strength_skill_icon_100x100.png">Strength</option>
+                    <option value="STUMBLE.png">STUMBLE</option>
+                    <option value="trait_icon_100x100.png">Trait</option>
+                </select>
+            </div>
 
             <div class="form-group">
-                <label for="imageSelect" data-i18n="card.image.load_image">Load image</label>
+                <input type="hidden" id="clearImage" name="clearImage" value="">
+                <button class="btn btn-secondary btn-sm" onclick="onClearInput('modelImageUrl')">Clear</button>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="centerImage" onchange="onAnyChange()">
+                <label class="form-check-label" for="centerImage">Center image</label>
+            </div>
+
+            <div class="form-group">
+                <label for="imageSelect">Load icon (recommended 100x100 px)</label>
                 <input class="form-control-file" id="imageSelect" oninput="onModelImageUpload()" type="file">
             </div>
 
