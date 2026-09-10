@@ -1,0 +1,105 @@
+{
+    "head": {
+        "title": "Creador de cartas de Blood Bowl",
+        "description": "Una aplicación web del lado del cliente para crear cartas personalizadas y listas para imprimir del juego de mesa Blood Bowl."
+    },
+    "nav":{
+        "players" : "Jugadores",
+        "star_players" : "Jugadores estrella",
+        "special_cards" : "Cartas especiales",
+        "card_back" : "Dorso de la carta",
+        "plays" : "Jugadas",
+        "instructions" : "Instrucciones"
+    },
+    "card":{
+        "action":{
+            "remove_border":"Eliminar el borde para añadir el área de sangrado para impresión",
+            "add_dash":"Añadir un borde de línea discontinua",
+            "save_as_image":"Guardar como imagen",
+            "save_as_file":"Guardar como archivo",
+            "load":"Cargar archivo de tarjeta",
+            "reset_all":"Restablecer todo",
+            "choose_preset":"Elegir ajuste preestablecido",
+            "load_preset":"Cargar ajuste preestablecido"
+        },
+        "caracteristics":{
+            "player_stats" : "Estadísticas del jugador",
+            "player_name" : "Nombre del jugador",
+            "team_name" : "Nombre del equipo",
+            "show_team_name" : "Mostrar nombre del equipo",
+            "MA" : "MV",
+            "ST" : "FU",
+            "AG" : "AG",
+            "PA" : "PS",
+            "AV" : "AR",
+            "GP" : "MO",
+            "skills_traits" : "Habilidades y Rasgos",
+            "plays_for" : "Juega para",
+            "special_rules" : "Reglas especiales",
+            "rulename" : "Nombre de la regla: texto",
+            "player_development" : "Desarrollo del jugador",
+            "keywords" : "Palabras clave",
+            "primary_skills" : "Habilidades principales",
+            "secondary_skills" : "Habilidades secundarias",
+            "agility_box" : "Ag",
+            "devious_box" : "As",
+            "general_box" : "G",
+            "mutations_box" : "M",
+            "passing_box" :"P",
+            "strength_box" : "F",
+            "agility" : "Agilidad",
+            "devious" : "Astuto",
+            "general" : "General",
+            "mutations" : "Mutación",
+            "passing" :"Pase",
+            "strength" : "Fuerza",
+            "primary": "Primaria",
+            "secondary" : "Secundaria",
+            "body_text" : "Texto principal",
+            "clear" : "Borrar"
+        },
+        "deployement":{
+
+        },
+        "special":{
+            "card_details" : "Detalles de la carta",
+            "card_name": "Nombre de la carta",
+            "font_size" : "Tamaño de fuente",
+            "timing" :"Momento de activación",
+            "timing_text" : "Texto del momento de activación",
+            "duration" : "Duración",
+            "duration_text" : "Texto de duración",
+            "effect" : "Efecto",
+            "effect_text" : "Texto del efecto",
+            "footer" : "Pie de carta"
+        },
+        "card_back": {
+            "simple_background": "Fondo sencillo",
+            "background_logo": "Fondo con logotipo",
+            "background_header": "Fondo con encabezado",
+            "background_logo_header": "Fondo con logotipo y encabezado"
+        },
+        "image":{
+            "background": "Fondo",
+            "blue_textured": "Azul texturizado",
+            "light_blue": "Azul claro",
+            "blue_gray_textured": "Azul grisáceo texturizado",
+            "white_textured": "Blanco texturizado",
+            "simple_dark_blue": "Azul oscuro liso",
+            "simple_white": "Blanco liso",
+            "player_image": "Imagen del jugador",
+            "icon_image": "Imagen del icono",
+            "card_image": "Imagen de la carta",
+            "choose_icon": "Elegir icono",
+            "center_image": "Centrar imagen",
+            "load_icon": "Cargar icono (recomendado 100x100 px)",
+            "load_image" : "Cargar imagen",
+            "x_offset" : "Desplazamiento X (↔)",
+            "y_offset" : "Desplazamiento Y (↕)",
+            "scale_percent": "Escala (%)"
+        }
+    },
+    "plays":{
+
+    }
+}

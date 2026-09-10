@@ -5,6 +5,7 @@
     },
     "nav":{
         "players" : "Joueurs",
+        "star_players" : "Star Players",
         "special_cards" : "Cartes Spéciales",
         "card_back" : "Dos de carte",
         "plays" : "Tactiques de jeux",
@@ -13,31 +14,31 @@
     "card":{
         "action":{
             "remove_border":"Supprimer les bords pour ajouter une marge d'impression",
+            "add_dash":"Ajouter une bordure en pointillés",
             "save_as_image":"Sauvegarder comme image",
             "save_as_file":"Sauvegarder comme fichier",
             "load":"Charger une carte",
-            "reset_all":"effacer",
-            "show_team_name" : "Nom de l'équipe visible"
+            "reset_all":"Effacer",
+            "choose_preset":"Choisir un préréglage",
+            "load_preset":"Charger un préréglage"
         },
         "caracteristics":{
             "player_stats" : "Statistiques du Joueur",
             "player_name" : "Nom du joueur",
             "team_name" : "Nom de l'equipe",
-            "player_type" : "Type de joueur",
-            "roster_player" : "joueur standard",
-            "star_player" : "Star Player",
+            "show_team_name" : "Nom de l'équipe visible",
             "MA" : "M",
             "ST" : "F",
             "AG" : "AG",
             "PA" : "CP",
             "AV" : "AR",
             "GP" : "PO",
-            "skills_traits" : "Compétences & traits",
+            "skills_traits" : "Compétences & Traits",
             "plays_for" : "Joue pour",
             "special_rules" : "Rêgles spéciales",
+            "rulename" : "Nom de la règle: texte",
             "player_development" : "Developpement du joueur",
             "keywords" : "Mots-clefs",
-            "position" : "Position",
             "primary_skills" : "Compétences primaires",
             "secondary_skills" : "Compétences secondaires",
             "agility_box" : "A",
@@ -54,7 +55,8 @@
             "strength" : "Force",
             "primary": "Primaire",
             "secondary" : "Secondaire",
-            "body_text" : "Texte de la carte"
+            "body_text" : "Texte de la carte",
+            "clear" : "Effacer"
         },
         "deployement":{
 
@@ -71,8 +73,26 @@
             "effect_text" : "Texte de l'effet",
             "footer" : "Pied de carte"
         },
+        "card_back": {
+            "simple_background": "Fond simple",
+            "background_logo": "Fond avec logo",
+            "background_header": "Fond avec en-tête",
+            "background_logo_header": "Fond avec logo et en-tête"
+        },
         "image":{
+            "background": "Fond",
+            "blue_textured": "Bleu texturé",
+            "light_blue": "Bleu clair",
+            "blue_gray_textured": "Bleu-gris texturé",
+            "white_textured": "Blanc texturé",
+            "simple_dark_blue": "Bleu foncé uni",
+            "simple_white": "Blanc uni",
             "player_image": "Image du joueur",
+            "icon_image": "Image de l'icône",
+            "card_image": "Image de la carte",
+            "choose_icon": "Choisir une icône",
+            "center_image": "Centrer l'image",
+            "load_icon": "Charger une icône (recommandé 100x100 px)",
             "load_image" : "Charger Image",
             "x_offset" : "X offset (↔)",
             "y_offset" : "Y offset (↕)",

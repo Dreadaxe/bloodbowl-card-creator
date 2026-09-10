@@ -5,7 +5,7 @@
 </div>
 <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="dashLine" onchange="onAnyChange()">
-    <label class="form-check-label" for="dashline">Add dash line border</label>
+    <label class="form-check-label" for="dashline" data-i18n="card.action.add_dash">Add dash line border</label>
 </div>
 <div class="mt-4">
     <button  type="submit" class="btn btn-success" id="saveCanvasButton" onclick="saveCardAsImage()">
@@ -25,7 +25,7 @@
 </div>
 
 <div class="form-group">
-    <label for="preset">Choose preset</label>
+    <label for="preset" data-i18n="card.action.choose_preset">Choose preset</label>
     <select class="form-control" id="preset" name="preset" oninput="">
         <option value="Akhorne_The_Squirrel.json">Akhorne The Squirrel</option>
         <option value="Anqi_Panqi.json">Anqi Panqi</option>
@@ -97,7 +97,7 @@
 </div>
 
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="loadPreset" onclick="loadPreset(preset.value)">
+    <button type="submit" class="btn btn-success" id="loadPreset" data-i18n="card.action.load_preset" onclick="loadPreset(preset.value)">
         Load preset
     </button>
 </div>

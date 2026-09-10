@@ -483,7 +483,7 @@ async function onSaveClicked() {
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "bloodbowl_card_" + data.cardName.replace(/ /g, "_") + ".json");
+    downloadAnchorNode.setAttribute("download", "bloodbowl_" + data.cardName.replace(/ /g, "_") + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
@@ -493,7 +493,7 @@ saveCardAsImage = function () {
     var element = document.createElement('a');
     data = readControls();
     element.setAttribute('href', document.getElementById('canvas').toDataURL('image/png'));
-    element.setAttribute('download', "bloodbowl_card_" + data.cardName + ".png");
+    element.setAttribute('download', "bloodbowl_" + data.cardName + ".png");
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();

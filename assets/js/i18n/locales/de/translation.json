@@ -1,0 +1,105 @@
+{
+    "head": {
+        "title": "Blood Bowl-Karteneditor",
+        "description": "Eine clientseitige Web-App zum Erstellen individueller, druckfertiger Karten für das Blood Bowl-Tabletop-Spiel."
+    },
+    "nav":{
+        "players" : "Spieler",
+        "star_players" : "Star-Spieler",
+        "special_cards" : "Spezialkarten",
+        "card_back" : "Kartenrückseite",
+        "plays" : "Spielzüge",
+        "instructions" : "Anleitung"
+    },
+    "card":{
+        "action":{
+            "remove_border":"Rahmen entfernen, um Beschnittzugabe für den Druck hinzuzufügen",
+            "add_dash":"Gestrichelten Rahmen hinzufügen",
+            "save_as_image":"Als Bild speichern",
+            "save_as_file":"Als Datei speichern",
+            "load":"Kartendatei laden",
+            "reset_all":"Alles zurücksetzen",
+            "choose_preset":"Voreinstellung wählen",
+            "load_preset":"Voreinstellung laden"
+        },
+        "caracteristics":{
+            "player_stats" : "Spielerstatistiken",
+            "player_name" : "Spielername",
+            "team_name" : "Teamname",
+            "show_team_name" : "Teamname anzeigen",
+            "MA" : "BE",
+            "ST" : "ST",
+            "AG" : "GE",
+            "PA" : "WG",
+            "AV" : "RW",
+            "GP" : "GS",
+            "skills_traits" : "Fertigkeiten & Merkmale",
+            "plays_for" : "Spielt für",
+            "special_rules" : "Sonderregeln",
+            "rulename" : "Regelname: text",
+            "player_development" : "Spielerentwicklung",
+            "keywords" : "Schlagwörter",
+            "primary_skills" : "Primäre Fertigkeiten",
+            "secondary_skills" : "Sekundäre Fertigkeiten",
+            "agility_box" : "AG",
+            "devious_box" : "H",
+            "general_box" : "AL",
+            "mutations_box" : "M",
+            "passing_box" :"P",
+            "strength_box" : "S",
+            "agility" : "Agilität",
+            "devious" : "Hinterhältig",
+            "general" : "Allgemein",
+            "mutations" : "Mutation",
+            "passing" :"Passen",
+            "strength" : "Stärke",
+            "primary": "Primär",
+            "secondary" : "Sekundär",
+            "body_text" : "Fließtext",
+            "clear" : "Klar"
+        },
+        "deployement":{
+
+        },
+        "special":{
+            "card_details" : "Kartendetails",
+            "card_name": "Kartenname",
+            "font_size" : "Schriftgröße",
+            "timing" :"Zeitpunkt",
+            "timing_text" : "Zeitpunkt-Text",
+            "duration" : "Dauer",
+            "duration_text" : "Dauer-Text",
+            "effect" : "Effekt",
+            "effect_text" : "Effekt-Text",
+            "footer" : "Fußzeile"
+        },
+        "card_back": {
+            "simple_background": "Einfacher Hintergrund",
+            "background_logo": "Hintergrund mit Logo",
+            "background_header": "Hintergrund mit Kopfzeile",
+            "background_logo_header": "Hintergrund mit Logo und Kopfzeile"
+        },
+        "image":{
+            "background": "Hintergrund",
+            "blue_textured": "Blau (strukturiert)",
+            "light_blue": "Hellblau",
+            "blue_gray_textured": "Blaugrau (strukturiert)",
+            "white_textured": "Weiß (strukturiert)",
+            "simple_dark_blue": "Einfaches Dunkelblau",
+            "simple_white": "Einfaches Weiß",
+            "player_image": "Spielerbild",
+            "icon_image": "Symbolbild",
+            "card_image": "Kartenbild",
+            "choose_icon": "Symbol auswählen",
+            "center_image": "Bild zentrieren",
+            "load_icon": "Symbol laden (empfohlen 100x100 px)",
+            "load_image" : "Bild laden",
+            "x_offset" : "X-Versatz (↔)",
+            "y_offset" : "Y-Versatz (↕)",
+            "scale_percent": "Skalierung (%)"
+        }
+    },
+    "plays":{
+
+    }
+}

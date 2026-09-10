@@ -2,12 +2,12 @@ const dataRef = "starPlayerCard";
 
 function defaultCardData() {
     var cardData = new Object;
-    cardData.name = "BloodBowl_Card";
+    cardData.name = getName();
     cardData.cardName = i18next.t('card.caracteristics.player_name');
     cardData.teamName = i18next.t('card.caracteristics.team_name');
     cardData.showTeamName = false;
     cardData.playsFor = "";
-    cardData.specialRules = "Rulename: text";
+    cardData.specialRules = i18next.t('card.caracteristics.rulename');
     cardData.keywords = "";
     cardData.footer = "100,000";
     cardData.cardText = i18next.t('card.caracteristics.body_text');

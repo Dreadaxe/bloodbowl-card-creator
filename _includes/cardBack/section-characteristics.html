@@ -14,18 +14,18 @@
         <div class="card-body">
 
             <div class="form-group">
-                <label for="backgroundType">Background</label>
+                <label for="backgroundType" data-i18n="card.image.background">Background</label>
                 <select class="form-control" id="backgroundType" name="backgroundType" oninput="onAnyChange()">
-                    <option value="bg1" selected="selected">Simple background</option>
-                    <option value="bg2">Background with Logo</option>
-                    <option value="bg3">Background with Header</option>
-                    <option value="bg4">Background with Logo and Header</option>
+                    <option value="bg1" selected="selected" data-i18n="card.card_back.simple_background">Simple background</option>
+                    <option value="bg2" data-i18n="card.card_back.background_logo">Background with Logo</option>
+                    <option value="bg3" data-i18n="card.card_back.background_header">Background with Header</option>
+                    <option value="bg4" data-i18n="card.card_back.background_logo_header">Background with Logo and Header</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="cardName" data-i18n="card.special.card_name">Card Name</label>
-                <button class="btn btn-secondary btn-sm" onclick="onClearInput('cardName')">Clear</button>
+                <button class="btn btn-secondary btn-sm" onclick="onClearInput('cardName')" data-i18n="card.caracteristics.clear">Clear</button>
                 <input class="form-control" type="text" id="cardName" name="cardName" value="" oninput="onAnyChange()">
             </div>
             <hr>
@@ -36,7 +36,7 @@
 
             <div class="form-group">
                 <label for="cardText"  data-i18n="card.caracteristics.body_text">Body Text</label>
-                <button class="btn btn-secondary btn-sm" onclick="onClearInput('cardText')">Clear</button>
+                <button class="btn btn-secondary btn-sm" onclick="onClearInput('cardText')" data-i18n="card.caracteristics.clear">Clear</button>
                 <textarea class="form-control" id="cardText" name="cardText" rows="3"
                     oninput="onAnyChange()" data-i18n="card.caracteristics.body_text">Body Text</textarea>
             </div>

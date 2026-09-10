@@ -1,4 +1,6 @@
 [
     {"name": "English", "code":"en_en", "prefix": "en"},
-    {"name": "Français", "code":"fr_fr", "prefix": "fr"}
+    {"name": "Français", "code":"fr_fr", "prefix": "fr"},
+    {"name": "Deutsch", "code":"de_de", "prefix": "de"},
+    {"name": "Español", "code":"es_es", "prefix": "es"}
 ]

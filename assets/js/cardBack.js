@@ -2,10 +2,10 @@ const dataRef = "cardBack";
 
 function defaultCardData() {
     var cardData = new Object;
-    cardData.name = "BloodBowl_Special_Card";
-    cardData.cardName = "Card Name";
-    cardData.cardText = "Body Text";
-    cardData.footer = "Footer";
+    cardData.name = getName();
+    cardData.cardName = i18next.t('card.special.card_name');
+    cardData.cardText = i18next.t('card.caracteristics.body_text');
+    cardData.footer = i18next.t('card.special.footer');
     cardData.imageUrl = null;
     cardData.imageProperties = getDefaultModelImageProperties();
     cardData.fontSizeSelector = 32; // Set the default font size to 32

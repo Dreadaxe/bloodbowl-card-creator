@@ -1,6 +1,8 @@
 const lngs = {
   en: { nativeName: 'English' },
-  fr: { nativeName: 'Français' }
+  fr: { nativeName: 'Français' },
+  de: { nativeName: 'Deutsch' },
+  es: { nativeName: 'Español' }
 }
 
 const rerender = () => {
@@ -20,8 +22,14 @@ const rerender = () => {
 initI18n = function () {
 
   let storedLng = window.localStorage.getItem("lang");
-
-  let fallbackLng= "en"
+  const primaryLanguage = navigator.language;
+  console.log(primaryLanguage);
+  
+  let fallbackLng= primaryLanguage.split('-')[0];
+  if (!(fallbackLng in lngs)) {
+    fallbackLng = "en";
+  }
+  
   if(storedLng != null){
     fallbackLng = storedLng;
   }

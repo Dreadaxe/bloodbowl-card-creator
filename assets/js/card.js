@@ -2,7 +2,7 @@ const dataRef = "playerCard";
 
 function defaultCardData() {
     var cardData = new Object;
-    cardData.name = "BloodBowl_Card";
+    cardData.name = getName();
     cardData.cardName = i18next.t('card.caracteristics.player_name');
     cardData.teamName = i18next.t('card.caracteristics.team_name');
     cardData.showTeamName = false;

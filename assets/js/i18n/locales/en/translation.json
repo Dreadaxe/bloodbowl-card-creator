@@ -1,10 +1,11 @@
 {
     "head": {
-        "title": "Blood Bowl Créateur de cartes",
+        "title": "Blood Bowl Card Creator",
         "description": "A client-side web app for creating custom, print-ready Blood Bowl tabletop game cards."
     },
     "nav":{
         "players" : "Players",
+        "star_players" : "Star Players",
         "special_cards" : "Special Cards",
         "card_back" : "Card Back",
         "plays" : "Plays",
@@ -13,31 +14,31 @@
     "card":{
         "action":{
             "remove_border":"Remove border to add bleed area for printing",
+            "add_dash":"Add dash line border",
             "save_as_image":"Save as image",
             "save_as_file":"Save as file",
             "load":"Load card file",
             "reset_all":"Reset all",
-            "show_team_name" : "Show Team name"
+            "choose_preset":"Choose preset",
+            "load_preset":"Load preset"
         },
         "caracteristics":{
             "player_stats" : "Player Stats",
             "player_name" : "Player name",
             "team_name" : "Team name",
-            "player_type" : "Player Type",
-            "roster_player" : "Roster Player",
-            "star_player" : "Star Player",
+            "show_team_name" : "Show Team name",
             "MA" : "MA",
             "ST" : "ST",
             "AG" : "AG",
             "PA" : "PA",
             "AV" : "AV",
             "GP" : "GP",
-            "skills_traits" : "Skills & traits",
+            "skills_traits" : "Skills & Traits",
             "plays_for" : "Plays For",
             "special_rules" : "Special rules",
+            "rulename" : "Rulename: text",
             "player_development" : "Player developement",
             "keywords" : "Keywords",
-            "position" : "Position",
             "primary_skills" : "Primary Skills",
             "secondary_skills" : "Secondary Skills",
             "agility_box" : "A",
@@ -54,7 +55,8 @@
             "strength" : "Strength",
             "primary": "Primary",
             "secondary" : "Secondary",
-            "body_text" : "Body text"
+            "body_text" : "Body text",
+            "clear" : "Clear"
         },
         "deployement":{
 
@@ -71,8 +73,26 @@
             "effect_text" : "Effect Text",
             "footer" : "Footer"
         },
+        "card_back": {
+            "simple_background": "Simple background",
+            "background_logo": "Background with Logo",
+            "background_header": "Background with Header",
+            "background_logo_header": "Background with Logo and Header"
+        },
         "image":{
+            "background": "Background",
+            "blue_textured": "Blue textured",
+            "light_blue": "Light blue",
+            "blue_gray_textured": "Blue-gray textured",
+            "white_textured": "White textured",
+            "simple_dark_blue": "Simple dark blue",
+            "simple_white": "Simple white",
             "player_image": "Player Image",
+            "icon_image": "Icon Image",
+            "card_image": "Card Image",
+            "choose_icon": "Choose icon",
+            "center_image": "Center image",
+            "load_icon": "Load icon (recommended 100x100 px)",
             "load_image" : "Load Image",
             "x_offset" : "X offset (↔)",
             "y_offset" : "Y offset (↕)",
