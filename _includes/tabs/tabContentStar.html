@@ -1,46 +1,45 @@
-<div class="row mt-3">
+<div class="container-fluid">
+    <div class="row mt-3">
 
-    <div class="col-lg-4">
-        <img id="bg1" style="display: none;" src="assets/img/card/blank1.png">
-        <img id="bg2" style="display: none;" src="assets/img/card/blank2.png">
-        <img id="bg3" style="display: none;" src="assets/img/card/blank3.png">
-        <img id="bg4" style="display: none;" src="assets/img/card/blank4.png">
-        <img id="bg5" style="display: none;" src="assets/img/card/blank5.png">
-        <img id="bg6" style="display: none;" src="assets/img/card/blank6.png">
-        <img id="star_frame" style="display: none;" src="assets/img/card/bloodbowl_specialplayer_frame.png">
-        <img id="border" style="display: none;" src="assets/img/card/bloodbowl_border.png">
-        <img id="sf-sp" style="display: none;" src="assets/img/card/numbers/sf-sp.png">
-        <img id="sf+sp" style="display: none;" src="assets/img/card/numbers/sf+sp.png">
-        <img id="sf0sp" style="display: none;" src="assets/img/card/numbers/sf0sp.png">
-        <img id="sf1sp" style="display: none;" src="assets/img/card/numbers/sf1sp.png">
-        <img id="sf2sp" style="display: none;" src="assets/img/card/numbers/sf2sp.png">
-        <img id="sf3sp" style="display: none;" src="assets/img/card/numbers/sf3sp.png">
-        <img id="sf4sp" style="display: none;" src="assets/img/card/numbers/sf4sp.png">
-        <img id="sf5sp" style="display: none;" src="assets/img/card/numbers/sf5sp.png">
-        <img id="sf6sp" style="display: none;" src="assets/img/card/numbers/sf6sp.png">
-        <img id="sf7sp" style="display: none;" src="assets/img/card/numbers/sf7sp.png">
-        <img id="sf8sp" style="display: none;" src="assets/img/card/numbers/sf8sp.png">
-        <img id="sf9sp" style="display: none;" src="assets/img/card/numbers/sf9sp.png">
+        <div class="col-lg-4">
+            <img id="bg1" style="display: none;" src="assets/img/card/blank1.png">
+            <img id="bg2" style="display: none;" src="assets/img/card/blank2.png">
+            <img id="bg3" style="display: none;" src="assets/img/card/blank3.png">
+            <img id="bg4" style="display: none;" src="assets/img/card/blank4.png">
+            <img id="bg5" style="display: none;" src="assets/img/card/blank5.png">
+            <img id="bg6" style="display: none;" src="assets/img/card/blank6.png">
+            <img id="star_frame" style="display: none;" src="assets/img/card/bloodbowl_specialplayer_frame.png">
+            <img id="border" style="display: none;" src="assets/img/card/bloodbowl_border.png">
+            <img id="sf-sp" style="display: none;" src="assets/img/card/numbers/sf-sp.png">
+            <img id="sf+sp" style="display: none;" src="assets/img/card/numbers/sf+sp.png">
+            <img id="sf0sp" style="display: none;" src="assets/img/card/numbers/sf0sp.png">
+            <img id="sf1sp" style="display: none;" src="assets/img/card/numbers/sf1sp.png">
+            <img id="sf2sp" style="display: none;" src="assets/img/card/numbers/sf2sp.png">
+            <img id="sf3sp" style="display: none;" src="assets/img/card/numbers/sf3sp.png">
+            <img id="sf4sp" style="display: none;" src="assets/img/card/numbers/sf4sp.png">
+            <img id="sf5sp" style="display: none;" src="assets/img/card/numbers/sf5sp.png">
+            <img id="sf6sp" style="display: none;" src="assets/img/card/numbers/sf6sp.png">
+            <img id="sf7sp" style="display: none;" src="assets/img/card/numbers/sf7sp.png">
+            <img id="sf8sp" style="display: none;" src="assets/img/card/numbers/sf8sp.png">
+            <img id="sf9sp" style="display: none;" src="assets/img/card/numbers/sf9sp.png">
 
+            <canvas class="canvas rounded" id="canvas" width="822" height="1122">
+                Sorry, your browser doesn't support the &lt;canvas&gt; element.
+            </canvas>
+        </div>
 
-        <canvas class="canvas rounded" id="canvas" width="822" height="1122 ">
-            Sorry, your browser doesn't support the &lt;canvas&gt; element.
-        </canvas>
-    </div>
+        <div class="col-lg-5">
+            <div class="overflow-auto">
+                <div class="accordion" id="accordionStarCard">
 
-    <div class="col-lg-5 scroll-area">
-        <div class="scroll-area">
-            <div class="accordion">
+                    {% include star/section-characteristics.html %}
+                    {% include star/section-image.html %}
 
-                {% include star/section-characteristics.html %}
-                {% include star/section-image.html %}
-      
+                </div>
+
+                {% include star/section-actions.html %}
 
             </div>
-
-            {% include star/section-actions.html %}
-
         </div>
     </div>
-
 </div>

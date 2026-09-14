@@ -1,31 +1,32 @@
-
-<div class="form-group form-check">
+<div class="form-check mt-3">
     <input type="checkbox" class="form-check-input" id="removeBorder" onchange="onAnyChange()">
     <label class="form-check-label" for="removeBorder" data-i18n="card.action.remove_border">Remove border to add bleed area for printing</label>
 </div>
-<div class="form-group form-check">
+
+<div class="form-check mt-3">
     <input type="checkbox" class="form-check-input" id="dashLine" onchange="onAnyChange()">
-    <label class="form-check-label" for="dashline" data-i18n="card.action.add_dash">Add dash line border</label>
+    <label class="form-check-label" for="dashLine" data-i18n="card.action.add_dash">Add dash line border</label>
 </div>
+
 <div class="mt-4">
-    <button  type="submit" class="btn btn-success" id="saveCanvasButton" onclick="saveCardAsImage()">
+    <button  type="button" class="btn btn-primary" id="saveCanvasButton" onclick="saveCardAsImage()">
         <span data-i18n="card.action.save_as_image"/>
     </button>
 </div>
 
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="saveButton" onclick="onSaveClicked()">
+    <button type="button" class="btn btn-primary" id="saveButton" onclick="onSaveClicked()">
         <span data-i18n="card.action.save_as_file"/>
     </button>
 </div>
 
 <div class="mt-4">
     <label for="loadbutton" data-i18n="card.action.load"></label>
-    <input class="form-control-file" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
+    <input class="form-control" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
 </div>
 
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="clearCacheButton" onclick="onClearCache()">
+    <button type="button" class="btn btn-outline-danger" id="clearCacheButton" onclick="onClearCache()">
         <span data-i18n="card.action.reset_all"/>
     </button>
 </div>

@@ -1,53 +1,37 @@
-<div class="form-group">
-    
-</div>
-
-
-<div class="form-group form-check">
+<div class="form-check mt-3">
     <input class="form-check-input" id="removeBorder" onchange="onAnyChange()" type="checkbox">
-    <label class="form-check-label" for="removeBorder">Remove border to add bleed area for printing</label>
+    <label class="form-check-label" for="removeBorder" data-i18n="card.action.remove_border">Remove border to add bleed area for printing</label>
 </div>
 
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="saveCanvasButton" onclick="saveCardAsImage()">
-        Save card as image
+    <button type="button" class="btn btn-primary" id="saveCanvasButton" onclick="saveCardAsImage()">
+        <span data-i18n="card.action.save_as_image"/>
     </button>
 </div>
 
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="saveButton" onclick="onSaveClicked()">
-        Save card as file
+    <button type="button" class="btn btn-primary" id="saveButton" onclick="onSaveClicked()">
+        <span data-i18n="card.action.save_as_file"/>
     </button>
 </div>
 
 <div class="mt-4">
-    <select id="sel" onchange="loadPlayFromList()">
+    <select class="form-select" id="sel" onchange="loadPlayFromList()">
     </select>
 </div>
 
 <div class="mt-4">
-    <label for="loadbutton">Load card file</label>
-    <input class="form-control-file" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
+    <label for="loadbutton" data-i18n="card.action.load">Load card file</label>
+    <input class="form-control" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
 </div>
 
-
 <div class="mt-4">
-    <button type="submit" class="btn btn-success" id="clearCacheButton" onclick="onClearCache()">
-        Reset all
+    <button type="button" class="btn btn-outline-danger" id="clearCacheButton" onclick="onClearCache()">
+        <span data-i18n="card.action.reset_all"/>
     </button>
-    <br><hr>
 </div>
 
-
-
-<div class="mt-4">
-
+<div class="input-group mb-6 mt-2">
+    <br>
+    <br>
 </div>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

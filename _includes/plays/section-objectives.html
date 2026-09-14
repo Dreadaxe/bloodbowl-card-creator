@@ -1,18 +1,16 @@
+<div class="accordion-item">
 
+    <h2 class="accordion-header h5 mb-0" id="objectiveHeading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#objectiveCollapse" aria-expanded="false" aria-controls="objectiveCollapse">
+            Players
+        </button>
+    </h2>
+    
+    <div id="objectiveCollapse" class="accordion-collapse collapse" aria-labelledby="objectiveHeading" data-bs-parent="#accordionPlays">
+        <div class="accordion-body">
 
-    <!-- Player Section -->
-    <div class="card-header" id="objectiveHeading">
-        <h2 class="h5 mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#objectiveCollapse"
-                aria-expanded="false" aria-controls="objectiveCollapse">
-                Players
-            </button>
-        </h2>
-    </div>
-    <div class="collapse" id="objectiveCollapse">
-        <div class="card-body">
             <div class="form-group row">
-                <label for="objective1" class="col-sm-3 col-form-label">Player 1</label>
+                <label for="objective1X" class="col-sm-3 col-form-label">Player 1</label>
                 <div class="col-sm-3">
                     <label for="objective1X">X</label>
                     <input class="form-control" type="number" id="objective1X" name="objective1X" value="0"
@@ -30,6 +28,7 @@
                     maxlength="2" oninput="onAnyChange()">
                 </div>
             </div>
+
             <div class="form-group row">
                 <label for="objective2X" class="col-sm-3 col-form-label">Player 2</label>
                 <div class="col-sm-3">
@@ -38,7 +37,7 @@
                         min="0" max="30" oninput="onAnyChange()">
                 </div>
                 <div class="col-sm-3">
-                    <label for="objectiveHDaggerY">Y</label>
+                    <label for="objective2Y">Y</label>
                     <input class="form-control" type="number" id="objective2Y" name="objective2Y" value="0"
                         min="0" max="22" oninput="onAnyChange()">
                 </div>
@@ -48,6 +47,7 @@
                     maxlength="2" oninput="onAnyChange()">
                 </div>
             </div>
+
             <div class="form-group row">
                 <label for="objective3X" class="col-sm-3 col-form-label">Player 3</label>
                 <div class="col-sm-3">
@@ -191,7 +191,8 @@
                     <input class="form-control" type="text" id="objective10Icon" name="objective10Icon" value="L"
                     maxlength="2" oninput="onAnyChange()">
                 </div>
-            </div>            
+            </div>
+            
             <div class="form-group row">
                 <label for="objective11X" class="col-sm-3 col-form-label">Player 11</label>
                 <div class="col-sm-3">
@@ -209,6 +210,6 @@
                     maxlength="2" oninput="onAnyChange()">
                 </div>
             </div>   
-            </div>        
         </div>
-
+    </div>
+</div>

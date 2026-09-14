@@ -62,8 +62,7 @@ function drawCardText(value, yStart, maxLinesForNormalFont, keywords=false, isSp
                 const word = words[i];
                 const testLine = currentLine + ' ' + word;
                 const metrics = context.measureText(testLine);
-
-                // Если с новым словом строка не влазит в ширину, переносим слово на новую строку
+                
                 if (metrics.width > maxWidth) {
                     textLines.push(currentLine);
                     currentLine = word;

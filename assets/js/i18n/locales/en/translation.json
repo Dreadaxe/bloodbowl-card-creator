@@ -93,7 +93,7 @@
             "choose_icon": "Choose icon",
             "center_image": "Center image",
             "load_icon": "Load icon (recommended 100x100 px)",
-            "load_image" : "Load Image",
+            "load_image" : "Load image",
             "x_offset" : "X offset (↔)",
             "y_offset" : "Y offset (↕)",
             "scale_percent": "Scale (%)"

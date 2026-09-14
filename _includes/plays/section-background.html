@@ -1,16 +1,13 @@
-<div class="card">
+<div class="accordion-item">
 
-    <div class="card-header" id="missionsHeadingOne">
-        <h2 class="h5 mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#missionsCollapseOne" aria-expanded="false"
-                aria-controls="missionsCollapseOne">
-                Background
-            </button>
-        </h2>
-    </div>
+    <h2 class="accordion-header h5 mb-0" id="missionsHeadingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#missionsCollapseOne" aria-expanded="false" aria-controls="missionsCollapseOne">
+            Background
+        </button>
+    </h2>
 
-    <div class="collapse" id="missionsCollapseOne">
-        <div class="card-body">
+    <div id="missionsCollapseOne"  class="accordion-collapse collapse" aria-labelledby="missionsHeadingOne" data-bs-parent="#accordionPlays">
+        <div class="accordion-body">
 
             <div class="row">
                 <div class="col-6">
@@ -34,43 +31,48 @@
             </div>
             {% endcomment %}
 
-        </div>
-        <div class="card">
+    </div>
+</div>
 
-            <div class="card-header" id="customBackgroundHeading">
-                <h2 class="h5 mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#customBackgroundCollapse" aria-expanded="false"
-                        aria-controls="customBackgroundCollapse">
-                        Custom Background</button>
-                </h2>
+<div class="accordion-item">
+
+    <h2 class="accordion-header h5 mb-0" id="customBackgroundHeading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#customBackgroundCollapse" aria-expanded="false" aria-controls="customBackgroundCollapse">
+            Custom Background
+        </button>
+    </h2>
+        
+    <div id="customBackgroundCollapse" class="accordion-collapse collapse" aria-labelledby="customBackgroundHeading" data-bs-parent="#accordionPlays">
+        <div class="accordion-body">
+        
+            <div class="form-group mb-3">
+                <label for="customBackgroundSelect">Load image</label>
+                <input class="form-control" id="customBackgroundSelect" oninput="onCustomBackgroundUpload()" type="file">
             </div>
         
-            <div class="collapse" id="customBackgroundCollapse">
-                <div class="card-body">
-        
+            <input type="hidden" id="customBackgroundUrl" name="customBackgroundUrl" value="">
+
+            <div class="row col-30">
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="customBackgroundSelect">Load image</label>
-                        <input class="form-control-file" id="customBackgroundSelect" oninput="onCustomBackgroundUpload()" type="file">
-                    </div>
-        
-                    <input type="hidden" id="customBackgroundUrl" name="customBackgroundUrl" value="">
-        
-                    <div class="form-group">
-                        <label for="customBackgroundOffsetX">X offset (&#8596;)</label>
+                        <label for="customBackgroundOffsetX" data-i18n="card.image.x_offset">X offset (&#8596;)</label>
                         <input class="form-control" id="customBackgroundOffsetX" oninput="onAnyChange()" type="number" value="0" />
                     </div>
-        
+                </div>
+
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="customBackgroundOffsetY">Y offset (&#8597;)</label>
+                        <label for="customBackgroundOffsetY" data-i18n="card.image.y_offset">Y offset (&#8597;)</label>
                         <input class="form-control" id="customBackgroundOffsetY" oninput="onAnyChange()" type="number" value="0" />
                     </div>
-        
-                    <div class="form-group">
-                        <label for="customBackgroundScalePercent">Scale (%)</label>
-                        <input class="form-control" id="customBackgroundScalePercent" min="0" max="300" oninput="onAnyChange()"
-                            type="number" value="100" />
-                    </div>
+                </div>
 
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="customBackgroundScalePercent" data-i18n="card.image.scale_percent">Scale (%)</label>
+                        <input class="form-control" id="customBackgroundScalePercent" min="0" max="300" oninput="onAnyChange()"
+                               type="number" value="100" />
+                    </div>
                 </div>
             </div>
         </div>

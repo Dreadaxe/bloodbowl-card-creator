@@ -1,32 +1,30 @@
-<div class="card">
+<div class="accordion-item">
 
-    <div class="card-header" id="fightersHeadingFive">
-        <h2 class="h5 mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#fightersCollapseFive"
-                aria-expanded="false" aria-controls="fightersCollapseFive">
-                <span data-i18n="card.caracteristics.player_stats"></span>
-            </button>
-        </h2>
-    </div>
+    <h2 class="accordion-header h5 mb-0" id="headingCharacteristics">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fightersCollapseFive" aria-expanded="false" aria-controls="fightersCollapseFive">
+            <span data-i18n="card.caracteristics.player_stats"></span>
+        </button>
+    </h2>
 
-    <div class="collapse" id="fightersCollapseFive">
-        <div class="card-body">
+    <div id="fightersCollapseFive" class="accordion-collapse collapse" aria-labelledby="headingCharacteristics" data-bs-parent="#accordionCard">
+        <div class="accordion-body">
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="cardName" data-i18n="card.caracteristics.player_name"></label>
-                <input class="form-control" type="text" id="cardName" name="cardName" value=" " oninput="onAnyChange()">
+                <input class="form-control" type="text" id="cardName" name="cardName" oninput="onAnyChange()">
             </div>
 
             <div class="form-group">
                 <label for="teamName" data-i18n="card.caracteristics.team_name"></label>
-                <input class="form-control" type="text" id="teamName" name="teamName" value=" " oninput="onAnyChange()">
+                <input class="form-control" type="text" id="teamName" name="teamName" oninput="onAnyChange()">
             </div>
-            <div class="form-group form-check">
+
+            <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="showTeamName" onchange="onAnyChange()">
                 <label class="form-check-label" for="showTeamName" data-i18n="card.caracteristics.show_team_name">Show Team Name</label>
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="ma" data-i18n="card.caracteristics.MA">M</label>
@@ -63,85 +61,92 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row mb-3">
                 <div class="col-sm-6">
                     <label for="footer" data-i18n="card.caracteristics.GP">PO</label>
                     <input class="form-control" type="text" id="footer" name="footer" value=" " oninput="onAnyChange()">
                 </div>
             </div>
              
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="cardText" data-i18n="card.caracteristics.skills_traits">Compétences et traits</label>
                 <textarea class="form-control" id="cardText" name="cardText" rows="3"
                     oninput="onAnyChange()">Texte de la carte</textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="keywords" data-i18n="card.caracteristics.keywords">Mots-clefs</label>
-                <textarea class="form-control" id="keywords" name="keywords" rows="2"
+                <textarea class="form-control" id="keywords" name="keywords" rows="1"
                     oninput="onAnyChange()"></textarea>
             </div>
 
-            <div class="row col-12">
+            <div class="row col-12 mb-3">
                 <span data-i18n="card.caracteristics.primary_skills"></span>
                 <div class="row col-12">
                     <div class="col-sm-1">
-                        <label for="p_agility" data-i18n="card.caracteristics.agility_box">A</label>
-                        <input type="checkbox" id="p_agility" name="p_agility" oninput="onAnyChange()">
-                        
-                    </div>
-                    <div class="col-sm-1">
-                        <label for="p_devious" data-i18n="card.caracteristics.devious_box">D</label>
-                        <input type="checkbox" id="p_devious" name="p_devious" oninput="onAnyChange()">
-                    </div>
-                    <div class="col-sm-1">
-                        <label for="p_general" data-i18n="card.caracteristics.general_box">G</label>
-                        <input type="checkbox" id="p_general" name="p_general" oninput="onAnyChange()">
-                        
-                    </div>
-                    <div class="col-sm-1">
-                        <label for="p_mutations" data-i18n="card.caracteristics.mutations_box">M</label>
-                        <input type="checkbox" id="p_mutations" name="p_mutations" oninput="onAnyChange()">
-                    </div>   
-                    <div class="col-sm-1">
-                        <label for="p_passing" data-i18n="card.caracteristics.passing_box">P</label>
-                        <input type="checkbox" id="p_passing" name="p_passing" oninput="onAnyChange()">
+                        <label class="form-check-label" for="p_agility" data-i18n="card.caracteristics.agility_box">A</label>
+                        <input class="form-check-input" type="checkbox" id="p_agility" name="p_agility" oninput="onAnyChange()">
                     </div>
 
                     <div class="col-sm-1">
-                        <label for="p_strength" data-i18n="card.caracteristics.strength_box">S</label>
-                        <input type="checkbox" id="p_strength" name="p_strength" oninput="onAnyChange()">
+                        <label class="form-check-label" for="p_devious" data-i18n="card.caracteristics.devious_box">D</label>
+                        <input class="form-check-input" type="checkbox" id="p_devious" name="p_devious" oninput="onAnyChange()">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label class="form-check-label" for="p_general" data-i18n="card.caracteristics.general_box">G</label>
+                        <input class="form-check-input" type="checkbox" id="p_general" name="p_general" oninput="onAnyChange()">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label class="form-check-label" for="p_mutations" data-i18n="card.caracteristics.mutations_box">M</label>
+                        <input class="form-check-input" type="checkbox" id="p_mutations" name="p_mutations" oninput="onAnyChange()">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label class="form-check-label" for="p_passing" data-i18n="card.caracteristics.passing_box">P</label>
+                        <input class="form-check-input" type="checkbox" id="p_passing" name="p_passing" oninput="onAnyChange()">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label class="form-check-label" for="p_strength" data-i18n="card.caracteristics.strength_box">S</label>
+                        <input class="form-check-input" type="checkbox" id="p_strength" name="p_strength" oninput="onAnyChange()">
                     </div>
                 </div>
-
             </div>
 
             <div class="row col-12">
                 <span data-i18n="card.caracteristics.secondary_skills"></span>
                 <div class="row col-12">
                     <div class="col-sm-1">
-                        <label for="s_agility" data-i18n="card.caracteristics.agility_box">A</label>
-                        <input type="checkbox" id="s_agility" name="s_agility" oninput="onAnyChange()">
+                        <label class="form-check-label" for="s_agility" data-i18n="card.caracteristics.agility_box">A</label>
+                        <input class="form-check-input" type="checkbox" id="s_agility" name="s_agility" oninput="onAnyChange()">
                     </div>
+
                     <div class="col-sm-1">
-                        <label for="s_devious" data-i18n="card.caracteristics.devious_box">D</label>
-                        <input type="checkbox" id="s_devious" name="s_devious" oninput="onAnyChange()">
+                        <label class="form-check-label" for="s_devious" data-i18n="card.caracteristics.devious_box">D</label>
+                        <input class="form-check-input" type="checkbox" id="s_devious" name="s_devious" oninput="onAnyChange()">
                     </div>
+
                     <div class="col-sm-1">
-                        <label for="s_general" data-i18n="card.caracteristics.general_box">G</label>
-                        <input type="checkbox" id="s_general" name="s_general" oninput="onAnyChange()">
+                        <label class="form-check-label" for="s_general" data-i18n="card.caracteristics.general_box">G</label>
+                        <input class="form-check-input" type="checkbox" id="s_general" name="s_general" oninput="onAnyChange()">
                     </div>
+
                     <div class="col-sm-1">
-                        <label for="s_mutations" data-i18n="card.caracteristics.mutations_box">M</label>
-                        <input type="checkbox" id="s_mutations" name="s_mutations" oninput="onAnyChange()">
-                    </div>  
-                    <div class="col-sm-1">
-                        <label for="s_passing" data-i18n="card.caracteristics.passing_box">P</label>
-                        <input type="checkbox" id="s_passing" name="s_passing" oninput="onAnyChange()">
+                        <label class="form-check-label" for="s_mutations" data-i18n="card.caracteristics.mutations_box">M</label>
+                        <input class="form-check-input" type="checkbox" id="s_mutations" name="s_mutations" oninput="onAnyChange()">
                     </div>
+
                     <div class="col-sm-1">
-                        <label for="s_strength" data-i18n="card.caracteristics.strength_box">S</label>
-                        <input type="checkbox" id="s_strength" name="s_strength" oninput="onAnyChange()">
+                        <label class="form-check-label" for="s_passing" data-i18n="card.caracteristics.passing_box">P</label>
+                        <input class="form-check-input" type="checkbox" id="s_passing" name="s_passing" oninput="onAnyChange()">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label class="form-check-label" for="s_strength" data-i18n="card.caracteristics.strength_box">S</label>
+                        <input class="form-check-input" type="checkbox" id="s_strength" name="s_strength" oninput="onAnyChange()">
                     </div>
                 </div>
             </div>

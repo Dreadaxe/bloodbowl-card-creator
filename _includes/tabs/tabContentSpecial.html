@@ -1,29 +1,27 @@
-<div class="row mt-3">
+<div class="container-fluid">
+    <div class="row mt-3">
 
-    <div class="col-lg-4">
-        <img id="bg1" style="display: none;" src="assets/img/special/bloodbowl_specialplays.png">
-        <img id="border" style="display: none;" src="assets/img/special/bloodbowl_border.png">
+        <div class="col-lg-4">
+            <img id="bg1" style="display: none;" src="assets/img/special/bloodbowl_specialplays.png">
+            <img id="border" style="display: none;" src="assets/img/special/bloodbowl_border.png">
 
+            <canvas class="canvas rounded" id="canvas" width="822" height="1122">
+                Sorry, your browser doesn't support the &lt;canvas&gt; element.
+            </canvas>
+        </div>
 
+        <div class="col-lg-5">
+            <div class="overflow-auto">
+                <div class="accordion" id="accordionSpecial">
 
-        <canvas class="canvas rounded" id="canvas" width="822" height="1122 ">
-            Sorry, your browser doesn't support the &lt;canvas&gt; element.
-        </canvas>
-    </div>
+                    {% include special/section-characteristics.html %}
+                    {% include special/section-image.html %}
 
-    <div class="col-lg-5 scroll-area-fade">
-        <div class="scroll-area">
-            <div class="accordion">
+                </div>
 
-                {% include special/section-characteristics.html %}
-                {% include special/section-image.html %}
-
+                {% include special/section-actions.html %}
 
             </div>
-
-            {% include special/section-actions.html %}
-
         </div>
     </div>
-
 </div>

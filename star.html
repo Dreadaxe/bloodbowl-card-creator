@@ -9,21 +9,16 @@
 </head>
 
 <body>
-    <div class="font-hack2 sr-only" style="font-family:'built-titling';visibility:hidden;">Nothing to see here, move along…</div>
-    <div class="font-hack3 sr-only" style="font-family:'brothers-regular';visibility:hidden;">Nothing to see here, move along…</div>
-    <div class="font-hack3 sr-only" style="font-family:'franklin-gothic-book';visibility:hidden;">Nothing to see here, move along…</div>
+    <div class="font-hack2 sr-only visually-hidden" style="font-family:'built-titling';">Nothing to see here, move along…</div>
+    <div class="font-hack3 sr-only visually-hidden" style="font-family:'brothers-regular';">Nothing to see here, move along…</div>
+    <div class="font-hack3 sr-only visually-hidden" style="font-family:'franklin-gothic-book';">Nothing to see here, move along…</div>
 
-    <div class="container-fluid">
+    {% include nav.html %}
 
-        {% include nav.html %}
-
-        {% include tabs/tabContentStar.html %}
-
-    </div>
+    {% include tabs/tabContentStar.html %}
 
     {% include js.html %}
     <script src="assets/js/star.js"></script>
-
 </body>
 
 </html>

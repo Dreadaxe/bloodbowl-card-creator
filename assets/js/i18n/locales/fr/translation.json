@@ -93,7 +93,7 @@
             "choose_icon": "Choisir une icône",
             "center_image": "Centrer l'image",
             "load_icon": "Charger une icône (recommandé 100x100 px)",
-            "load_image" : "Charger Image",
+            "load_image" : "Charger image",
             "x_offset" : "X offset (↔)",
             "y_offset" : "Y offset (↕)",
             "scale_percent": "Echelle (%)"
