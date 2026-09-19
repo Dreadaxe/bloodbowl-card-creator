@@ -4,9 +4,10 @@ A client-side web app for creating custom, print-ready Blood Bowl tabletop game 
 
 ## Card Types
 
-- **Player Cards** (`index.html`) — Roster and Star Player cards with stats (MA, ST, AG, PA, AV), skill categories, custom images, and team logos
-- **Cards Back** (`cardBack.html`) — Custom cards back
+- **Player Cards** (`index.html`) — Player cards with stats (MA, ST, AG, PA, AV), skill categories, custom images, and team logos
+- **Star Players Cards** (`star.html`) — Star Players cards with stats, skills, plays for, special rules, custom images
 - **Special Cards** (`special.html`) — Custom rules and ability cards
+- **Cards Back** (`cardBack.html`) — Custom cards back
 - **Playbook Cards** (`playbook.html`) — Team strategy and play diagrams with searchable pre-loaded plays
 
 ## Running Locally
@@ -23,11 +24,16 @@ Then open http://localhost:4000.
 
 - Upload custom player images with positioning/scaling controls
 - 570+ team logos included
+- 66 ready presets for all official Season 3 Star Players(included Mega-Stars)
+- Different backgrounds
+- Icons for Special Cards 
+- Cards designed closely to Season 3
 - PNG export for printing (822×1122px cards)
 - Save/load card designs as JSON
 - Auto-save to browser localStorage
-- Multiple cards per session
+- Localization on English, German, France, Spanish
+- Dark and Light themes 
 
 ## Tech Stack
 
-Vanilla JavaScript, jQuery, Bootstrap 4, HTML5 Canvas, Jekyll
+Vanilla JavaScript, jQuery, Bootstrap 5, HTML5 Canvas, Jekyll

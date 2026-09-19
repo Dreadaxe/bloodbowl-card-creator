@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">BloodBowl Card Creator</a>
+        <a class="navbar-brand" href="index.html">Blood Bowl Card Creator</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,17 @@
                     <a class="nav-link" href="instructions.html" data-i18n="nav.instructions">Instructions</a>
                 </li>
             </ul>
-            <form class="d-flex">
+            <form class="d-flex me-1">
+                <div class="btn-group mt-1">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="kofibutton">
+                        Buy me a Coffee
+                    </button>
+                    <ul class="dropdown-menu">
+                        <iframe id='kofiframe' src='https://ko-fi.com/noxomant/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;width:200%;padding:4px;background:#f9f9f9;' height='500' title='noxomant'></iframe>
+                    </ul>
+                </div>
+            </form>
+            <form class="d-flex mt-1">
                 <select class="form-select me-1" name="language" id="languageSwitcher"></select>
 
                 <div class="dropdown bd-mode-toggle">
