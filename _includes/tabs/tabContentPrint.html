@@ -14,6 +14,7 @@
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         <button class="btn btn-sm btn-outline-primary" id="selectVisibleButton" type="button" data-i18n="print.select_visible">Select visible</button>
                         <button class="btn btn-sm btn-outline-secondary" id="clearSelectionButton" type="button" data-i18n="print.clear_selection">Clear selection</button>
+                        <button class="btn btn-sm btn-outline-danger" id="resetPrintStateButton" type="button" data-i18n="print.reset_print_state">Reset sheet</button>
                     </div>
 
                     <div class="star-list mt-3" id="starList" aria-live="polite"></div>
@@ -51,6 +52,11 @@
 
                     <label class="form-label" for="backImage" data-i18n="print.card_back">Common card back (optional PNG or JPEG)</label>
                     <input class="form-control" id="backImage" type="file" accept="image/png,image/jpeg,image/webp">
+
+                    <div class="alert alert-info mt-2 mb-0 d-none" id="rememberedBackNotice">
+                        <span id="rememberedBackName"></span>
+                        <button class="btn btn-sm btn-outline-secondary ms-2" id="removeRememberedBackButton" type="button" data-i18n="print.remove">Remove</button>
+                    </div>
 
                     <div class="alert alert-info mt-2 mb-0 d-none" id="queuedBackNotice">
                         <span id="queuedBackName"></span>

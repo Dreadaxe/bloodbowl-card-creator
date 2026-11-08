@@ -2,6 +2,7 @@
     const databaseName = "bloodbowl-card-creator";
     const databaseVersion = 1;
     const storeName = "printQueue";
+    const statePrefix = "state:";
 
     function openDatabase() {
         return new Promise((resolve, reject) => {
@@ -95,7 +96,9 @@
         try {
             const transaction = database.transaction(storeName, "readonly");
             const records = await requestResult(transaction.objectStore(storeName).getAll());
-            return records.sort((a, b) => a.createdAt - b.createdAt);
+            return records
+                .filter(record => record.kind !== "state")
+                .sort((a, b) => a.createdAt - b.createdAt);
         } finally {
             database.close();
         }
@@ -106,7 +109,39 @@
     }
 
     async function clear() {
-        await useStore("readwrite", store => store.clear());
+        await useStore("readwrite", store => {
+            const request = store.openCursor();
+            request.onsuccess = () => {
+                const cursor = request.result;
+                if (!cursor) return;
+                if (cursor.value.kind !== "state") cursor.delete();
+                cursor.continue();
+            };
+        });
+    }
+
+    async function getState(key) {
+        const database = await openDatabase();
+        try {
+            const transaction = database.transaction(storeName, "readonly");
+            const record = await requestResult(transaction.objectStore(storeName).get(`${statePrefix}${key}`));
+            return record ? record.value : null;
+        } finally {
+            database.close();
+        }
+    }
+
+    async function setState(key, value) {
+        await useStore("readwrite", store => store.put({
+            id: `${statePrefix}${key}`,
+            kind: "state",
+            value,
+            updatedAt: Date.now()
+        }));
+    }
+
+    async function removeState(key) {
+        await useStore("readwrite", store => store.delete(`${statePrefix}${key}`));
     }
 
     async function sendCurrentCardToPrint(type, button) {
@@ -121,6 +156,14 @@
         }
     }
 
-    window.BloodBowlPrintQueue = Object.freeze({ addCanvas, clear, getAll, remove });
+    window.BloodBowlPrintQueue = Object.freeze({
+        addCanvas,
+        clear,
+        getAll,
+        getState,
+        remove,
+        removeState,
+        setState
+    });
     window.sendCurrentCardToPrint = sendCurrentCardToPrint;
 })();

@@ -1,4 +1,5 @@
 const dataRef = "printSheet";
+const PRINT_STATE_KEY = "print-sheet";
 
 // The shared i18n bootstrap expects every page to expose the card editor hooks.
 // The print page has no editable card state, so these are intentionally minimal.
@@ -44,9 +45,12 @@ let renderTimer = null;
 let renderVersion = 0;
 let renderInProgress = false;
 let renderPending = false;
+let statePersistenceReady = false;
+let stateSaveTimer = null;
 const editedCards = new Map();
 let queuedRecords = [];
 let queuedBack = null;
+let rememberedBackFile = null;
 let editingFile = null;
 let cardEditorModal = null;
 
@@ -61,6 +65,125 @@ function setError(message) {
     const error = document.getElementById("printError");
     error.textContent = message;
     error.classList.toggle("d-none", !message);
+}
+
+function normalizeQuantity(value) {
+    return Math.min(99, Math.max(1, Number.parseInt(value, 10) || 1));
+}
+
+function serializePrintState() {
+    const presetSelections = [...document.querySelectorAll(".star-list-item")]
+        .filter(row => row.querySelector(".star-checkbox").checked)
+        .map(row => ({
+            file: row.dataset.file,
+            quantity: normalizeQuantity(row.querySelector(".star-quantity").value)
+        }));
+    const queuedSelections = [...document.querySelectorAll(".queued-card-item")]
+        .filter(row => row.querySelector(".queued-card-checkbox").checked)
+        .map(row => ({
+            id: row.dataset.id,
+            quantity: normalizeQuantity(row.querySelector(".queued-card-quantity").value)
+        }));
+
+    return {
+        version: 1,
+        search: document.getElementById("starSearch").value,
+        presetSelections,
+        queuedSelections,
+        options: {
+            includeBleed: document.getElementById("includeBleed").checked,
+            showPageMarks: document.getElementById("showPageMarks").checked,
+            duplexFlip: document.getElementById("duplexFlip").value
+        },
+        editedCards: [...editedCards.entries()],
+        rememberedBackFile
+    };
+}
+
+async function persistPrintState() {
+    window.clearTimeout(stateSaveTimer);
+    stateSaveTimer = null;
+    if (!statePersistenceReady || !window.BloodBowlPrintQueue?.setState) return;
+    await BloodBowlPrintQueue.setState(PRINT_STATE_KEY, serializePrintState());
+}
+
+function schedulePrintStateSave(delay = 180) {
+    if (!statePersistenceReady) return;
+    window.clearTimeout(stateSaveTimer);
+    stateSaveTimer = window.setTimeout(() => {
+        persistPrintState().catch(error => {
+            console.error(error);
+            setError(error.message);
+        });
+    }, delay);
+}
+
+function updateRememberedBackNotice() {
+    const notice = document.getElementById("rememberedBackNotice");
+    notice.classList.toggle("d-none", !rememberedBackFile);
+    document.getElementById("rememberedBackName").textContent = rememberedBackFile
+        ? translate("print.remembered_back_name", {
+            name: rememberedBackFile.name,
+            defaultValue: `Remembered back: ${rememberedBackFile.name}`
+        })
+        : "";
+}
+
+async function restorePrintState() {
+    const saved = window.BloodBowlPrintQueue?.getState
+        ? await BloodBowlPrintQueue.getState(PRINT_STATE_KEY)
+        : null;
+
+    if (saved) {
+        const options = saved.options || {};
+        if (typeof options.includeBleed === "boolean") {
+            document.getElementById("includeBleed").checked = options.includeBleed;
+        }
+        if (typeof options.showPageMarks === "boolean") {
+            document.getElementById("showPageMarks").checked = options.showPageMarks;
+        }
+        if (["long", "short"].includes(options.duplexFlip)) {
+            document.getElementById("duplexFlip").value = options.duplexFlip;
+        }
+        if (typeof saved.search === "string") {
+            document.getElementById("starSearch").value = saved.search;
+            filterPresets();
+        }
+
+        rememberedBackFile = saved.rememberedBackFile?.blob ? saved.rememberedBackFile : null;
+        editedCards.clear();
+        (saved.editedCards || []).forEach(([file, data]) => editedCards.set(file, data));
+
+        const presetSelections = new Map(
+            (saved.presetSelections || []).map(item => [item.file, item])
+        );
+        document.querySelectorAll(".star-list-item").forEach(row => {
+            const selection = presetSelections.get(row.dataset.file);
+            if (!selection) return;
+            row.querySelector(".star-checkbox").checked = true;
+            row.querySelector(".star-quantity").disabled = false;
+            row.querySelector(".star-quantity").value = String(normalizeQuantity(selection.quantity));
+            row.querySelector(".star-edit-button").disabled = false;
+        });
+
+        const queuedSelections = new Map(
+            (saved.queuedSelections || []).map(item => [item.id, item])
+        );
+        document.querySelectorAll(".queued-card-item").forEach(row => {
+            const selection = queuedSelections.get(row.dataset.id);
+            if (!selection) return;
+            row.querySelector(".queued-card-checkbox").checked = true;
+            row.querySelector(".queued-card-quantity").disabled = false;
+            row.querySelector(".queued-card-quantity").value = String(normalizeQuantity(selection.quantity));
+        });
+
+        editedCards.forEach((data, file) => updateEditedRow(file));
+    }
+
+    statePersistenceReady = true;
+    updateRememberedBackNotice();
+    updateQueuedBackNotice();
+    updateSelectionSummary();
 }
 
 function showEmptyPreview() {
@@ -85,6 +208,7 @@ function queueSheetRender(delay = 180) {
 }
 
 function scheduleSheetRender(options = {}) {
+    schedulePrintStateSave(options.immediate ? 0 : 180);
     renderVersion += 1;
     generatedSheets = false;
     document.getElementById("printSheetsButton").disabled = true;
@@ -136,7 +260,7 @@ function getSelectedEntries() {
                 kind: "preset",
                 file: row.dataset.file,
                 name: row.dataset.name,
-                quantity: Math.max(1, Number.parseInt(quantity.value, 10) || 1)
+                quantity: normalizeQuantity(quantity.value)
             };
         })
         .filter(Boolean);
@@ -154,7 +278,7 @@ function getSelectedEntries() {
                 id: record.id,
                 name: record.name,
                 blob: record.blob,
-                quantity: Math.max(1, Number.parseInt(quantity.value, 10) || 1)
+                quantity: normalizeQuantity(quantity.value)
             };
         })
         .filter(Boolean);
@@ -251,7 +375,6 @@ async function loadPresetIndex() {
     const fragment = document.createDocumentFragment();
     presets.forEach((preset, index) => fragment.append(createPresetRow(preset, index)));
     list.replaceChildren(fragment);
-    updateSelectionSummary();
 }
 
 function filterPresets() {
@@ -259,6 +382,7 @@ function filterPresets() {
     document.querySelectorAll(".star-list-item").forEach(row => {
         row.hidden = query !== "" && !row.dataset.normalizedName.includes(query);
     });
+    schedulePrintStateSave();
 }
 
 function selectVisiblePresets() {
@@ -282,6 +406,42 @@ function clearSelection() {
         row.querySelector(".queued-card-quantity").disabled = true;
         row.querySelector(".queued-card-quantity").value = "1";
     });
+    updateSelectionSummary();
+}
+
+async function resetPrintState() {
+    window.clearTimeout(stateSaveTimer);
+    stateSaveTimer = null;
+    statePersistenceReady = false;
+
+    editedCards.clear();
+    rememberedBackFile = null;
+    document.getElementById("backImage").value = "";
+    document.getElementById("starSearch").value = "";
+    document.getElementById("includeBleed").checked = false;
+    document.getElementById("showPageMarks").checked = true;
+    document.getElementById("duplexFlip").value = "long";
+
+    document.querySelectorAll(".star-list-item").forEach(row => {
+        row.hidden = false;
+        row.querySelector(".star-checkbox").checked = false;
+        row.querySelector(".star-quantity").disabled = true;
+        row.querySelector(".star-quantity").value = "1";
+        row.querySelector(".star-edit-button").disabled = true;
+        updateEditedRow(row.dataset.file);
+    });
+    document.querySelectorAll(".queued-card-item").forEach(row => {
+        row.querySelector(".queued-card-checkbox").checked = false;
+        row.querySelector(".queued-card-quantity").disabled = true;
+        row.querySelector(".queued-card-quantity").value = "1";
+    });
+
+    if (window.BloodBowlPrintQueue?.removeState) {
+        await BloodBowlPrintQueue.removeState(PRINT_STATE_KEY);
+    }
+    statePersistenceReady = true;
+    updateRememberedBackNotice();
+    updateQueuedBackNotice();
     updateSelectionSummary();
 }
 
@@ -323,8 +483,14 @@ function createQueuedCardRow(record, autoSelect) {
     reopenButton.type = "button";
     reopenButton.dataset.i18n = "print.reopen_editor";
     reopenButton.textContent = translate("print.reopen_editor", { defaultValue: "Edit" });
-    reopenButton.addEventListener("click", () => {
-        window.location.href = record.sourcePage || "index.html";
+    reopenButton.addEventListener("click", async () => {
+        try {
+            await persistPrintState();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            window.location.href = record.sourcePage || "index.html";
+        }
     });
 
     const removeButton = document.createElement("button");
@@ -351,8 +517,13 @@ async function loadPrintQueue() {
     const list = document.getElementById("queuedCardList");
     panel.classList.toggle("d-none", frontRecords.length === 0);
     list.replaceChildren(...frontRecords.map(record => createQueuedCardRow(record, record.id === addedId)));
+    if (addedId) {
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete("added");
+        window.history.replaceState({}, "", `${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`);
+    }
     updateQueuedBackNotice();
-    updateSelectionSummary();
+    if (statePersistenceReady) updateSelectionSummary();
 }
 
 function updateQueuedBackNotice() {
@@ -364,7 +535,7 @@ function updateQueuedBackNotice() {
             defaultValue: `Queued back: ${queuedBack.name}`
         })
         : "";
-    const hasBack = Boolean(queuedBack || document.getElementById("backImage").files.length);
+    const hasBack = Boolean(queuedBack || rememberedBackFile || document.getElementById("backImage").files.length);
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
 }
 
@@ -464,6 +635,7 @@ async function applyCardChanges() {
         editedCards.set(editingFile, await editor.exportCurrentData());
         updateEditedRow(editingFile);
         scheduleSheetRender({ immediate: true });
+        await persistPrintState();
         cardEditorModal.hide();
     } catch (error) {
         setError(error.message);
@@ -471,10 +643,11 @@ async function applyCardChanges() {
     }
 }
 
-function restorePreset(file) {
+async function restorePreset(file) {
     editedCards.delete(file);
     updateEditedRow(file);
     scheduleSheetRender({ immediate: true });
+    await persistPrintState();
 }
 
 function localizeDynamicControls() {
@@ -493,6 +666,7 @@ function localizeDynamicControls() {
     document.querySelectorAll("[data-i18n='print.remove']").forEach(element => {
         element.textContent = translate("print.remove", { defaultValue: "Remove" });
     });
+    updateRememberedBackNotice();
     updateQueuedBackNotice();
 }
 
@@ -717,7 +891,9 @@ async function generateSheets(requestedVersion) {
     const printButton = document.getElementById("printSheetsButton");
     const includeBleed = document.getElementById("includeBleed").checked;
     const showPageMarks = document.getElementById("showPageMarks").checked;
-    const backFile = document.getElementById("backImage").files[0] || null;
+    const selectedBackFile = document.getElementById("backImage").files[0] || null;
+    const backFile = selectedBackFile || (rememberedBackFile && rememberedBackFile.blob) || null;
+    const backFileName = selectedBackFile?.name || rememberedBackFile?.name || "";
     const duplexFlip = document.getElementById("duplexFlip").value;
 
     printButton.disabled = true;
@@ -765,9 +941,9 @@ async function generateSheets(requestedVersion) {
         if (backSource) {
             const preparedBack = await prepareCardBlob(backSource, includeBleed);
             backEntry = {
-                name: queuedBack && !backFile
-                    ? queuedBack.name
-                    : translate("print.card_back", { defaultValue: "Card back" }),
+                name: backFile
+                    ? backFileName || translate("print.card_back", { defaultValue: "Card back" })
+                    : queuedBack.name,
                 url: registerNextObjectUrl(preparedBack.blob),
                 fullBleed: preparedBack.fullBleed
             };
@@ -821,8 +997,21 @@ function printSheets() {
 }
 
 function onBackImageChanged() {
-    const hasBack = document.getElementById("backImage").files.length > 0 || Boolean(queuedBack);
+    const selectedBackFile = document.getElementById("backImage").files[0] || null;
+    rememberedBackFile = selectedBackFile
+        ? { name: selectedBackFile.name, blob: selectedBackFile }
+        : null;
+    updateRememberedBackNotice();
+    const hasBack = Boolean(rememberedBackFile || queuedBack);
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
+    scheduleSheetRender({ immediate: true });
+}
+
+function removeRememberedBack() {
+    rememberedBackFile = null;
+    document.getElementById("backImage").value = "";
+    updateRememberedBackNotice();
+    updateQueuedBackNotice();
     scheduleSheetRender({ immediate: true });
 }
 
@@ -831,6 +1020,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("starSearch").addEventListener("input", filterPresets);
     document.getElementById("selectVisibleButton").addEventListener("click", selectVisiblePresets);
     document.getElementById("clearSelectionButton").addEventListener("click", clearSelection);
+    document.getElementById("resetPrintStateButton").addEventListener("click", resetPrintState);
     document.getElementById("includeBleed").addEventListener("change", () => scheduleSheetRender({ immediate: true }));
     document.getElementById("showPageMarks").addEventListener("change", () => scheduleSheetRender({ immediate: true }));
     document.getElementById("backImage").addEventListener("change", onBackImageChanged);
@@ -839,6 +1029,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("applyCardChangesButton").addEventListener("click", applyCardChanges);
     document.getElementById("clearPrintQueueButton").addEventListener("click", clearPrintQueue);
     document.getElementById("removeQueuedBackButton").addEventListener("click", removeQueuedBack);
+    document.getElementById("removeRememberedBackButton").addEventListener("click", removeRememberedBack);
     document.getElementById("cardEditorModal").addEventListener("hidden.bs.modal", () => {
         editingFile = null;
         document.getElementById("applyCardChangesButton").disabled = true;
@@ -853,10 +1044,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         await Promise.all([loadPresetIndex(), loadPrintQueue()]);
+        await restorePrintState();
     } catch (error) {
         console.error(error);
         setError(error.message);
     }
 });
 
-window.addEventListener("beforeunload", revokeRenderedUrls);
+window.addEventListener("pagehide", () => {
+    persistPrintState().catch(console.error);
+    revokeRenderedUrls();
+});
