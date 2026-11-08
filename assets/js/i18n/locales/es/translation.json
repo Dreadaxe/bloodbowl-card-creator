@@ -136,7 +136,7 @@
         "print": "Imprimir / Guardar como PDF",
         "print_hint": "En el diálogo de impresión, elige A4, escala del 100 % y sin márgenes adicionales.",
         "preview": "Vista previa",
-        "empty_preview": "Selecciona al menos un jugador estrella y genera las hojas.",
+        "empty_preview": "Selecciona al menos un jugador estrella para previsualizar las hojas.",
         "front_page": "Hoja de anversos {{page}}",
         "back_page": "Hoja de reversos {{page}}",
         "page_summary": "{{sheets}} hojas · {{pages}} páginas",

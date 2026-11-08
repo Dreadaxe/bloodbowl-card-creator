@@ -40,6 +40,10 @@ const fullHeightMm = PRINT_CONSTANTS.trimHeightMm + (bleedYmm * 2);
 let presets = [];
 let renderedObjectUrls = [];
 let generatedSheets = false;
+let renderTimer = null;
+let renderVersion = 0;
+let renderInProgress = false;
+let renderPending = false;
 const editedCards = new Map();
 let queuedRecords = [];
 let queuedBack = null;
@@ -59,9 +63,62 @@ function setError(message) {
     error.classList.toggle("d-none", !message);
 }
 
-function markSheetsStale() {
+function showEmptyPreview() {
+    revokeRenderedUrls();
+    const empty = document.createElement("div");
+    empty.className = "print-empty-state";
+    empty.id = "printEmptyState";
+    empty.dataset.i18n = "print.empty_preview";
+    empty.textContent = translate("print.empty_preview", {
+        defaultValue: "Select at least one Star Player to preview the sheets."
+    });
+    document.getElementById("printPreview").replaceChildren(empty);
+    document.getElementById("pageSummary").textContent = "";
     generatedSheets = false;
     document.getElementById("printSheetsButton").disabled = true;
+    document.getElementById("renderProgress").classList.add("d-none");
+}
+
+function queueSheetRender(delay = 180) {
+    window.clearTimeout(renderTimer);
+    renderTimer = window.setTimeout(runScheduledRender, delay);
+}
+
+function scheduleSheetRender(options = {}) {
+    renderVersion += 1;
+    generatedSheets = false;
+    document.getElementById("printSheetsButton").disabled = true;
+
+    if (getSelectedEntries().length === 0) {
+        showEmptyPreview();
+        return;
+    }
+
+    if (renderInProgress) {
+        renderPending = true;
+        return;
+    }
+
+    queueSheetRender(options.immediate ? 0 : 180);
+}
+
+async function runScheduledRender() {
+    renderTimer = null;
+    if (renderInProgress) {
+        renderPending = true;
+        return;
+    }
+
+    const requestedVersion = renderVersion;
+    renderInProgress = true;
+    renderPending = false;
+    await generateSheets(requestedVersion);
+    renderInProgress = false;
+
+    if (renderPending || requestedVersion !== renderVersion) {
+        renderPending = false;
+        if (getSelectedEntries().length > 0) queueSheetRender(0);
+    }
 }
 
 function getVisibleRows() {
@@ -116,8 +173,7 @@ function updateSelectionSummary() {
         defaultValue: `${selected.length} selected · ${totalCards} cards`
     });
     document.getElementById("cardCount").textContent = totalCards;
-    document.getElementById("generateSheetsButton").disabled = totalCards === 0;
-    markSheetsStale();
+    scheduleSheetRender();
 }
 
 function createPresetRow(preset, index) {
@@ -315,13 +371,11 @@ function updateQueuedBackNotice() {
 async function removeQueuedRecord(id) {
     await BloodBowlPrintQueue.remove(id);
     await loadPrintQueue();
-    markSheetsStale();
 }
 
 async function clearPrintQueue() {
     await BloodBowlPrintQueue.clear();
     await loadPrintQueue();
-    markSheetsStale();
 }
 
 async function removeQueuedBack() {
@@ -409,7 +463,7 @@ async function applyCardChanges() {
         const editor = await waitForFrameRenderer("cardEditorFrame");
         editedCards.set(editingFile, await editor.exportCurrentData());
         updateEditedRow(editingFile);
-        markSheetsStale();
+        scheduleSheetRender({ immediate: true });
         cardEditorModal.hide();
     } catch (error) {
         setError(error.message);
@@ -420,7 +474,7 @@ async function applyCardChanges() {
 function restorePreset(file) {
     editedCards.delete(file);
     updateEditedRow(file);
-    markSheetsStale();
+    scheduleSheetRender({ immediate: true });
 }
 
 function localizeDynamicControls() {
@@ -502,12 +556,6 @@ async function cropToTrim(blob) {
     );
     if (typeof image.close === "function") image.close();
     return { blob: await canvasToBlob(canvas), hasGeneratorBleed: true };
-}
-
-function registerObjectUrl(blob) {
-    const url = URL.createObjectURL(blob);
-    renderedObjectUrls.push(url);
-    return url;
 }
 
 function revokeRenderedUrls() {
@@ -659,21 +707,27 @@ function mirrorBackEntries(frontEntries, backEntry, flip) {
     return backs;
 }
 
-async function generateSheets() {
+async function generateSheets(requestedVersion) {
     const selected = getSelectedEntries();
-    if (selected.length === 0) return;
+    if (selected.length === 0) {
+        showEmptyPreview();
+        return;
+    }
 
-    const generateButton = document.getElementById("generateSheetsButton");
     const printButton = document.getElementById("printSheetsButton");
     const includeBleed = document.getElementById("includeBleed").checked;
     const showPageMarks = document.getElementById("showPageMarks").checked;
     const backFile = document.getElementById("backImage").files[0] || null;
     const duplexFlip = document.getElementById("duplexFlip").value;
 
-    generateButton.disabled = true;
     printButton.disabled = true;
     setError("");
-    revokeRenderedUrls();
+    const nextObjectUrls = [];
+    const registerNextObjectUrl = blob => {
+        const url = URL.createObjectURL(blob);
+        nextObjectUrls.push(url);
+        return url;
+    };
 
     try {
         const renderer = await waitForRenderer();
@@ -699,7 +753,7 @@ async function generateSheets() {
             const prepared = await prepareCardBlob(sourceBlob, includeBleed);
             renderedCards.set(entry.key, {
                 name: entry.name,
-                url: registerObjectUrl(prepared.blob),
+                url: registerNextObjectUrl(prepared.blob),
                 fullBleed: prepared.fullBleed
             });
             renderedCount += 1;
@@ -714,10 +768,12 @@ async function generateSheets() {
                 name: queuedBack && !backFile
                     ? queuedBack.name
                     : translate("print.card_back", { defaultValue: "Card back" }),
-                url: registerObjectUrl(preparedBack.blob),
+                url: registerNextObjectUrl(preparedBack.blob),
                 fullBleed: preparedBack.fullBleed
             };
         }
+
+        if (requestedVersion !== renderVersion) return;
 
         const cards = selected.flatMap(entry =>
             Array.from({ length: entry.quantity }, () => renderedCards.get(entry.key))
@@ -747,14 +803,16 @@ async function generateSheets() {
             pages: sheetCount * (backEntry ? 2 : 1),
             defaultValue: `${sheetCount} sheets · ${sheetCount * (backEntry ? 2 : 1)} pages`
         });
+        revokeRenderedUrls();
+        renderedObjectUrls = nextObjectUrls.splice(0);
         generatedSheets = true;
         printButton.disabled = false;
     } catch (error) {
         console.error(error);
         setError(error.message || translate("print.unknown_error", { defaultValue: "Unable to generate print sheets." }));
     } finally {
+        nextObjectUrls.forEach(url => URL.revokeObjectURL(url));
         document.getElementById("renderProgress").classList.add("d-none");
-        generateButton.disabled = getSelectedEntries().length === 0;
     }
 }
 
@@ -765,7 +823,7 @@ function printSheets() {
 function onBackImageChanged() {
     const hasBack = document.getElementById("backImage").files.length > 0 || Boolean(queuedBack);
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
-    markSheetsStale();
+    scheduleSheetRender({ immediate: true });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -773,11 +831,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("starSearch").addEventListener("input", filterPresets);
     document.getElementById("selectVisibleButton").addEventListener("click", selectVisiblePresets);
     document.getElementById("clearSelectionButton").addEventListener("click", clearSelection);
-    document.getElementById("includeBleed").addEventListener("change", markSheetsStale);
-    document.getElementById("showPageMarks").addEventListener("change", markSheetsStale);
+    document.getElementById("includeBleed").addEventListener("change", () => scheduleSheetRender({ immediate: true }));
+    document.getElementById("showPageMarks").addEventListener("change", () => scheduleSheetRender({ immediate: true }));
     document.getElementById("backImage").addEventListener("change", onBackImageChanged);
-    document.getElementById("duplexFlip").addEventListener("change", markSheetsStale);
-    document.getElementById("generateSheetsButton").addEventListener("click", generateSheets);
+    document.getElementById("duplexFlip").addEventListener("change", () => scheduleSheetRender({ immediate: true }));
     document.getElementById("printSheetsButton").addEventListener("click", printSheets);
     document.getElementById("applyCardChangesButton").addEventListener("click", applyCardChanges);
     document.getElementById("clearPrintQueueButton").addEventListener("click", clearPrintQueue);

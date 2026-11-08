@@ -136,7 +136,7 @@
         "print": "Drucken / Als PDF speichern",
         "print_hint": "Wähle im Druckdialog A4, 100 % Skalierung und keine zusätzlichen Ränder.",
         "preview": "Vorschau",
-        "empty_preview": "Wähle mindestens einen Starspieler aus und erstelle dann die Bögen.",
+        "empty_preview": "Wähle mindestens einen Starspieler aus, um die Bögen anzuzeigen.",
         "front_page": "Vorderseitenbogen {{page}}",
         "back_page": "Rückseitenbogen {{page}}",
         "page_summary": "{{sheets}} Bögen · {{pages}} Seiten",

@@ -136,7 +136,7 @@
         "print": "Print / Save as PDF",
         "print_hint": "In the print dialog, choose A4, 100% scale and no additional margins.",
         "preview": "Preview",
-        "empty_preview": "Select at least one Star Player, then generate the sheets.",
+        "empty_preview": "Select at least one Star Player to preview the sheets.",
         "front_page": "Front sheet {{page}}",
         "back_page": "Back sheet {{page}}",
         "page_summary": "{{sheets}} sheets · {{pages}} pages",

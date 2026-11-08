@@ -136,7 +136,7 @@
         "print": "Imprimer / Enregistrer en PDF",
         "print_hint": "Dans la fenêtre d'impression, choisissez A4, une échelle de 100 % et aucune marge supplémentaire.",
         "preview": "Aperçu",
-        "empty_preview": "Sélectionnez au moins un champion, puis générez les feuilles.",
+        "empty_preview": "Sélectionnez au moins un champion pour afficher les feuilles.",
         "front_page": "Feuille de rectos {{page}}",
         "back_page": "Feuille de versos {{page}}",
         "page_summary": "{{sheets}} feuilles · {{pages}} pages",
