@@ -508,7 +508,51 @@ async function renderStarPresetForPrint(file, options = {}) {
     return renderStarDataForPrint(cardData, options);
 }
 
+async function loadStarPresetForEditing(file) {
+    await waitForI18n();
+    const response = await fetch("assets/star/" + file);
+    if (!response.ok) {
+        throw new Error(`Unable to load ${file} (${response.status})`);
+    }
+    const cardData = await response.json();
+    document.getElementById("removeBorder").checked = false;
+    document.getElementById("dashLine").checked = false;
+    await writeControls(cardData);
+    return { cardName: cardData.cardName };
+}
+
+async function loadStarDataForEditing(cardData) {
+    await waitForI18n();
+    const editableData = JSON.parse(JSON.stringify(cardData));
+    document.getElementById("removeBorder").checked = Boolean(editableData.printOptions && editableData.printOptions.removeBorder);
+    document.getElementById("dashLine").checked = Boolean(editableData.printOptions && editableData.printOptions.dashLine);
+    await writeControls(editableData);
+    return { cardName: editableData.cardName };
+}
+
+async function exportCurrentStarData() {
+    await waitForI18n();
+    const cardData = readControls();
+    cardData.base64Image = await handleImageUrlFromDisk(cardData.imageUrl);
+    cardData.imageUrl = null;
+    cardData.printOptions = {
+        removeBorder: document.getElementById("removeBorder").checked,
+        dashLine: document.getElementById("dashLine").checked
+    };
+    return cardData;
+}
+
 window.BloodBowlStarRenderer = Object.freeze({
+    exportCurrentData: exportCurrentStarData,
+    loadData: loadStarDataForEditing,
+    loadPreset: loadStarPresetForEditing,
     renderData: renderStarDataForPrint,
     renderPreset: renderStarPresetForPrint
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("embedded") === "1") {
+        document.querySelector("nav")?.classList.add("d-none");
+    }
 });

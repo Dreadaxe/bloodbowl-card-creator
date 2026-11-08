@@ -5,16 +5,18 @@
     border-radius: var(--bs-border-radius);
 }
 
-.star-list-item {
+.star-list-item,
+.queued-card-item {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) 5rem;
+    grid-template-columns: auto minmax(0, 1fr) 5rem auto;
     gap: 0.75rem;
     align-items: center;
     padding: 0.55rem 0.75rem;
     border-bottom: 1px solid var(--bs-border-color);
 }
 
-.star-list-item:last-child {
+.star-list-item:last-child,
+.queued-card-item:last-child {
     border-bottom: 0;
 }
 
@@ -22,12 +24,26 @@
     display: none;
 }
 
-.star-list-item label {
+.star-name {
     min-width: 0;
+}
+
+.star-list-item label,
+.queued-card-item label {
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.star-edited-badge {
+    margin-left: 0.4rem;
+    vertical-align: text-bottom;
+}
+
+.star-actions {
+    display: flex;
+    gap: 0.35rem;
 }
 
 .star-quantity {
@@ -79,11 +95,40 @@
     height: 100%;
 }
 
-.print-card .trim-guide {
+.page-cut-mark {
     position: absolute;
-    box-sizing: border-box;
-    border: 0.15mm dashed rgb(0 0 0 / 72%);
+    z-index: 20;
+    display: block;
+    background: #000;
     pointer-events: none;
+}
+
+.page-cut-mark-vertical {
+    width: 0.2mm;
+    height: 5mm;
+    transform: translateX(-0.1mm);
+}
+
+.page-cut-mark-horizontal {
+    width: 5mm;
+    height: 0.2mm;
+    transform: translateY(-0.1mm);
+}
+
+.page-cut-mark-top {
+    top: 2mm;
+}
+
+.page-cut-mark-bottom {
+    bottom: 2mm;
+}
+
+.page-cut-mark-left {
+    left: 2mm;
+}
+
+.page-cut-mark-right {
+    right: 2mm;
 }
 
 .card-renderer-frame {
@@ -94,6 +139,26 @@
     height: 1250px;
     opacity: 0;
     pointer-events: none;
+}
+
+.card-editor-frame {
+    width: 100%;
+    height: calc(100vh - 7.5rem);
+    border: 0;
+}
+
+.card-editor-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    color: var(--bs-secondary-color);
+    background: var(--bs-body-bg);
+}
+
+.card-editor-loading.is-ready {
+    display: none;
 }
 
 @media (max-width: 1199.98px) {

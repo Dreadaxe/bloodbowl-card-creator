@@ -25,6 +25,16 @@
                 </div>
             </div>
 
+            <div class="card mb-3 d-none" id="queuedCardsPanel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center gap-2">
+                        <h2 class="h5 mb-0" data-i18n="print.sent_cards">Cards sent to print</h2>
+                        <button class="btn btn-sm btn-outline-danger" id="clearPrintQueueButton" type="button" data-i18n="print.clear_queue">Clear queue</button>
+                    </div>
+                    <div class="star-list mt-3" id="queuedCardList"></div>
+                </div>
+            </div>
+
             <div class="card mb-3">
                 <div class="card-body">
                     <h2 class="h5" data-i18n="print.layout">Layout</h2>
@@ -35,12 +45,17 @@
                     </div>
 
                     <div class="form-check mb-3">
-                        <input class="form-check-input" id="showCutLines" type="checkbox" checked>
-                        <label class="form-check-label" for="showCutLines" data-i18n="print.cut_lines">Show cut lines</label>
+                        <input class="form-check-input" id="showPageMarks" type="checkbox" checked>
+                        <label class="form-check-label" for="showPageMarks" data-i18n="print.page_cut_marks">Show cut marks at the edges of the page</label>
                     </div>
 
                     <label class="form-label" for="backImage" data-i18n="print.card_back">Common card back (optional PNG or JPEG)</label>
                     <input class="form-control" id="backImage" type="file" accept="image/png,image/jpeg,image/webp">
+
+                    <div class="alert alert-info mt-2 mb-0 d-none" id="queuedBackNotice">
+                        <span id="queuedBackName"></span>
+                        <button class="btn btn-sm btn-outline-secondary ms-2" id="removeQueuedBackButton" type="button" data-i18n="print.remove">Remove</button>
+                    </div>
 
                     <div class="mt-3 d-none" id="duplexOptions">
                         <label class="form-label" for="duplexFlip" data-i18n="print.duplex_flip">Duplex binding</label>
@@ -81,3 +96,22 @@
 </main>
 
 <iframe class="card-renderer-frame" id="cardRendererFrame" src="star.html?renderer=1" title="Card renderer" aria-hidden="true" tabindex="-1"></iframe>
+
+<div class="modal fade" id="cardEditorModal" tabindex="-1" aria-labelledby="cardEditorModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title h5" id="cardEditorModalTitle" data-i18n="print.edit_card_title">Edit card</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 position-relative">
+                <div class="card-editor-loading" id="cardEditorLoading" data-i18n="print.editor_loading">Loading editor…</div>
+                <iframe class="card-editor-frame" id="cardEditorFrame" src="star.html?embedded=1" title="Star Player card editor"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" data-i18n="print.cancel">Cancel</button>
+                <button type="button" class="btn btn-primary" id="applyCardChangesButton" disabled data-i18n="print.apply_changes">Apply changes</button>
+            </div>
+        </div>
+    </div>
+</div>

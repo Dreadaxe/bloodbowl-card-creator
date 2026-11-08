@@ -40,6 +40,11 @@ const fullHeightMm = PRINT_CONSTANTS.trimHeightMm + (bleedYmm * 2);
 let presets = [];
 let renderedObjectUrls = [];
 let generatedSheets = false;
+const editedCards = new Map();
+let queuedRecords = [];
+let queuedBack = null;
+let editingFile = null;
+let cardEditorModal = null;
 
 function translate(key, options = {}) {
     if (window.i18next && i18next.isInitialized) {
@@ -64,18 +69,40 @@ function getVisibleRows() {
 }
 
 function getSelectedEntries() {
-    return [...document.querySelectorAll(".star-list-item")]
+    const presetsSelected = [...document.querySelectorAll(".star-list-item")]
         .map(row => {
             const checkbox = row.querySelector(".star-checkbox");
             const quantity = row.querySelector(".star-quantity");
             if (!checkbox.checked) return null;
             return {
+                key: `preset:${row.dataset.file}`,
+                kind: "preset",
                 file: row.dataset.file,
                 name: row.dataset.name,
                 quantity: Math.max(1, Number.parseInt(quantity.value, 10) || 1)
             };
         })
         .filter(Boolean);
+
+    const queuedSelected = [...document.querySelectorAll(".queued-card-item")]
+        .map(row => {
+            const checkbox = row.querySelector(".queued-card-checkbox");
+            const quantity = row.querySelector(".queued-card-quantity");
+            if (!checkbox.checked) return null;
+            const record = queuedRecords.find(item => item.id === row.dataset.id);
+            if (!record) return null;
+            return {
+                key: `queue:${record.id}`,
+                kind: "queue",
+                id: record.id,
+                name: record.name,
+                blob: record.blob,
+                quantity: Math.max(1, Number.parseInt(quantity.value, 10) || 1)
+            };
+        })
+        .filter(Boolean);
+
+    return [...presetsSelected, ...queuedSelected];
 }
 
 function updateSelectionSummary() {
@@ -106,13 +133,23 @@ function createPresetRow(preset, index) {
     checkbox.id = `star-${index}`;
     checkbox.addEventListener("change", () => {
         quantity.disabled = !checkbox.checked;
+        editButton.disabled = !checkbox.checked;
         updateSelectionSummary();
     });
+
+    const name = document.createElement("div");
+    name.className = "star-name";
 
     const label = document.createElement("label");
     label.htmlFor = checkbox.id;
     label.textContent = preset.name;
     label.title = preset.name;
+
+    const editedBadge = document.createElement("span");
+    editedBadge.className = "badge text-bg-warning star-edited-badge d-none";
+    editedBadge.dataset.i18n = "print.edited";
+    editedBadge.textContent = translate("print.edited", { defaultValue: "Edited" });
+    name.append(label, editedBadge);
 
     const quantity = document.createElement("input");
     quantity.className = "form-control form-control-sm star-quantity";
@@ -124,7 +161,26 @@ function createPresetRow(preset, index) {
     quantity.setAttribute("aria-label", `${preset.name} quantity`);
     quantity.addEventListener("input", updateSelectionSummary);
 
-    row.append(checkbox, label, quantity);
+    const actions = document.createElement("div");
+    actions.className = "star-actions";
+
+    const editButton = document.createElement("button");
+    editButton.className = "btn btn-sm btn-outline-primary star-edit-button";
+    editButton.type = "button";
+    editButton.disabled = true;
+    editButton.dataset.i18n = "print.edit";
+    editButton.textContent = translate("print.edit", { defaultValue: "Edit" });
+    editButton.addEventListener("click", () => openCardEditor(preset.file, preset.name));
+
+    const restoreButton = document.createElement("button");
+    restoreButton.className = "btn btn-sm btn-outline-secondary star-restore-button d-none";
+    restoreButton.type = "button";
+    restoreButton.dataset.i18n = "print.restore";
+    restoreButton.textContent = translate("print.restore", { defaultValue: "Restore" });
+    restoreButton.addEventListener("click", () => restorePreset(preset.file));
+
+    actions.append(editButton, restoreButton);
+    row.append(checkbox, name, quantity, actions);
     return row;
 }
 
@@ -153,6 +209,7 @@ function selectVisiblePresets() {
     getVisibleRows().forEach(row => {
         row.querySelector(".star-checkbox").checked = true;
         row.querySelector(".star-quantity").disabled = false;
+        row.querySelector(".star-edit-button").disabled = false;
     });
     updateSelectionSummary();
 }
@@ -161,13 +218,119 @@ function clearSelection() {
     document.querySelectorAll(".star-list-item").forEach(row => {
         row.querySelector(".star-checkbox").checked = false;
         row.querySelector(".star-quantity").disabled = true;
+        row.querySelector(".star-edit-button").disabled = true;
         row.querySelector(".star-quantity").value = "1";
+    });
+    document.querySelectorAll(".queued-card-item").forEach(row => {
+        row.querySelector(".queued-card-checkbox").checked = false;
+        row.querySelector(".queued-card-quantity").disabled = true;
+        row.querySelector(".queued-card-quantity").value = "1";
     });
     updateSelectionSummary();
 }
 
-function waitForRenderer() {
-    const frame = document.getElementById("cardRendererFrame");
+function createQueuedCardRow(record, autoSelect) {
+    const row = document.createElement("div");
+    row.className = "queued-card-item";
+    row.dataset.id = record.id;
+
+    const checkbox = document.createElement("input");
+    checkbox.className = "form-check-input queued-card-checkbox";
+    checkbox.type = "checkbox";
+    checkbox.id = `queued-${record.id}`;
+    checkbox.checked = autoSelect;
+
+    const label = document.createElement("label");
+    label.htmlFor = checkbox.id;
+    label.textContent = record.name;
+    label.title = record.name;
+
+    const quantity = document.createElement("input");
+    quantity.className = "form-control form-control-sm queued-card-quantity";
+    quantity.type = "number";
+    quantity.min = "1";
+    quantity.max = "99";
+    quantity.value = "1";
+    quantity.disabled = !autoSelect;
+    quantity.addEventListener("input", updateSelectionSummary);
+
+    checkbox.addEventListener("change", () => {
+        quantity.disabled = !checkbox.checked;
+        updateSelectionSummary();
+    });
+
+    const actions = document.createElement("div");
+    actions.className = "star-actions";
+
+    const reopenButton = document.createElement("button");
+    reopenButton.className = "btn btn-sm btn-outline-primary";
+    reopenButton.type = "button";
+    reopenButton.dataset.i18n = "print.reopen_editor";
+    reopenButton.textContent = translate("print.reopen_editor", { defaultValue: "Edit" });
+    reopenButton.addEventListener("click", () => {
+        window.location.href = record.sourcePage || "index.html";
+    });
+
+    const removeButton = document.createElement("button");
+    removeButton.className = "btn btn-sm btn-outline-danger";
+    removeButton.type = "button";
+    removeButton.dataset.i18n = "print.remove";
+    removeButton.textContent = translate("print.remove", { defaultValue: "Remove" });
+    removeButton.addEventListener("click", () => removeQueuedRecord(record.id));
+
+    actions.append(reopenButton, removeButton);
+    row.append(checkbox, label, quantity, actions);
+    return row;
+}
+
+async function loadPrintQueue() {
+    if (!window.BloodBowlPrintQueue) return;
+    queuedRecords = await BloodBowlPrintQueue.getAll();
+    const addedId = new URLSearchParams(window.location.search).get("added");
+    const frontRecords = queuedRecords.filter(record => record.type !== "back");
+    const backRecords = queuedRecords.filter(record => record.type === "back");
+    queuedBack = backRecords.length ? backRecords[backRecords.length - 1] : null;
+
+    const panel = document.getElementById("queuedCardsPanel");
+    const list = document.getElementById("queuedCardList");
+    panel.classList.toggle("d-none", frontRecords.length === 0);
+    list.replaceChildren(...frontRecords.map(record => createQueuedCardRow(record, record.id === addedId)));
+    updateQueuedBackNotice();
+    updateSelectionSummary();
+}
+
+function updateQueuedBackNotice() {
+    const notice = document.getElementById("queuedBackNotice");
+    notice.classList.toggle("d-none", !queuedBack);
+    document.getElementById("queuedBackName").textContent = queuedBack
+        ? translate("print.queued_back_name", {
+            name: queuedBack.name,
+            defaultValue: `Queued back: ${queuedBack.name}`
+        })
+        : "";
+    const hasBack = Boolean(queuedBack || document.getElementById("backImage").files.length);
+    document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
+}
+
+async function removeQueuedRecord(id) {
+    await BloodBowlPrintQueue.remove(id);
+    await loadPrintQueue();
+    markSheetsStale();
+}
+
+async function clearPrintQueue() {
+    await BloodBowlPrintQueue.clear();
+    await loadPrintQueue();
+    markSheetsStale();
+}
+
+async function removeQueuedBack() {
+    if (!queuedBack) return;
+    await removeQueuedRecord(queuedBack.id);
+}
+
+function waitForFrameRenderer(frameId = "cardRendererFrame") {
+    const frame = document.getElementById(frameId);
     const startedAt = Date.now();
 
     return new Promise((resolve, reject) => {
@@ -193,6 +356,90 @@ function waitForRenderer() {
         };
         check();
     });
+}
+
+function waitForRenderer() {
+    return waitForFrameRenderer("cardRendererFrame");
+}
+
+function updateEditedRow(file) {
+    const row = [...document.querySelectorAll(".star-list-item")].find(item => item.dataset.file === file);
+    if (!row) return;
+    const isEdited = editedCards.has(file);
+    row.querySelector(".star-edited-badge").classList.toggle("d-none", !isEdited);
+    row.querySelector(".star-restore-button").classList.toggle("d-none", !isEdited);
+}
+
+async function openCardEditor(file, fallbackName) {
+    editingFile = file;
+    const loading = document.getElementById("cardEditorLoading");
+    const applyButton = document.getElementById("applyCardChangesButton");
+    const title = document.getElementById("cardEditorModalTitle");
+    loading.classList.remove("is-ready");
+    applyButton.disabled = true;
+    title.textContent = translate("print.edit_named_card", {
+        name: fallbackName,
+        defaultValue: `Edit ${fallbackName}`
+    });
+    cardEditorModal.show();
+
+    try {
+        const editor = await waitForFrameRenderer("cardEditorFrame");
+        const result = editedCards.has(file)
+            ? await editor.loadData(editedCards.get(file))
+            : await editor.loadPreset(file);
+        const cardName = result.cardName || fallbackName;
+        title.textContent = translate("print.edit_named_card", {
+            name: cardName,
+            defaultValue: `Edit ${cardName}`
+        });
+        loading.classList.add("is-ready");
+        applyButton.disabled = false;
+    } catch (error) {
+        cardEditorModal.hide();
+        setError(error.message);
+    }
+}
+
+async function applyCardChanges() {
+    if (!editingFile) return;
+    const button = document.getElementById("applyCardChangesButton");
+    button.disabled = true;
+    try {
+        const editor = await waitForFrameRenderer("cardEditorFrame");
+        editedCards.set(editingFile, await editor.exportCurrentData());
+        updateEditedRow(editingFile);
+        markSheetsStale();
+        cardEditorModal.hide();
+    } catch (error) {
+        setError(error.message);
+        button.disabled = false;
+    }
+}
+
+function restorePreset(file) {
+    editedCards.delete(file);
+    updateEditedRow(file);
+    markSheetsStale();
+}
+
+function localizeDynamicControls() {
+    document.querySelectorAll("[data-i18n='print.edit']").forEach(element => {
+        element.textContent = translate("print.edit", { defaultValue: "Edit" });
+    });
+    document.querySelectorAll("[data-i18n='print.restore']").forEach(element => {
+        element.textContent = translate("print.restore", { defaultValue: "Restore" });
+    });
+    document.querySelectorAll("[data-i18n='print.edited']").forEach(element => {
+        element.textContent = translate("print.edited", { defaultValue: "Edited" });
+    });
+    document.querySelectorAll("[data-i18n='print.reopen_editor']").forEach(element => {
+        element.textContent = translate("print.reopen_editor", { defaultValue: "Edit" });
+    });
+    document.querySelectorAll("[data-i18n='print.remove']").forEach(element => {
+        element.textContent = translate("print.remove", { defaultValue: "Remove" });
+    });
+    updateQueuedBackNotice();
 }
 
 function canvasToBlob(canvas) {
@@ -323,17 +570,57 @@ function createCardElement(entry, slotIndex, options) {
     image.alt = entry.name || "";
     card.append(image);
 
-    if (options.showCutLines) {
-        const guide = document.createElement("span");
-        guide.className = "trim-guide";
-        guide.style.left = `${useFullBleed ? bleedXmm : 0}mm`;
-        guide.style.top = `${useFullBleed ? bleedYmm : 0}mm`;
-        guide.style.width = `${PRINT_CONSTANTS.trimWidthMm}mm`;
-        guide.style.height = `${PRINT_CONSTANTS.trimHeightMm}mm`;
-        card.append(guide);
+    return card;
+}
+
+function uniqueCoordinates(values) {
+    return values
+        .sort((a, b) => a - b)
+        .filter((value, index, array) => index === 0 || Math.abs(value - array[index - 1]) > 0.01);
+}
+
+function getTrimBoundaries(options) {
+    const geometry = getSheetGeometry(options.includeBleed);
+    const x = [];
+    const y = [];
+
+    for (let column = 0; column < PRINT_CONSTANTS.columns; column += 1) {
+        const start = geometry.left + (column * geometry.cellWidth) + (options.includeBleed ? bleedXmm : 0);
+        x.push(start, start + PRINT_CONSTANTS.trimWidthMm);
     }
 
-    return card;
+    for (let row = 0; row < PRINT_CONSTANTS.rows; row += 1) {
+        const start = geometry.top + (row * geometry.cellHeight) + (options.includeBleed ? bleedYmm : 0);
+        y.push(start, start + PRINT_CONSTANTS.trimHeightMm);
+    }
+
+    return { x: uniqueCoordinates(x), y: uniqueCoordinates(y) };
+}
+
+function createPageCutMark(classes, positionProperty, positionMm) {
+    const mark = document.createElement("span");
+    mark.className = `page-cut-mark ${classes}`;
+    mark.style[positionProperty] = `${positionMm}mm`;
+    mark.setAttribute("aria-hidden", "true");
+    return mark;
+}
+
+function addPageCutMarks(page, options) {
+    if (!options.showPageMarks) return;
+
+    const boundaries = getTrimBoundaries(options);
+    boundaries.x.forEach(x => {
+        page.append(
+            createPageCutMark("page-cut-mark-vertical page-cut-mark-top", "left", x),
+            createPageCutMark("page-cut-mark-vertical page-cut-mark-bottom", "left", x)
+        );
+    });
+    boundaries.y.forEach(y => {
+        page.append(
+            createPageCutMark("page-cut-mark-horizontal page-cut-mark-left", "top", y),
+            createPageCutMark("page-cut-mark-horizontal page-cut-mark-right", "top", y)
+        );
+    });
 }
 
 function createPrintPage(entries, type, pageNumber, options) {
@@ -350,6 +637,7 @@ function createPrintPage(entries, type, pageNumber, options) {
     const page = document.createElement("div");
     page.className = `print-page print-page-${type}`;
     page.dataset.pageType = type;
+    addPageCutMarks(page, options);
     entries.forEach((entry, index) => {
         if (entry) page.append(createCardElement(entry, index, options));
     });
@@ -378,7 +666,7 @@ async function generateSheets() {
     const generateButton = document.getElementById("generateSheetsButton");
     const printButton = document.getElementById("printSheetsButton");
     const includeBleed = document.getElementById("includeBleed").checked;
-    const showCutLines = document.getElementById("showCutLines").checked;
+    const showPageMarks = document.getElementById("showPageMarks").checked;
     const backFile = document.getElementById("backImage").files[0] || null;
     const duplexFlip = document.getElementById("duplexFlip").value;
 
@@ -394,12 +682,22 @@ async function generateSheets() {
         setProgress(0, selected.length);
 
         for (const entry of selected) {
-            const result = await renderer.renderPreset(entry.file, {
-                removeBorder: includeBleed,
-                dashLine: false
-            });
-            const prepared = await prepareCardBlob(result.blob, includeBleed);
-            renderedCards.set(entry.file, {
+            let sourceBlob;
+            if (entry.kind === "preset") {
+                const editedData = editedCards.get(entry.file);
+                const renderOptions = editedData && editedData.printOptions
+                    ? editedData.printOptions
+                    : { removeBorder: includeBleed, dashLine: false };
+                const result = editedData
+                    ? await renderer.renderData(editedData, renderOptions)
+                    : await renderer.renderPreset(entry.file, renderOptions);
+                sourceBlob = result.blob;
+            } else {
+                sourceBlob = entry.blob;
+            }
+
+            const prepared = await prepareCardBlob(sourceBlob, includeBleed);
+            renderedCards.set(entry.key, {
                 name: entry.name,
                 url: registerObjectUrl(prepared.blob),
                 fullBleed: prepared.fullBleed
@@ -409,17 +707,20 @@ async function generateSheets() {
         }
 
         let backEntry = null;
-        if (backFile) {
-            const preparedBack = await prepareCardBlob(backFile, includeBleed);
+        const backSource = backFile || (queuedBack && queuedBack.blob);
+        if (backSource) {
+            const preparedBack = await prepareCardBlob(backSource, includeBleed);
             backEntry = {
-                name: translate("print.card_back", { defaultValue: "Card back" }),
+                name: queuedBack && !backFile
+                    ? queuedBack.name
+                    : translate("print.card_back", { defaultValue: "Card back" }),
                 url: registerObjectUrl(preparedBack.blob),
                 fullBleed: preparedBack.fullBleed
             };
         }
 
         const cards = selected.flatMap(entry =>
-            Array.from({ length: entry.quantity }, () => renderedCards.get(entry.file))
+            Array.from({ length: entry.quantity }, () => renderedCards.get(entry.key))
         );
         const preview = document.getElementById("printPreview");
         preview.replaceChildren();
@@ -429,7 +730,7 @@ async function generateSheets() {
             const frontEntries = cards.slice(offset, offset + PRINT_CONSTANTS.cardsPerPage);
             while (frontEntries.length < PRINT_CONSTANTS.cardsPerPage) frontEntries.push(null);
             sheetCount += 1;
-            const options = { includeBleed, showCutLines };
+            const options = { includeBleed, showPageMarks };
             preview.append(createPrintPage(frontEntries, "front", sheetCount, options));
             if (backEntry) {
                 preview.append(createPrintPage(
@@ -462,28 +763,39 @@ function printSheets() {
 }
 
 function onBackImageChanged() {
-    const hasBack = document.getElementById("backImage").files.length > 0;
+    const hasBack = document.getElementById("backImage").files.length > 0 || Boolean(queuedBack);
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
     markSheetsStale();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    cardEditorModal = new bootstrap.Modal(document.getElementById("cardEditorModal"));
     document.getElementById("starSearch").addEventListener("input", filterPresets);
     document.getElementById("selectVisibleButton").addEventListener("click", selectVisiblePresets);
     document.getElementById("clearSelectionButton").addEventListener("click", clearSelection);
     document.getElementById("includeBleed").addEventListener("change", markSheetsStale);
-    document.getElementById("showCutLines").addEventListener("change", markSheetsStale);
+    document.getElementById("showPageMarks").addEventListener("change", markSheetsStale);
     document.getElementById("backImage").addEventListener("change", onBackImageChanged);
     document.getElementById("duplexFlip").addEventListener("change", markSheetsStale);
     document.getElementById("generateSheetsButton").addEventListener("click", generateSheets);
     document.getElementById("printSheetsButton").addEventListener("click", printSheets);
+    document.getElementById("applyCardChangesButton").addEventListener("click", applyCardChanges);
+    document.getElementById("clearPrintQueueButton").addEventListener("click", clearPrintQueue);
+    document.getElementById("removeQueuedBackButton").addEventListener("click", removeQueuedBack);
+    document.getElementById("cardEditorModal").addEventListener("hidden.bs.modal", () => {
+        editingFile = null;
+        document.getElementById("applyCardChangesButton").disabled = true;
+    });
 
     if (window.i18next) {
-        i18next.on("languageChanged", updateSelectionSummary);
+        i18next.on("languageChanged", () => {
+            updateSelectionSummary();
+            localizeDynamicControls();
+        });
     }
 
     try {
-        await loadPresetIndex();
+        await Promise.all([loadPresetIndex(), loadPrintQueue()]);
     } catch (error) {
         console.error(error);
         setError(error.message);
