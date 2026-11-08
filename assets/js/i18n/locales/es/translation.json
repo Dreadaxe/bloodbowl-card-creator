@@ -9,6 +9,7 @@
         "special_cards" : "Cartas especiales",
         "card_back" : "Dorso de la carta",
         "plays" : "Jugadas",
+        "print_sheets" : "Imprimir",
         "instructions" : "Instrucciones"
     },
     "card":{
@@ -101,5 +102,31 @@
     },
     "plays":{
 
+    },
+    "print":{
+        "title": "Hojas de impresión",
+        "intro": "Elige jugadores estrella y colócalos en hojas A4 listas para imprimir, con nueve cartas por página.",
+        "search": "Buscar jugadores estrella",
+        "search_placeholder": "Escribe un nombre…",
+        "select_visible": "Seleccionar visibles",
+        "clear_selection": "Borrar selección",
+        "selection_summary": "{{count}} seleccionados · {{cards}} cartas",
+        "layout": "Diseño",
+        "include_bleed": "Incluir el sangrado de las cartas",
+        "cut_lines": "Mostrar líneas de corte",
+        "card_back": "Reverso común (PNG o JPEG opcional)",
+        "duplex_flip": "Encuadernación a doble cara",
+        "long_edge": "Borde largo (recomendado)",
+        "short_edge": "Borde corto",
+        "generate": "Generar hojas A4",
+        "print": "Imprimir / Guardar como PDF",
+        "print_hint": "En el diálogo de impresión, elige A4, escala del 100 % y sin márgenes adicionales.",
+        "preview": "Vista previa",
+        "empty_preview": "Selecciona al menos un jugador estrella y genera las hojas.",
+        "front_page": "Hoja de anversos {{page}}",
+        "back_page": "Hoja de reversos {{page}}",
+        "page_summary": "{{sheets}} hojas · {{pages}} páginas",
+        "renderer_timeout": "El renderizador de cartas no se inició. Recarga la página e inténtalo de nuevo.",
+        "unknown_error": "No se pudieron generar las hojas de impresión."
     }
 }

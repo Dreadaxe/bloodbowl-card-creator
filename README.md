@@ -9,6 +9,7 @@ A client-side web app for creating custom, print-ready Blood Bowl tabletop game 
 - **Special Cards** (`special.html`) — Custom rules and ability cards
 - **Cards Back** (`cardBack.html`) — Custom cards back
 - **Playbook Cards** (`playbook.html`) — Team strategy and play diagrams with searchable pre-loaded plays
+- **Print Sheets** (`print.html`) — Select Star Players and arrange them on A4 sheets, nine cards per page
 
 ## Running Locally
 
@@ -30,6 +31,7 @@ Then open http://localhost:4000.
 - Cards designed closely to Season 3
 - PNG export for printing (822×1122px cards)
 - Save/load card designs as JSON
+- A4 print sheets with optional bleed, cut lines, quantities, and duplex card backs
 - Auto-save to browser localStorage
 - Localization on English, German, France, Spanish
 - Dark and Light themes 

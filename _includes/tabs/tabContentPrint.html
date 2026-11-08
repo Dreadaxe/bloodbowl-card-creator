@@ -1,0 +1,83 @@
+<main class="container-fluid py-3 print-workspace">
+    <div class="row g-4">
+        <section class="col-xl-4 col-lg-5 print-controls" aria-labelledby="printPageTitle">
+            <h1 class="h3" id="printPageTitle" data-i18n="print.title">Print sheets</h1>
+            <p class="text-body-secondary" data-i18n="print.intro">
+                Choose Star Players and arrange them on print-ready A4 sheets, nine cards per page.
+            </p>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <label class="form-label" for="starSearch" data-i18n="print.search">Search Star Players</label>
+                    <input class="form-control" id="starSearch" type="search" data-i18n="[placeholder]print.search_placeholder" placeholder="Type a name…">
+
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <button class="btn btn-sm btn-outline-primary" id="selectVisibleButton" type="button" data-i18n="print.select_visible">Select visible</button>
+                        <button class="btn btn-sm btn-outline-secondary" id="clearSelectionButton" type="button" data-i18n="print.clear_selection">Clear selection</button>
+                    </div>
+
+                    <div class="star-list mt-3" id="starList" aria-live="polite"></div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span id="selectionSummary" class="small text-body-secondary"></span>
+                        <span class="badge text-bg-primary" id="cardCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="h5" data-i18n="print.layout">Layout</h2>
+
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" id="includeBleed" type="checkbox">
+                        <label class="form-check-label" for="includeBleed" data-i18n="print.include_bleed">Include the card bleed area</label>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" id="showCutLines" type="checkbox" checked>
+                        <label class="form-check-label" for="showCutLines" data-i18n="print.cut_lines">Show cut lines</label>
+                    </div>
+
+                    <label class="form-label" for="backImage" data-i18n="print.card_back">Common card back (optional PNG or JPEG)</label>
+                    <input class="form-control" id="backImage" type="file" accept="image/png,image/jpeg,image/webp">
+
+                    <div class="mt-3 d-none" id="duplexOptions">
+                        <label class="form-label" for="duplexFlip" data-i18n="print.duplex_flip">Duplex binding</label>
+                        <select class="form-select" id="duplexFlip">
+                            <option value="long" data-i18n="print.long_edge">Long edge (recommended)</option>
+                            <option value="short" data-i18n="print.short_edge">Short edge</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" id="generateSheetsButton" type="button" disabled data-i18n="print.generate">Generate A4 sheets</button>
+                <button class="btn btn-outline-primary" id="printSheetsButton" type="button" disabled data-i18n="print.print">Print / Save as PDF</button>
+            </div>
+
+            <div class="progress mt-3 d-none" id="renderProgress" role="progressbar" aria-label="Card rendering progress" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" id="renderProgressBar" style="width: 0%">0%</div>
+            </div>
+            <div class="alert alert-danger mt-3 d-none" id="printError" role="alert"></div>
+            <p class="small text-body-secondary mt-3 mb-0" data-i18n="print.print_hint">
+                In the print dialog, choose A4, 100% scale and no additional margins.
+            </p>
+        </section>
+
+        <section class="col-xl-8 col-lg-7" aria-labelledby="previewTitle">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h4 mb-0" id="previewTitle" data-i18n="print.preview">Preview</h2>
+                <span class="small text-body-secondary" id="pageSummary"></span>
+            </div>
+            <div class="print-preview" id="printPreview">
+                <div class="print-empty-state" id="printEmptyState" data-i18n="print.empty_preview">
+                    Select at least one Star Player, then generate the sheets.
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<iframe class="card-renderer-frame" id="cardRendererFrame" src="star.html?renderer=1" title="Card renderer" aria-hidden="true" tabindex="-1"></iframe>

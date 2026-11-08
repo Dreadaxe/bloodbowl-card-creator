@@ -454,7 +454,8 @@ readJSONFile = async function (file) {
 async function loadPreset(url) {
     const response = await fetch("assets/star/" + url);
     const json = await response.json();
-    writeControls(json);
+    await writeControls(json);
+    return json;
 }
 
 async function fileChange(file) {

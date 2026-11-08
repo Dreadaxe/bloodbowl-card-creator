@@ -9,6 +9,7 @@
         "special_cards" : "Spezialkarten",
         "card_back" : "Kartenrückseite",
         "plays" : "Spielzüge",
+        "print_sheets" : "Drucken",
         "instructions" : "Anleitung"
     },
     "card":{
@@ -101,5 +102,31 @@
     },
     "plays":{
 
+    },
+    "print":{
+        "title": "Druckbögen",
+        "intro": "Wähle Starspieler aus und ordne sie auf druckfertigen A4-Bögen mit neun Karten pro Seite an.",
+        "search": "Starspieler suchen",
+        "search_placeholder": "Name eingeben…",
+        "select_visible": "Sichtbare auswählen",
+        "clear_selection": "Auswahl löschen",
+        "selection_summary": "{{count}} ausgewählt · {{cards}} Karten",
+        "layout": "Layout",
+        "include_bleed": "Beschnittbereich der Karten einschließen",
+        "cut_lines": "Schnittlinien anzeigen",
+        "card_back": "Gemeinsame Kartenrückseite (optionale PNG- oder JPEG-Datei)",
+        "duplex_flip": "Duplexbindung",
+        "long_edge": "Lange Kante (empfohlen)",
+        "short_edge": "Kurze Kante",
+        "generate": "A4-Bögen erstellen",
+        "print": "Drucken / Als PDF speichern",
+        "print_hint": "Wähle im Druckdialog A4, 100 % Skalierung und keine zusätzlichen Ränder.",
+        "preview": "Vorschau",
+        "empty_preview": "Wähle mindestens einen Starspieler aus und erstelle dann die Bögen.",
+        "front_page": "Vorderseitenbogen {{page}}",
+        "back_page": "Rückseitenbogen {{page}}",
+        "page_summary": "{{sheets}} Bögen · {{pages}} Seiten",
+        "renderer_timeout": "Der Kartenrenderer wurde nicht gestartet. Lade die Seite neu und versuche es erneut.",
+        "unknown_error": "Die Druckbögen konnten nicht erstellt werden."
     }
 }

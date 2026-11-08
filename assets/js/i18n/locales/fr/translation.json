@@ -9,6 +9,7 @@
         "special_cards" : "Cartes Spéciales",
         "card_back" : "Dos de carte",
         "plays" : "Tactiques de jeux",
+        "print_sheets" : "Impression",
         "instructions" : "Instructions"
     },
     "card":{
@@ -101,5 +102,31 @@
     },
     "plays":{
 
+    },
+    "print":{
+        "title": "Feuilles d'impression",
+        "intro": "Choisissez les champions et disposez-les sur des feuilles A4 prêtes à imprimer, à raison de neuf cartes par page.",
+        "search": "Rechercher des champions",
+        "search_placeholder": "Saisissez un nom…",
+        "select_visible": "Sélectionner les résultats",
+        "clear_selection": "Effacer la sélection",
+        "selection_summary": "{{count}} sélectionnés · {{cards}} cartes",
+        "layout": "Mise en page",
+        "include_bleed": "Inclure le fond perdu des cartes",
+        "cut_lines": "Afficher les traits de coupe",
+        "card_back": "Dos commun (PNG ou JPEG facultatif)",
+        "duplex_flip": "Reliure recto-verso",
+        "long_edge": "Bord long (recommandé)",
+        "short_edge": "Bord court",
+        "generate": "Générer les feuilles A4",
+        "print": "Imprimer / Enregistrer en PDF",
+        "print_hint": "Dans la fenêtre d'impression, choisissez A4, une échelle de 100 % et aucune marge supplémentaire.",
+        "preview": "Aperçu",
+        "empty_preview": "Sélectionnez au moins un champion, puis générez les feuilles.",
+        "front_page": "Feuille de rectos {{page}}",
+        "back_page": "Feuille de versos {{page}}",
+        "page_summary": "{{sheets}} feuilles · {{pages}} pages",
+        "renderer_timeout": "Le moteur de rendu des cartes n'a pas démarré. Rechargez la page puis réessayez.",
+        "unknown_error": "Impossible de générer les feuilles d'impression."
     }
 }

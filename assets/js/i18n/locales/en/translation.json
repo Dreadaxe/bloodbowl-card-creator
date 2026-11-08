@@ -9,6 +9,7 @@
         "special_cards" : "Special Cards",
         "card_back" : "Card Back",
         "plays" : "Plays",
+        "print_sheets" : "Print",
         "instructions" : "Instructions"
     },
     "card":{
@@ -101,5 +102,31 @@
     },
     "plays":{
 
+    },
+    "print":{
+        "title": "Print sheets",
+        "intro": "Choose Star Players and arrange them on print-ready A4 sheets, nine cards per page.",
+        "search": "Search Star Players",
+        "search_placeholder": "Type a name…",
+        "select_visible": "Select visible",
+        "clear_selection": "Clear selection",
+        "selection_summary": "{{count}} selected · {{cards}} cards",
+        "layout": "Layout",
+        "include_bleed": "Include the card bleed area",
+        "cut_lines": "Show cut lines",
+        "card_back": "Common card back (optional PNG or JPEG)",
+        "duplex_flip": "Duplex binding",
+        "long_edge": "Long edge (recommended)",
+        "short_edge": "Short edge",
+        "generate": "Generate A4 sheets",
+        "print": "Print / Save as PDF",
+        "print_hint": "In the print dialog, choose A4, 100% scale and no additional margins.",
+        "preview": "Preview",
+        "empty_preview": "Select at least one Star Player, then generate the sheets.",
+        "front_page": "Front sheet {{page}}",
+        "back_page": "Back sheet {{page}}",
+        "page_summary": "{{sheets}} sheets · {{pages}} pages",
+        "renderer_timeout": "The card renderer did not start. Reload the page and try again.",
+        "unknown_error": "Unable to generate print sheets."
     }
 }

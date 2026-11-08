@@ -1,0 +1,162 @@
+.star-list {
+    max-height: 24rem;
+    overflow-y: auto;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.star-list-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) 5rem;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.star-list-item:last-child {
+    border-bottom: 0;
+}
+
+.star-list-item[hidden] {
+    display: none;
+}
+
+.star-list-item label {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.star-quantity {
+    min-width: 0;
+}
+
+.print-preview {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: center;
+}
+
+.print-empty-state {
+    width: 100%;
+    padding: 4rem 1rem;
+    text-align: center;
+    color: var(--bs-secondary-color);
+    border: 2px dashed var(--bs-border-color);
+    border-radius: var(--bs-border-radius-lg);
+}
+
+.print-page-wrapper {
+    width: min(100%, 210mm);
+}
+
+.print-page-label {
+    margin-bottom: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--bs-secondary-color);
+}
+
+.print-page {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 18%);
+    transform-origin: top left;
+}
+
+.print-card {
+    position: absolute;
+}
+
+.print-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.print-card .trim-guide {
+    position: absolute;
+    box-sizing: border-box;
+    border: 0.15mm dashed rgb(0 0 0 / 72%);
+    pointer-events: none;
+}
+
+.card-renderer-frame {
+    position: fixed;
+    top: 0;
+    left: -10000px;
+    width: 900px;
+    height: 1250px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 1199.98px) {
+    .print-page-wrapper {
+        overflow: auto;
+    }
+}
+
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    body > :not(.print-workspace) {
+        display: none !important;
+    }
+
+    .print-workspace {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: none !important;
+    }
+
+    .print-workspace > .row,
+    .print-workspace > .row > section:last-child,
+    .print-preview,
+    .print-page-wrapper {
+        display: block !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .print-controls,
+    #previewTitle,
+    #pageSummary,
+    .print-page-label,
+    #printEmptyState {
+        display: none !important;
+    }
+
+    .print-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        break-after: page;
+        page-break-after: always;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .print-page-wrapper:last-child .print-page {
+        break-after: auto;
+        page-break-after: auto;
+    }
+}
