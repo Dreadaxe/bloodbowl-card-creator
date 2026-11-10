@@ -236,16 +236,53 @@ drawGoldPrice = function (value, x, y){
 }
 
 drawDevelopment = function (primary, secondary) {
-    getContext().font = 'bold 24px franklin-gothic-book';
-    getContext().fillStyle = 'black';
-    getContext().textAlign = "left";
-    getContext().textBaseline = "middle";
-    x = 261;
-    writeScaled(i18next.t('card.caracteristics.primary')+":", { x: x, y: 890 });
-    writeScaled(i18next.t('card.caracteristics.secondary')+":", { x: x, y: 930 });
-    getContext().font = '24px franklin-gothic-book';
-    writeScaled(primary, { x: x+92, y: 890 });
-    writeScaled(secondary, { x: x+121, y: 930 });
+    const context = getContext();
+    const x = 261;
+    const maxWidth = 500;
+    const gap = 8;
+    const defaultFontSize = 24;
+    const minFontSize = 16;
+    const lines = [
+        {
+            label: i18next.t('card.caracteristics.primary') + ":",
+            value: primary,
+            y: 890
+        },
+        {
+            label: i18next.t('card.caracteristics.secondary') + ":",
+            value: secondary,
+            y: 930
+        }
+    ];
+    let fontSize = defaultFontSize;
+    let labelWidth;
+    let valueWidth;
+
+    context.fillStyle = 'black';
+    context.textAlign = "left";
+    context.textBaseline = "middle";
+
+    do {
+        labelWidth = 0;
+        valueWidth = 0;
+        lines.forEach(function (line) {
+            context.font = `bold ${fontSize}px franklin-gothic-book`;
+            labelWidth = Math.max(labelWidth, context.measureText(line.label).width);
+            context.font = `${fontSize}px franklin-gothic-book`;
+            valueWidth = Math.max(valueWidth, context.measureText(line.value).width);
+        });
+        if (labelWidth + gap + valueWidth <= maxWidth || fontSize === minFontSize) {
+            break;
+        }
+        fontSize--;
+    } while (fontSize >= minFontSize);
+
+    lines.forEach(function (line) {
+        context.font = `bold ${fontSize}px franklin-gothic-book`;
+        writeScaled(line.label, { x, y: line.y });
+        context.font = `${fontSize}px franklin-gothic-book`;
+        writeScaled(line.value, { x: x + labelWidth + gap, y: line.y });
+    });
 }
 
 async function drawCardFrame(cardData) {
@@ -412,19 +449,25 @@ function drawNumber(num,x, y, plus){
     }
 }
 
-render = async function (cardData) {
-    await document.fonts.ready; await pageReady();
-    const background=document.getElementById(cardData.backgroundType);
-    await waitForImageElement(background);
-    getContext().clearRect(0,0,getCanvas().width,getCanvas().height);
-    getContext().drawImage(background,0,0,getCanvas().width,getCanvas().height);
-    if(cardData.imageUrl) {
-        const image=await loadCanvasImage(cardData.imageUrl);
-        const position=scalePixelPosition({x:100+cardData.imageProperties.offsetX,y:cardData.imageProperties.offsetY});
-        const scale=cardData.imageProperties.scalePercent/100;
-        getContext().drawImage(image,position.x,position.y,image.width*scale,image.height*scale);
+render = function (cardData) {
+    // First the textured background
+    getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
+
+    if (cardData.imageUrl) {
+        var image = new Image();
+        image.onload = function () {
+        var position = scalePixelPosition({ x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY });
+        var scale = cardData.imageProperties.scalePercent / 100.0;
+        var width = image.width * scale;
+        var height = image.height * scale;
+        getContext().drawImage(image, position.x, position.y, width, height);
+        drawCardFrame(cardData);
+        };
+    image.src = cardData.imageUrl;
     }
-    await drawCardFrame(cardData);
+    // next the frame elements
+
+    drawCardFrame(cardData);
 }
 
 function readControls() {
@@ -513,6 +556,5 @@ async function writeControls(cardData) {
     document.getElementById("keywords").value = cardData.keywords;
 
     // render the updated info
-    await render(cardData);
-    return cardData;
+    render(cardData);
 }
