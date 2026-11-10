@@ -412,25 +412,19 @@ function drawNumber(num,x, y, plus){
     }
 }
 
-render = function (cardData) {
-    // First the textured background
-    getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
-
-    if (cardData.imageUrl) {
-        var image = new Image();
-        image.onload = function () {
-        var position = scalePixelPosition({ x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY });
-        var scale = cardData.imageProperties.scalePercent / 100.0;
-        var width = image.width * scale;
-        var height = image.height * scale;
-        getContext().drawImage(image, position.x, position.y, width, height);
-        drawCardFrame(cardData);
-        };
-    image.src = cardData.imageUrl;
+render = async function (cardData) {
+    await document.fonts.ready; await pageReady();
+    const background=document.getElementById(cardData.backgroundType);
+    await waitForImageElement(background);
+    getContext().clearRect(0,0,getCanvas().width,getCanvas().height);
+    getContext().drawImage(background,0,0,getCanvas().width,getCanvas().height);
+    if(cardData.imageUrl) {
+        const image=await loadCanvasImage(cardData.imageUrl);
+        const position=scalePixelPosition({x:100+cardData.imageProperties.offsetX,y:cardData.imageProperties.offsetY});
+        const scale=cardData.imageProperties.scalePercent/100;
+        getContext().drawImage(image,position.x,position.y,image.width*scale,image.height*scale);
     }
-    // next the frame elements
-
-    drawCardFrame(cardData);
+    await drawCardFrame(cardData);
 }
 
 function readControls() {
@@ -519,5 +513,6 @@ async function writeControls(cardData) {
     document.getElementById("keywords").value = cardData.keywords;
 
     // render the updated info
-    render(cardData);
+    await render(cardData);
+    return cardData;
 }

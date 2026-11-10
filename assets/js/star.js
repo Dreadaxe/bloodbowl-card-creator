@@ -343,25 +343,6 @@ function drawNumber(num,x, y, plus){
     }
 }
 
-function waitForImageElement(image) {
-    if (image.complete && image.naturalWidth > 0) {
-        return Promise.resolve(image);
-    }
-    return new Promise((resolve, reject) => {
-        image.addEventListener("load", () => resolve(image), { once: true });
-        image.addEventListener("error", reject, { once: true });
-    });
-}
-
-function loadCanvasImage(src) {
-    return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.onload = () => resolve(image);
-        image.onerror = reject;
-        image.src = src;
-    });
-}
-
 render = async function (cardData) {
     await document.fonts.ready;
     await pageReady();
@@ -556,3 +537,4 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("nav")?.classList.add("d-none");
     }
 });
+

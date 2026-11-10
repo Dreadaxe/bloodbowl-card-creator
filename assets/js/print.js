@@ -279,6 +279,7 @@ function getSelectedEntries() {
                 name: record.name,
                 blob: record.blob,
                 backBlob: record.backBlob || null,
+                record,
                 quantity: normalizeQuantity(quantity.value)
             };
         })
@@ -484,13 +485,19 @@ function createQueuedCardRow(record, autoSelect) {
     reopenButton.type = "button";
     reopenButton.dataset.i18n = "print.reopen_editor";
     reopenButton.textContent = translate("print.reopen_editor", { defaultValue: "Edit" });
+    if (!record.data && !record.bbtc?.data && !record.bbtc?.rules?.length) {
+        reopenButton.disabled = true;
+        reopenButton.title = translate('print.image_only_card', {defaultValue:'This older card only contains an image. Import its profile again to edit it.'});
+    }
     reopenButton.addEventListener("click", async () => {
         try {
             await persistPrintState();
+            const target = new URL(window.BloodBowlQueueEditor.sourcePage(record), window.location.href);
+            target.searchParams.set('queueCard', record.id);
+            window.location.href = target.href;
         } catch (error) {
             console.error(error);
-        } finally {
-            window.location.href = record.sourcePage || "index.html";
+            setError(error.message);
         }
     });
 
@@ -565,15 +572,17 @@ async function removeQueuedBack() {
     await removeQueuedRecord(queuedBack.id);
 }
 
-function waitForFrameRenderer(frameId = "cardRendererFrame") {
+function waitForFrameRenderer(frameId = "cardRendererFrame", api = "BloodBowlStarRenderer") {
     const frame = document.getElementById(frameId);
     const startedAt = Date.now();
 
     return new Promise((resolve, reject) => {
         const check = () => {
             try {
-                const renderer = frame.contentWindow && frame.contentWindow.BloodBowlStarRenderer;
-                if (renderer && typeof renderer.renderPreset === "function") {
+                const target = frame.contentWindow;
+                const renderer = target && target[api];
+                if (renderer && typeof renderer.renderData === "function" &&
+                    (api === "BloodBowlStarRenderer" || target.document.readyState === 'complete' && target.i18next?.isInitialized)) {
                     resolve(renderer);
                     return;
                 }
@@ -596,6 +605,17 @@ function waitForFrameRenderer(frameId = "cardRendererFrame") {
 
 function waitForRenderer() {
     return waitForFrameRenderer("cardRendererFrame");
+}
+
+function waitForQueuedRenderer(sourcePage) {
+    const id = 'queued-renderer-' + sourcePage.replace(/[^a-z0-9]/gi,'-');
+    if (!document.getElementById(id)) {
+        const frame = document.createElement('iframe'); frame.id=id;
+        frame.src=sourcePage+'?embedded=1&queueRender=1'; frame.title='Card renderer';
+        frame.style.cssText='position:fixed;left:-10000px;width:1000px;height:1200px;visibility:hidden';
+        document.body.append(frame);
+    }
+    return waitForFrameRenderer(id,'BloodBowlCardRenderer');
 }
 
 function updateEditedRow(file) {
@@ -926,21 +946,39 @@ async function generateSheets(requestedVersion) {
             let sourceBlob;
             if (entry.kind === "preset") {
                 const editedData = editedCards.get(entry.file);
-                const renderOptions = editedData && editedData.printOptions
-                    ? editedData.printOptions
-                    : { removeBorder: includeBleed, dashLine: false };
+                const renderOptions = {
+                    ...editedData?.printOptions,
+                    removeBorder: includeBleed || Boolean(editedData?.printOptions?.removeBorder),
+                    dashLine: Boolean(editedData?.printOptions?.dashLine)
+                };
                 const result = editedData
                     ? await renderer.renderData(editedData, renderOptions)
                     : await renderer.renderPreset(entry.file, renderOptions);
                 sourceBlob = result.blob;
             } else {
                 sourceBlob = entry.blob;
+                const data = await BloodBowlQueueEditor.editableData(entry.record);
+                if (data && ['index.html','star.html','special.html'].includes(BloodBowlQueueEditor.sourcePage(entry.record))) {
+                    const cardRenderer = await waitForQueuedRenderer(BloodBowlQueueEditor.sourcePage(entry.record));
+                    const result = await cardRenderer.renderData(data, {
+                        removeBorder:includeBleed || Boolean(data.printOptions?.removeBorder),
+                        dashLine:Boolean(data.printOptions?.dashLine),language:entry.record.bbtc?.language
+                    });
+                    sourceBlob=result.blob;
+                }
             }
 
             const prepared = await prepareCardBlob(sourceBlob, includeBleed);
             let individualBack = null;
             if (entry.backBlob) {
-                const preparedBack = await prepareCardBlob(entry.backBlob, includeBleed);
+                let sourceBack = entry.backBlob;
+                const data = await BloodBowlQueueEditor.editableData(entry.record,'back');
+                if (data) {
+                    const cardRenderer = await waitForQueuedRenderer('special.html');
+                    const result = await cardRenderer.renderData(data,{removeBorder:includeBleed,dashLine:false,language:entry.record.bbtc?.language});
+                    sourceBack=result.blob;
+                }
+                const preparedBack = await prepareCardBlob(sourceBack, includeBleed);
                 individualBack = {
                     name: entry.name,
                     url: registerNextObjectUrl(preparedBack.blob),
@@ -1076,4 +1114,5 @@ window.addEventListener("pagehide", () => {
     persistPrintState().catch(console.error);
     revokeRenderedUrls();
 });
+
 

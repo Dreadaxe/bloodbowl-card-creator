@@ -20,7 +20,8 @@ function defaultCardData() {
     return cardData;
 }
 
-function drawCardText() {
+async function drawCardText() {
+    const pending=[];
     let yStart = 250;
     let context = getContext();
     context.textAlign = "center";
@@ -57,10 +58,10 @@ function drawCardText() {
         img3.src = 'assets/img/special/timing.png';
         timing_y = yStart;
         // When the image is loaded, draw it on the canvas
-        img3.onload = function() {
+        pending.push(new Promise((resolve,reject)=>{img3.onload = function() {
             // Draw the image on the canvas at position (x, y)
             ctx.drawImage(img3, getCanvas().width/2 - 169/2, timing_y);
-        };
+resolve();};img3.onerror=reject;}));
         yStart += gapAfterTitle;
     }
 
@@ -81,10 +82,10 @@ function drawCardText() {
         img2.src = 'assets/img/special/duration.png';
         duration_y = yStart;
         // When the image is loaded, draw it on the canvas
-        img2.onload = function() {
+        pending.push(new Promise((resolve,reject)=>{img2.onload = function() {
             // Draw the image on the canvas at position (x, y)
             ctx.drawImage(img2, getCanvas().width/2 - 224/2, duration_y);
-        };
+resolve();};img2.onerror=reject;}));
         yStart += gapAfterTitle;
     }
 
@@ -104,10 +105,10 @@ function drawCardText() {
         img1.src = 'assets/img/special/effect.png';
         effect_y = yStart;
         // When the image is loaded, draw it on the canvas
-        img1.onload = function() {
+        pending.push(new Promise((resolve,reject)=>{img1.onload = function() {
             // Draw the image on the canvas at position (x, y)
             ctx.drawImage(img1, getCanvas().width/2 - 156/2, effect_y);
-        };
+resolve();};img1.onerror=reject;}));
         yStart += gapAfterTitle;
     }
 
@@ -121,6 +122,7 @@ function drawCardText() {
         yStart += lineHeight;
     }
     
+    await Promise.all(pending);
 }
 
 drawCardName = function (value) {
@@ -214,7 +216,11 @@ async function drawCardFrame(cardData) {
     drawFooter(cardData.footer);
     drawFooterIcon();
 
-    drawCardText();
+    if (cardData.ruleLayout) {
+        const ctx=getContext();ctx.save();ctx.fillStyle='#111';ctx.textAlign='left';ctx.textBaseline='top';
+        for(const line of cardData.ruleLayout.lines){ctx.font=`${line.bold?'bold ':''}${cardData.ruleLayout.fontSize}px franklin-gothic-book`;ctx.fillText(line.text,line.x,line.y);}
+        ctx.restore();
+    } else await drawCardText();
 
     if (!document.getElementById("removeBorder").checked) {
         getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
@@ -228,29 +234,17 @@ async function drawCardFrame(cardData) {
 
 }
 
-render = function (cardData) {
-    // First the textured background
-    getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
-
-    if (cardData.imageUrl) {
-        var image = new Image();
-        image.onload = function () {
-            var scale = cardData.imageProperties.scalePercent / 100.0;
-            var width = image.width * scale;
-            var height = image.height * scale;
-            if (cardData.centerImage) {          // 62 902
-                var position = scalePixelPosition({x: 61 + cardData.imageProperties.offsetX, y: 904 + cardData.imageProperties.offsetY});
-            }
-            else {
-                var position = scalePixelPosition({x: 100 + cardData.imageProperties.offsetX, y: cardData.imageProperties.offsetY});
-            }
-            drawCardFrame(cardData).then(r => getContext().drawImage(image, position.x, position.y, width, height));
-        };
-    image.src = cardData.imageUrl;
-    }
-    else {
-        // next the frame elements
-        drawCardFrame(cardData);
+render = async function (cardData) {
+    await document.fonts.ready; await pageReady();
+    const background=document.getElementById('bg1'); await waitForImageElement(background);
+    getContext().clearRect(0,0,getCanvas().width,getCanvas().height);
+    getContext().drawImage(background,0,0,getCanvas().width,getCanvas().height);
+    await drawCardFrame(cardData);
+    if(cardData.imageUrl) {
+        const image=await loadCanvasImage(cardData.imageUrl);
+        const scale=cardData.imageProperties.scalePercent/100;
+        const position=scalePixelPosition({x:(cardData.centerImage?61:100)+cardData.imageProperties.offsetX,y:(cardData.centerImage?904:0)+cardData.imageProperties.offsetY});
+        getContext().drawImage(image,position.x,position.y,image.width*scale,image.height*scale);
     }
 }
 
@@ -302,5 +296,6 @@ async function writeControls(cardData) {
     $("#fontSizeSelector")[0].value = cardData.fontSizeSelector; // Set the fontSizeSelector value
     $("#centerImage")[0].checked = cardData.centerImage;
 
-    render(cardData);
+    await render(cardData);
+    return cardData;
 }
