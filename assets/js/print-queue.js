@@ -144,6 +144,30 @@
         await useStore("readwrite", store => store.delete(`${statePrefix}${key}`));
     }
 
+    // Import complete front/back pairs atomically. Recreating a player removes
+    // obsolete annexes from that import, without touching other cards or state.
+    async function importRecords(records) {
+        if (!Array.isArray(records) || !records.length || records.some(record =>
+            !record.id || !record.blob || !record.backBlob || !record.bbtc?.batch || !record.bbtc?.number
+        )) throw new Error("Incomplete team card import");
+        const replacing = new Set(records.map(record => `${record.bbtc.batch}:${record.bbtc.number}`));
+        await useStore("readwrite", store => {
+            const request = store.openCursor();
+            request.onsuccess = () => {
+                const cursor = request.result;
+                if (cursor) {
+                    const imported = cursor.value.bbtc;
+                    if (imported && replacing.has(`${imported.batch}:${imported.number}`)) cursor.delete();
+                    cursor.continue();
+                } else {
+                    try { records.forEach(record => store.put(record)); }
+                    catch (error) { store.transaction.abort(); }
+                }
+            };
+        });
+        return records.map(record => record.id);
+    }
+
     async function sendCurrentCardToPrint(type, button) {
         if (button) button.disabled = true;
         try {
@@ -161,9 +185,11 @@
         clear,
         getAll,
         getState,
+        importRecords,
         remove,
         removeState,
         setState
     });
     window.sendCurrentCardToPrint = sendCurrentCardToPrint;
 })();
+

@@ -278,6 +278,7 @@ function getSelectedEntries() {
                 id: record.id,
                 name: record.name,
                 blob: record.blob,
+                backBlob: record.backBlob || null,
                 quantity: normalizeQuantity(quantity.value)
             };
         })
@@ -505,8 +506,13 @@ function createQueuedCardRow(record, autoSelect) {
     return row;
 }
 
-async function loadPrintQueue() {
+async function loadPrintQueue(options = {}) {
     if (!window.BloodBowlPrintQueue) return;
+    const previous = new Map([...document.querySelectorAll(".queued-card-item")].map(row => [row.dataset.id, {
+        checked: row.querySelector(".queued-card-checkbox").checked,
+        quantity: row.querySelector(".queued-card-quantity").value
+    }]));
+    const selectIds = new Set(options.selectIds || []);
     queuedRecords = await BloodBowlPrintQueue.getAll();
     const addedId = new URLSearchParams(window.location.search).get("added");
     const frontRecords = queuedRecords.filter(record => record.type !== "back");
@@ -516,7 +522,12 @@ async function loadPrintQueue() {
     const panel = document.getElementById("queuedCardsPanel");
     const list = document.getElementById("queuedCardList");
     panel.classList.toggle("d-none", frontRecords.length === 0);
-    list.replaceChildren(...frontRecords.map(record => createQueuedCardRow(record, record.id === addedId)));
+    list.replaceChildren(...frontRecords.map(record => {
+        const saved = previous.get(record.id);
+        const row = createQueuedCardRow(record, record.id === addedId || selectIds.has(record.id) || Boolean(saved?.checked));
+        if (saved) row.querySelector(".queued-card-quantity").value = saved.quantity;
+        return row;
+    }));
     if (addedId) {
         const cleanUrl = new URL(window.location.href);
         cleanUrl.searchParams.delete("added");
@@ -535,7 +546,7 @@ function updateQueuedBackNotice() {
             defaultValue: `Queued back: ${queuedBack.name}`
         })
         : "";
-    const hasBack = Boolean(queuedBack || rememberedBackFile || document.getElementById("backImage").files.length);
+    const hasBack = Boolean(queuedBack || rememberedBackFile || document.getElementById("backImage").files.length || queuedRecords.some(record => record.backBlob));
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
 }
 
@@ -876,7 +887,7 @@ function mirrorBackEntries(frontEntries, backEntry, flip) {
         const column = index % PRINT_CONSTANTS.columns;
         const targetRow = flip === "short" ? (PRINT_CONSTANTS.rows - 1 - row) : row;
         const targetColumn = flip === "long" ? (PRINT_CONSTANTS.columns - 1 - column) : column;
-        backs[(targetRow * PRINT_CONSTANTS.columns) + targetColumn] = backEntry;
+        backs[(targetRow * PRINT_CONSTANTS.columns) + targetColumn] = entry.back || backEntry;
     });
     return backs;
 }
@@ -927,10 +938,20 @@ async function generateSheets(requestedVersion) {
             }
 
             const prepared = await prepareCardBlob(sourceBlob, includeBleed);
+            let individualBack = null;
+            if (entry.backBlob) {
+                const preparedBack = await prepareCardBlob(entry.backBlob, includeBleed);
+                individualBack = {
+                    name: entry.name,
+                    url: registerNextObjectUrl(preparedBack.blob),
+                    fullBleed: preparedBack.fullBleed
+                };
+            }
             renderedCards.set(entry.key, {
                 name: entry.name,
                 url: registerNextObjectUrl(prepared.blob),
-                fullBleed: prepared.fullBleed
+                fullBleed: prepared.fullBleed,
+                back: individualBack
             });
             renderedCount += 1;
             setProgress(renderedCount, selected.length);
@@ -954,6 +975,7 @@ async function generateSheets(requestedVersion) {
         const cards = selected.flatMap(entry =>
             Array.from({ length: entry.quantity }, () => renderedCards.get(entry.key))
         );
+        const hasBacks = Boolean(backEntry) || cards.some(card => card.back);
         const preview = document.getElementById("printPreview");
         preview.replaceChildren();
 
@@ -964,7 +986,7 @@ async function generateSheets(requestedVersion) {
             sheetCount += 1;
             const options = { includeBleed, showPageMarks };
             preview.append(createPrintPage(frontEntries, "front", sheetCount, options));
-            if (backEntry) {
+            if (hasBacks) {
                 preview.append(createPrintPage(
                     mirrorBackEntries(frontEntries, backEntry, duplexFlip),
                     "back",
@@ -976,8 +998,8 @@ async function generateSheets(requestedVersion) {
 
         document.getElementById("pageSummary").textContent = translate("print.page_summary", {
             sheets: sheetCount,
-            pages: sheetCount * (backEntry ? 2 : 1),
-            defaultValue: `${sheetCount} sheets · ${sheetCount * (backEntry ? 2 : 1)} pages`
+            pages: sheetCount * (hasBacks ? 2 : 1),
+            defaultValue: `${sheetCount} sheets · ${sheetCount * (hasBacks ? 2 : 1)} pages`
         });
         revokeRenderedUrls();
         renderedObjectUrls = nextObjectUrls.splice(0);
@@ -1002,8 +1024,7 @@ function onBackImageChanged() {
         ? { name: selectedBackFile.name, blob: selectedBackFile }
         : null;
     updateRememberedBackNotice();
-    const hasBack = Boolean(rememberedBackFile || queuedBack);
-    document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
+    updateQueuedBackNotice();
     scheduleSheetRender({ immediate: true });
 }
 
@@ -1055,3 +1076,4 @@ window.addEventListener("pagehide", () => {
     persistPrintState().catch(console.error);
     revokeRenderedUrls();
 });
+
