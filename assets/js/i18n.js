@@ -5,7 +5,7 @@ const lngs = {
   es: { nativeName: 'Español' }
 }
 
-const rerender = async () => {
+const rerender = () => {
   // start localizing, details:
   // https://github.com/i18next/jquery-i18next#usage-of-selector-function
   $('html').localize()
@@ -14,16 +14,8 @@ const rerender = async () => {
   $('meta[name=description]').attr('content', $.t('head.description'))
   
 
-  try {
-    if (new URLSearchParams(window.location.search).get('queueRender') === '1') {
-      await writeControls(defaultCardData());
-    } else if (!await window.BloodBowlQueueEditor?.restore()) {
-      await writeControls(loadCardData(dataRef));
-    }
-  } catch (error) {
-    if (window.BloodBowlQueueEditor) window.BloodBowlQueueEditor.showError(error);
-    else console.error(error);
-  }
+  var cardData = loadCardData(dataRef);
+  writeControls(cardData);
   refreshSaveSlots();
 }
 
@@ -53,7 +45,7 @@ initI18n = function () {
       fallbackLng: fallbackLng,
       backend: {
       
-        loadPath: 'assets/js/i18n/locales/{{lng}}/{{ns}}.json?v=20261108-2'
+        loadPath: 'assets/js/i18n/locales/{{lng}}/{{ns}}.json?v=20261110-1'
       }
     }, (err, t) => {
       if (err) return console.error(err);
@@ -104,4 +96,3 @@ initI18n = function () {
 };
 
 document.addEventListener("DOMContentLoaded", initI18n);
-
