@@ -240,48 +240,74 @@ drawDevelopment = function (primary, secondary) {
     const x = 261;
     const maxWidth = 500;
     const gap = 8;
-    const defaultFontSize = 24;
-    const minFontSize = 16;
+    const fontSize = 24;
+    const lineHeight = 28;
+    const blockGap = 12;
     const lines = [
         {
             label: i18next.t('card.caracteristics.primary') + ":",
-            value: primary,
-            y: 890
+            value: primary
         },
         {
             label: i18next.t('card.caracteristics.secondary') + ":",
-            value: secondary,
-            y: 930
+            value: secondary
         }
     ];
-    let fontSize = defaultFontSize;
-    let labelWidth;
-    let valueWidth;
 
     context.fillStyle = 'black';
     context.textAlign = "left";
     context.textBaseline = "middle";
 
-    do {
-        labelWidth = 0;
-        valueWidth = 0;
-        lines.forEach(function (line) {
-            context.font = `bold ${fontSize}px franklin-gothic-book`;
-            labelWidth = Math.max(labelWidth, context.measureText(line.label).width);
-            context.font = `${fontSize}px franklin-gothic-book`;
-            valueWidth = Math.max(valueWidth, context.measureText(line.value).width);
-        });
-        if (labelWidth + gap + valueWidth <= maxWidth || fontSize === minFontSize) {
-            break;
-        }
-        fontSize--;
-    } while (fontSize >= minFontSize);
+    context.font = `bold ${fontSize}px franklin-gothic-book`;
+    const labelWidth = Math.max(...lines.map(function (line) {
+        return context.measureText(line.label).width;
+    }));
+    const valueX = x + labelWidth + gap;
+    const valueWidth = maxWidth - labelWidth - gap;
 
-    lines.forEach(function (line) {
-        context.font = `bold ${fontSize}px franklin-gothic-book`;
-        writeScaled(line.label, { x, y: line.y });
+    const wrapDevelopmentValue = function (value) {
+        const categories = value.split(",").map(function (category) {
+            return category.trim();
+        }).filter(Boolean);
+        const wrappedLines = [];
+        let currentLine = "";
+
         context.font = `${fontSize}px franklin-gothic-book`;
-        writeScaled(line.value, { x: x + labelWidth + gap, y: line.y });
+        categories.forEach(function (category, index) {
+            const suffix = index < categories.length - 1 ? "," : "";
+            const nextCategory = category + suffix;
+            const candidate = currentLine ? currentLine + " " + nextCategory : nextCategory;
+
+            if (currentLine && context.measureText(candidate).width > valueWidth) {
+                wrappedLines.push(currentLine);
+                currentLine = nextCategory;
+            } else {
+                currentLine = candidate;
+            }
+        });
+
+        if (currentLine) {
+            wrappedLines.push(currentLine);
+        }
+
+        return wrappedLines.length ? wrappedLines : [""];
+    };
+
+    let y = 890;
+    lines.forEach(function (line, lineIndex) {
+        const wrappedValue = wrapDevelopmentValue(line.value);
+        context.font = `bold ${fontSize}px franklin-gothic-book`;
+        writeScaled(line.label, { x, y });
+
+        wrappedValue.forEach(function (valueLine, valueIndex) {
+            context.font = `${fontSize}px franklin-gothic-book`;
+            writeScaled(valueLine, { x: valueX, y: y + valueIndex * lineHeight });
+        });
+
+        y += wrappedValue.length * lineHeight;
+        if (lineIndex < lines.length - 1) {
+            y += blockGap;
+        }
     });
 }
 
