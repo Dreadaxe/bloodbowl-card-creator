@@ -1,51 +1,73 @@
 <main class="container py-4">
     <header class="mb-4">
-        <h1 class="display-5">Créateur de cartes Blood Bowl</h1>
-        <p class="lead mb-2">Créez, sauvegardez et imprimez vos cartes de joueurs, champions, cartes spéciales, dos de carte et tactiques de jeu.</p>
-        <p class="text-body-secondary mb-0">L’éditeur fonctionne directement dans votre navigateur. Les cartes et préférences enregistrées localement restent sur votre appareil jusqu’à leur réinitialisation.</p>
+        <h1 class="display-5" data-i18n="instructions.title">Blood Bowl Card Creator</h1>
+        <p class="lead mb-2" data-i18n="instructions.intro">Create, save and print your Blood Bowl cards.</p>
+        <p class="text-body-secondary mb-0" data-i18n="instructions.local_storage">The editor runs in your browser.</p>
     </header>
 
     <div class="alert alert-warning" role="alert">
-        <h2 class="h5 alert-heading">À propos des préréglages officiels</h2>
-        <p class="mb-0">Certains préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux personnes possédant les livres correspondants et ne remplacent pas les règles officielles.</p>
+        <h2 class="h5 alert-heading" data-i18n="instructions.preset_warning.title">About official presets</h2>
+        <p class="mb-0" data-i18n="instructions.preset_warning.text">Some presets reproduce data from official publications.</p>
     </div>
 
     <section class="card mb-4">
         <div class="card-body">
-            <h2 class="h3 card-title">Créer et modifier une carte</h2>
+            <h2 class="h3 card-title" data-i18n="instructions.editor.title">Create and edit a card</h2>
             <ol class="mb-0">
-                <li class="mb-2">Choisissez un éditeur dans la barre de navigation : <strong>Joueurs</strong>, <strong>Star Players</strong>, <strong>Cartes spéciales</strong>, <strong>Dos de carte</strong> ou <strong>Tactiques de jeu</strong>.</li>
-                <li class="mb-2">Renseignez les champs ou chargez un préréglage. L’aperçu de la carte est mis à jour au fur et à mesure.</li>
-                <li class="mb-2">Utilisez <strong>Sauvegarder comme image</strong> pour obtenir un PNG, ou <strong>Sauvegarder comme fichier</strong> pour conserver une carte modifiable au format JSON.</li>
-                <li>Rechargez ensuite ce fichier JSON avec <strong>Charger une carte</strong>. La réinitialisation efface les données enregistrées localement pour repartir des valeurs par défaut.</li>
+                <li class="mb-2" data-i18n="instructions.editor.step_1">Choose an editor in the navigation bar.</li>
+                <li class="mb-2" data-i18n="instructions.editor.step_2">Fill in the fields or load a preset.</li>
+                <li class="mb-2" data-i18n="instructions.editor.step_3">Save a PNG or a JSON file.</li>
+                <li data-i18n="instructions.editor.step_4">Reload the JSON file later to continue editing.</li>
             </ol>
         </div>
     </section>
 
     <section class="card mb-4">
         <div class="card-body">
-            <h2 class="h3 card-title">Imprimer neuf cartes sur une feuille A4</h2>
+            <h2 class="h3 card-title" data-i18n="instructions.a4.title">Print nine cards on an A4 sheet</h2>
             <ol>
-                <li class="mb-2">Depuis n’importe quel éditeur, cliquez sur <strong>Envoyer à l’impression</strong>. Pour les champions, vous pouvez aussi les sélectionner directement dans l’onglet <strong>Impression</strong>.</li>
-                <li class="mb-2">Dans la feuille d’impression, choisissez et réorganisez jusqu’à neuf cartes par page. Vous pouvez revenir modifier une carte sans perdre votre sélection.</li>
-                <li class="mb-2">Activez selon vos besoins les marques de coupe, la marge d’impression, les pointillés ou les angles droits.</li>
-                <li>Imprimez au format <strong>A4</strong>, à l’échelle <strong>100 %</strong>, sans ajustement automatique du navigateur. Vérifiez l’aperçu avant de lancer une impression recto verso.</li>
+                <li class="mb-2" data-i18n="instructions.a4.step_1">Send cards to the print workspace.</li>
+                <li class="mb-2" data-i18n="instructions.a4.step_2">Arrange up to nine cards per page.</li>
+                <li class="mb-2" data-i18n="instructions.a4.step_3">Choose cut marks, bleed, dashed borders or square corners.</li>
+                <li data-i18n="instructions.a4.step_4">Print at A4 and 100% scale.</li>
             </ol>
-            <a class="btn btn-primary" href="print.html">Préparer une feuille d’impression</a>
+            <a class="btn btn-primary" href="print.html" data-i18n="instructions.a4.button">Prepare a print sheet</a>
+        </div>
+    </section>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h2 class="h3 card-title" data-i18n="instructions.professional.title">Professional printing</h2>
+            <p data-i18n="instructions.professional.intro">You can also send the exported cards to a professional printer.</p>
+            <ul>
+                <li class="mb-2" data-i18n="instructions.professional.size">Ask for a finished card size of 63 × 88 mm.</li>
+                <li class="mb-2" data-i18n="instructions.professional.bleed">Enable bleed when the printer requests it.</li>
+                <li class="mb-2" data-i18n="instructions.professional.marks">Only add crop marks when requested by the printer.</li>
+                <li data-i18n="instructions.professional.proof">Order a proof before a large print run.</li>
+            </ul>
+
+            <h3 class="h5 mt-4" data-i18n="instructions.professional.mpc_title">Historical MakePlayingCards settings</h3>
+            <p class="text-body-secondary" data-i18n="instructions.professional.mpc_note">These settings were used by the Noxoffa version. The project is not affiliated with this company.</p>
+            <ul class="mb-0">
+                <li><a href="https://www.makeplayingcards.com" target="_blank" rel="noopener noreferrer">MakePlayingCards</a> — Custom Game Cards (63 × 88 mm) Playing Cards</li>
+                <li>2.48″ × 3.46″ (63 × 88 mm), 55 cards</li>
+                <li>Card Stock: (S33) Superior Smooth</li>
+                <li>Finishing: MPC Game Card Finish</li>
+            </ul>
 
             <details class="mt-4">
-                <summary class="fw-semibold">Méthode historique avec GIMP</summary>
+                <summary class="fw-semibold" data-i18n="instructions.gimp.title">Historical GIMP method</summary>
                 <div class="mt-3">
-                    <p>Cette méthode reste disponible pour composer manuellement une page :</p>
+                    <p data-i18n="instructions.gimp.intro">This method remains available for manually composing a page.</p>
                     <ol>
-                        <li>Installez <a href="https://www.gimp.org" target="_blank" rel="noopener noreferrer">GIMP</a>.</li>
-                        <li>Ouvrez le <a href="assets/page_template.xcf" download>modèle A4 au format XCF</a>.</li>
-                        <li>Ajoutez les PNG avec <em>Fichier → Ouvrir en tant que calques</em>, puis placez-les dans les neuf emplacements.</li>
-                        <li>Réglez les marges à 0 dans la mise en page et imprimez à 100 %.</li>
+                        <li><span data-i18n="instructions.gimp.step_1_before">Install</span> <a href="https://www.gimp.org" target="_blank" rel="noopener noreferrer">GIMP</a>.</li>
+                        <li><span data-i18n="instructions.gimp.step_2_before">Open the</span> <a href="assets/page_template.xcf" download data-i18n="instructions.gimp.template_link">A4 XCF template</a>.</li>
+                        <li data-i18n="instructions.gimp.step_3">Add PNG files as layers and place them in the nine slots.</li>
+                        <li data-i18n="instructions.gimp.step_4">Set margins to 0 and print at 100%.</li>
                     </ol>
                     <div class="d-flex flex-wrap gap-3">
-                        <img src="assets/img/template_image.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Modèle A4 vierge dans GIMP">
-                        <img src="assets/img/template_result.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Exemple de feuille A4 remplie dans GIMP">
+                        <img src="assets/img/template_image.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Blank A4 template in GIMP" data-i18n="[alt]instructions.gimp.blank_alt">
+                        <img src="assets/img/template_result.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Completed A4 sheet in GIMP" data-i18n="[alt]instructions.gimp.result_alt">
                     </div>
                 </div>
             </details>
@@ -53,59 +75,60 @@
     </section>
 
     <section class="mb-4">
-        <h2 class="h3">Versions et filiation du projet</h2>
-        <p>Le projet est le résultat de plusieurs forks successifs. Chaque version conserve le travail précédent et ajoute ses propres évolutions.</p>
+        <h2 class="h3" data-i18n="instructions.lineage.title">Project versions and lineage</h2>
+        <p data-i18n="instructions.lineage.intro">The project is the result of several successive forks.</p>
         <div class="table-responsive">
             <table class="table table-striped table-bordered align-middle">
                 <thead>
                     <tr>
-                        <th scope="col">Version</th>
-                        <th scope="col">Principales évolutions</th>
-                        <th scope="col">Liens</th>
+                        <th scope="col" data-i18n="instructions.lineage.version">Version</th>
+                        <th scope="col" data-i18n="instructions.lineage.changes">Main changes</th>
+                        <th scope="col" data-i18n="instructions.lineage.links">Links</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th scope="row">Barry Sheppard</th>
-                        <td>Création de la première version Blood Bowl, adaptée du générateur de cartes Warcry.</td>
-                        <td><a href="https://barrysheppard.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/barrysheppard/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                        <td data-i18n="instructions.lineage.barry">Created the first Blood Bowl version from the Warcry card generator.</td>
+                        <td><a href="https://barrysheppard.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.site">Site</a> · <a href="https://github.com/barrysheppard/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.source">Source code</a></td>
                     </tr>
                     <tr>
                         <th scope="row">Graylikeme</th>
-                        <td>Poursuite de l’éditeur et ajout de la catégorie de compétences <em>Devious</em>.</td>
-                        <td><a href="https://graylikeme.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/graylikeme/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                        <td data-i18n="instructions.lineage.graylikeme">Continued the editor and added the Devious skill category.</td>
+                        <td><a href="https://graylikeme.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.site">Site</a> · <a href="https://github.com/graylikeme/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.source">Source code</a></td>
                     </tr>
                     <tr>
                         <th scope="row">Turficon</th>
-                        <td>Ajout des dos de carte, de l’internationalisation, de la traduction française et de diverses améliorations.</td>
-                        <td><a href="https://turficon.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/turficon/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                        <td data-i18n="instructions.lineage.turficon">Added card backs, internationalisation, French localisation and other improvements.</td>
+                        <td><a href="https://turficon.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.site">Site</a> · <a href="https://github.com/turficon/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.source">Source code</a></td>
                     </tr>
                     <tr>
                         <th scope="row">Noxoffa</th>
-                        <td>Séparation des éditeurs Joueurs et Star Players, ajout de 66 préréglages de champions de la Saison 3, nouveaux fonds et pictogrammes, thèmes clair/sombre, quatre langues et migration vers Bootstrap 5.</td>
-                        <td><a href="https://noxoffa.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/Noxoffa/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                        <td data-i18n="instructions.lineage.noxoffa">Separated Player and Star Player editors and added Season 3 presets, themes and languages.</td>
+                        <td><a href="https://noxoffa.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.site">Site</a> · <a href="https://github.com/Noxoffa/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.source">Source code</a></td>
                     </tr>
                     <tr class="table-primary">
-                        <th scope="row">Dreadaxe — version actuelle</th>
-                        <td>Feuilles A4 de neuf cartes, file d’impression commune à tous les éditeurs, modification des cartes à la volée, persistance entre les onglets, marques de coupe et options de bordure, recherche de champions et travail de localisation française à partir des données BBTC.</td>
-                        <td><a href="https://dreadaxe.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/Dreadaxe/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                        <th scope="row">Dreadaxe — <span data-i18n="instructions.lineage.current">current version</span></th>
+                        <td data-i18n="instructions.lineage.dreadaxe">Added A4 print sheets, the shared queue, live editing, persistence, cut marks, search and French localisation work.</td>
+                        <td><a href="https://dreadaxe.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.site">Site</a> · <a href="https://github.com/Dreadaxe/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer" data-i18n="instructions.lineage.source">Source code</a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p class="small text-body-secondary">Filiation : Barry Sheppard → Graylikeme → Turficon → Noxoffa → Dreadaxe.</p>
+        <p class="small text-body-secondary" data-i18n="instructions.lineage.summary">Lineage: Barry Sheppard → Graylikeme → Turficon → Noxoffa → Dreadaxe.</p>
     </section>
 
     <section class="card mb-4">
         <div class="card-body">
-            <h2 class="h3 card-title">Soutenir Noxomant</h2>
-            <p>Le bouton Ko-fi historique de Noxomant a été déplacé ici afin que chaque version du projet puisse identifier clairement son propre moyen de soutien.</p>
+            <h2 class="h3 card-title" data-i18n="instructions.support.title">Support Noxomant</h2>
+            <p data-i18n="instructions.support.text">Noxomant's historical Ko-fi button is kept here so each project version can identify its own support link.</p>
             <p>
-                <a class="btn btn-danger" href="https://ko-fi.com/noxomant" target="_blank" rel="noopener noreferrer">Offrir un café à Noxomant sur Ko-fi</a>
+                <a class="btn btn-danger" href="https://ko-fi.com/noxomant" target="_blank" rel="noopener noreferrer" data-i18n="instructions.support.button">Buy Noxomant a coffee on Ko-fi</a>
             </p>
             <iframe
                 src="https://ko-fi.com/noxomant/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true"
-                title="Soutenir Noxomant sur Ko-fi"
+                title="Support Noxomant on Ko-fi"
+                data-i18n="[title]instructions.support.iframe_title"
                 loading="lazy"
                 style="border: 0; width: 100%; max-width: 480px; height: 500px; background: #f9f9f9;">
             </iframe>
@@ -114,15 +137,15 @@
 
     <section class="card mb-4">
         <div class="card-body">
-            <h2 class="h3 card-title">Crédits, licence et avertissement</h2>
+            <h2 class="h3 card-title" data-i18n="instructions.credits.title">Credits, licence and disclaimer</h2>
             <ul>
-                <li>Illustrations issues du <em>BB Magic Set Editor</em> de jtv123, présenté sur <a href="https://www.reddit.com/r/bloodbowl/comments/s79fcc/blood_bowl_star_playerpositionalspecial_plays/" target="_blank" rel="noopener noreferrer">Reddit</a>.</li>
-                <li>Logos provenant des ressources Cyanide pour <a href="http://download.cyanide-studio.com/images-bb2/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 2</a> et <a href="http://download.cyanide-studio.com/images-bb3/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 3</a>.</li>
-                <li>Projet distribué sous licence <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">Creative Commons BY-NC 4.0</a>.</li>
+                <li><span data-i18n="instructions.credits.art_before">Artwork from the BB Magic Set Editor by jtv123, presented on</span> <a href="https://www.reddit.com/r/bloodbowl/comments/s79fcc/blood_bowl_star_playerpositionalspecial_plays/" target="_blank" rel="noopener noreferrer">Reddit</a>.</li>
+                <li><span data-i18n="instructions.credits.logos_before">Logos from Cyanide resources for</span> <a href="http://download.cyanide-studio.com/images-bb2/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 2</a> <span data-i18n="instructions.credits.and">and</span> <a href="http://download.cyanide-studio.com/images-bb3/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 3</a>.</li>
+                <li><span data-i18n="instructions.credits.license_before">Project distributed under the</span> <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener noreferrer">Creative Commons BY-NC 4.0</a> <span data-i18n="instructions.credits.license_after">licence</span>.</li>
             </ul>
-            <p>Ce projet communautaire, non commercial et à but non lucratif, est développé sur du temps libre. Son code source est ouvert aux contributions et aux forks, dans le respect de sa licence et des crédits ci-dessus.</p>
-            <p class="mb-2"><strong>Ce projet n’est ni approuvé, ni soutenu, ni sanctionné par Games Workshop.</strong></p>
-            <p class="small text-body-secondary mb-0">Blood Bowl, Games Workshop et tous les noms, logos, illustrations, personnages et éléments associés sont des marques ou œuvres protégées appartenant à leurs détenteurs respectifs. Tous droits réservés.</p>
+            <p data-i18n="instructions.credits.community">This community project is non-commercial, non-profit and open to contributions and forks.</p>
+            <p class="mb-2"><strong data-i18n="instructions.credits.disclaimer">This project is not endorsed, supported or sanctioned by Games Workshop.</strong></p>
+            <p class="small text-body-secondary mb-0" data-i18n="instructions.credits.rights">Blood Bowl, Games Workshop and associated names, logos and artwork belong to their respective owners. All rights reserved.</p>
         </div>
     </section>
 </main>
