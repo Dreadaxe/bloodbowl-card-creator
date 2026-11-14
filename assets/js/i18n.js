@@ -6,6 +6,7 @@ const lngs = {
 }
 
 const rerender = () => {
+  document.documentElement.lang = i18next.resolvedLanguage || 'en';
   // start localizing, details:
   // https://github.com/i18next/jquery-i18next#usage-of-selector-function
   $('html').localize()
@@ -25,13 +26,13 @@ initI18n = function () {
   const primaryLanguage = navigator.language;
   console.log(primaryLanguage);
   
-  let fallbackLng= primaryLanguage.split('-')[0];
-  if (!(fallbackLng in lngs)) {
-    fallbackLng = "en";
+  let initialLng = primaryLanguage.split('-')[0];
+  if (!(initialLng in lngs)) {
+    initialLng = "en";
   }
   
   if(storedLng != null){
-    fallbackLng = storedLng;
+    initialLng = storedLng;
   }
 
 
@@ -42,7 +43,8 @@ initI18n = function () {
     .use(i18nextHttpBackend)
     .init({
       debug: true,
-      fallbackLng: fallbackLng,
+      lng: initialLng,
+      fallbackLng: "en",
       backend: {
       
         loadPath: 'assets/js/i18n/locales/{{lng}}/{{ns}}.json?v=20261114-2'
