@@ -3,78 +3,77 @@
         "title": "Blood Bowl Créateur de cartes",
         "description": "Une application pour créer des cartes du jeu de plateau Blood Bowl, personnalisées et prêtes à imprimer."
     },
-    "nav":{
-        "players" : "Joueurs",
-        "star_players" : "Star Players",
-        "special_cards" : "Cartes Spéciales",
-        "card_back" : "Dos de carte",
-        "plays" : "Tactiques de jeux",
-        "print_sheets" : "Impression",
-        "instructions" : "Instructions"
+    "nav": {
+        "players": "Joueurs",
+        "star_players": "Star Players",
+        "special_cards": "Cartes Spéciales",
+        "card_back": "Dos de carte",
+        "plays": "Tactiques de jeux",
+        "print_sheets": "Impression",
+        "instructions": "Instructions",
+        "support_dreadaxe": "Soutenir Dreadaxe"
     },
-    "card":{
-        "action":{
-            "remove_border":"Supprimer les bords pour ajouter une marge d'impression",
-            "add_dash":"Ajouter une bordure en pointillés",
-            "save_as_image":"Sauvegarder comme image",
-            "send_to_print":"Envoyer à l'impression",
-            "save_as_file":"Sauvegarder comme fichier",
-            "load":"Charger une carte",
-            "reset_all":"Effacer",
-            "choose_preset":"Choisir un préréglage",
-            "load_preset":"Charger un préréglage",
-            "preset_notice":"Ces préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux utilisateurs possédant les livres correspondants et ne remplacent pas les règles officielles."
+    "card": {
+        "action": {
+            "remove_border": "Supprimer les bords pour ajouter une marge d'impression",
+            "add_dash": "Ajouter une bordure en pointillés",
+            "save_as_image": "Sauvegarder comme image",
+            "send_to_print": "Envoyer à l'impression",
+            "save_as_file": "Sauvegarder comme fichier",
+            "load": "Charger une carte",
+            "reset_all": "Effacer",
+            "choose_preset": "Choisir un préréglage",
+            "load_preset": "Charger un préréglage",
+            "preset_notice": "Ces préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux utilisateurs possédant les livres correspondants et ne remplacent pas les règles officielles."
         },
-        "caracteristics":{
-            "player_stats" : "Statistiques du Joueur",
-            "player_name" : "Nom du joueur",
-            "team_name" : "Nom de l'equipe",
-            "show_team_name" : "Nom de l'équipe visible",
-            "MA" : "M",
-            "ST" : "F",
-            "AG" : "AG",
-            "PA" : "CP",
-            "AV" : "AR",
-            "GP" : "PO",
-            "skills_traits" : "Compétences & Traits",
-            "plays_for" : "Joue pour",
-            "special_rules" : "Rêgles spéciales",
-            "rulename" : "Nom de la règle: texte",
-            "player_development" : "Développement du joueur",
-            "keywords" : "Mots-clefs",
-            "primary_skills" : "Compétences primaires",
-            "secondary_skills" : "Compétences secondaires",
-            "agility_box" : "A",
-            "devious_box" : "S",
-            "general_box" : "G",
-            "mutations_box" : "M",
-            "passing_box" :"P",
-            "strength_box" : "F",
-            "agility" : "Agilité",
-            "devious" : "Scélérates",
-            "general" : "Générales",
-            "mutations" : "Mutation",
-            "passing" :"Passe",
-            "strength" : "Force",
+        "caracteristics": {
+            "player_stats": "Statistiques du Joueur",
+            "player_name": "Nom du joueur",
+            "team_name": "Nom de l'equipe",
+            "show_team_name": "Nom de l'équipe visible",
+            "MA": "M",
+            "ST": "F",
+            "AG": "AG",
+            "PA": "CP",
+            "AV": "AR",
+            "GP": "PO",
+            "skills_traits": "Compétences & Traits",
+            "plays_for": "Joue pour",
+            "special_rules": "Rêgles spéciales",
+            "rulename": "Nom de la règle: texte",
+            "player_development": "Développement du joueur",
+            "keywords": "Mots-clefs",
+            "primary_skills": "Compétences primaires",
+            "secondary_skills": "Compétences secondaires",
+            "agility_box": "A",
+            "devious_box": "S",
+            "general_box": "G",
+            "mutations_box": "M",
+            "passing_box": "P",
+            "strength_box": "F",
+            "agility": "Agilité",
+            "devious": "Scélérates",
+            "general": "Générales",
+            "mutations": "Mutation",
+            "passing": "Passe",
+            "strength": "Force",
             "primary": "Primaire",
-            "secondary" : "Secondaire",
-            "body_text" : "Texte de la carte",
-            "clear" : "Effacer"
+            "secondary": "Secondaire",
+            "body_text": "Texte de la carte",
+            "clear": "Effacer"
         },
-        "deployement":{
-
-        },
-        "special":{
-            "card_details" : "Détails de la carte",
+        "deployement": {},
+        "special": {
+            "card_details": "Détails de la carte",
             "card_name": "Nom de la carte",
-            "font_size" : "Taille de police",
-            "timing" :"Timing",
-            "timing_text" : "Timing Text",
-            "duration" : "Durée",
-            "duration_text" : "Texte de la durée",
-            "effect" : "Effet",
-            "effect_text" : "Texte de l'effet",
-            "footer" : "Pied de carte"
+            "font_size": "Taille de police",
+            "timing": "Timing",
+            "timing_text": "Timing Text",
+            "duration": "Durée",
+            "duration_text": "Texte de la durée",
+            "effect": "Effet",
+            "effect_text": "Texte de l'effet",
+            "footer": "Pied de carte"
         },
         "card_back": {
             "simple_background": "Fond simple",
@@ -82,7 +81,7 @@
             "background_header": "Fond avec en-tête",
             "background_logo_header": "Fond avec logo et en-tête"
         },
-        "image":{
+        "image": {
             "background": "Fond",
             "blue_textured": "Bleu texturé",
             "light_blue": "Bleu clair",
@@ -96,16 +95,14 @@
             "choose_icon": "Choisir une icône",
             "center_image": "Centrer l'image",
             "load_icon": "Charger une icône (recommandé 100x100 px)",
-            "load_image" : "Charger image",
-            "x_offset" : "X offset (↔)",
-            "y_offset" : "Y offset (↕)",
+            "load_image": "Charger image",
+            "x_offset": "X offset (↔)",
+            "y_offset": "Y offset (↕)",
             "scale_percent": "Echelle (%)"
         }
     },
-    "plays":{
-
-    },
-    "print":{
+    "plays": {},
+    "print": {
         "title": "Feuilles d'impression",
         "intro": "Choisissez les champions et disposez-les sur des feuilles A4 prêtes à imprimer, à raison de neuf cartes par page.",
         "search": "Rechercher des champions",
@@ -145,5 +142,83 @@
         "page_summary": "{{sheets}} feuilles · {{pages}} pages",
         "renderer_timeout": "Le moteur de rendu des cartes n'a pas démarré. Rechargez la page puis réessayez.",
         "unknown_error": "Impossible de générer les feuilles d'impression."
+    },
+    "instructions": {
+        "title": "Créateur de cartes Blood Bowl",
+        "intro": "Créez, sauvegardez et imprimez vos cartes de joueurs, champions, cartes spéciales, dos de carte et tactiques de jeu.",
+        "local_storage": "L’éditeur fonctionne directement dans votre navigateur. Les cartes et préférences enregistrées localement restent sur votre appareil jusqu’à leur réinitialisation.",
+        "preset_warning": {
+            "title": "À propos des préréglages officiels",
+            "text": "Certains préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux personnes possédant les livres correspondants et ne remplacent pas les règles officielles."
+        },
+        "editor": {
+            "title": "Créer et modifier une carte",
+            "step_1": "Choisissez un éditeur dans la barre de navigation : Joueurs, Star Players, Cartes spéciales, Dos de carte ou Tactiques de jeu.",
+            "step_2": "Renseignez les champs ou chargez un préréglage. L’aperçu de la carte est mis à jour au fur et à mesure.",
+            "step_3": "Utilisez Sauvegarder comme image pour obtenir un PNG, ou Sauvegarder comme fichier pour conserver une carte modifiable au format JSON.",
+            "step_4": "Rechargez ensuite ce fichier JSON avec Charger une carte. La réinitialisation efface les données enregistrées localement et rétablit les valeurs par défaut."
+        },
+        "a4": {
+            "title": "Imprimer neuf cartes sur une feuille A4",
+            "step_1": "Depuis n’importe quel éditeur, cliquez sur Envoyer à l’impression. Pour les champions, vous pouvez aussi les sélectionner directement dans l’onglet Impression.",
+            "step_2": "Choisissez et réorganisez jusqu’à neuf cartes par page. Vous pouvez revenir modifier une carte sans perdre votre sélection.",
+            "step_3": "Activez selon vos besoins les marques de coupe, la marge d’impression, les pointillés ou les angles droits.",
+            "step_4": "Imprimez au format A4, à l’échelle 100 %, sans ajustement automatique du navigateur. Vérifiez l’aperçu avant une impression recto verso.",
+            "button": "Préparer une feuille d’impression"
+        },
+        "professional": {
+            "title": "Faire imprimer les cartes par un professionnel",
+            "intro": "Vous pouvez aussi confier les images exportées à un imprimeur local ou à un service d’impression en ligne.",
+            "size": "Demandez un format fini de 63 × 88 mm et faites confirmer la résolution d’image et le profil colorimétrique attendus.",
+            "bleed": "Si l’imprimeur exige un fond perdu, activez « Supprimer les bords pour ajouter une marge d’impression » avant d’exporter chaque carte.",
+            "marks": "N’ajoutez pas de marques de coupe aux fichiers individuels, sauf demande explicite de l’imprimeur.",
+            "proof": "Commandez une épreuve ou une petite série de test avant une grosse commande, notamment pour vérifier les couleurs, la lisibilité et l’alignement recto verso.",
+            "mpc_title": "Réglages historiques pour MakePlayingCards",
+            "mpc_note": "La version Noxoffa indiquait les réglages MakePlayingCards suivants. Ils sont conservés à titre de référence ; le projet n’est pas affilié à cette société."
+        },
+        "gimp": {
+            "title": "Méthode historique avec GIMP",
+            "intro": "Cette méthode reste disponible si vous préférez composer manuellement une page A4 :",
+            "step_1_before": "Installez",
+            "step_2_before": "Ouvrez le",
+            "template_link": "modèle A4 au format XCF",
+            "step_3": "Utilisez Fichier → Ouvrir en tant que calques pour ajouter les PNG, puis placez-les dans les neuf emplacements.",
+            "step_4": "Réglez les marges de page à 0 et imprimez à l’échelle 100 %.",
+            "blank_alt": "Modèle A4 vierge dans GIMP",
+            "result_alt": "Exemple de feuille A4 remplie dans GIMP"
+        },
+        "lineage": {
+            "title": "Versions et filiation du projet",
+            "intro": "Le projet est le résultat de plusieurs forks successifs. Chaque version conserve le travail précédent et ajoute ses propres évolutions.",
+            "version": "Version",
+            "changes": "Principales évolutions",
+            "links": "Liens",
+            "site": "Site",
+            "source": "Code source",
+            "barry": "Création de la première version Blood Bowl, adaptée du générateur de cartes Warcry.",
+            "graylikeme": "Poursuite de l’éditeur et ajout de la catégorie de compétences Devious.",
+            "turficon": "Ajout des dos de carte, de l’internationalisation, de la traduction française et de diverses améliorations.",
+            "noxoffa": "Séparation des éditeurs Joueurs et Star Players, ajout de 66 préréglages de champions de la Saison 3, nouveaux fonds et pictogrammes, thèmes clair/sombre, quatre langues et migration vers Bootstrap 5.",
+            "current": "version actuelle",
+            "dreadaxe": "Ajout des feuilles A4 de neuf cartes, d’une file d’impression commune à tous les éditeurs, de la modification à la volée, de la persistance entre les onglets, des marques de coupe et options de bordure, de la recherche de champions et du travail de localisation française à partir des données BBTC.",
+            "summary": "Filiation : Barry Sheppard → Graylikeme → Turficon → Noxoffa → Dreadaxe."
+        },
+        "support": {
+            "title": "Soutenir Noxomant",
+            "text": "Le bouton Ko-fi historique de Noxomant est conservé ici afin que chaque version du projet puisse identifier clairement son propre moyen de soutien.",
+            "button": "Offrir un café à Noxomant sur Ko-fi",
+            "iframe_title": "Soutenir Noxomant sur Ko-fi"
+        },
+        "credits": {
+            "title": "Crédits, licence et avertissement",
+            "art_before": "Illustrations issues du BB Magic Set Editor de jtv123, présenté sur",
+            "logos_before": "Logos provenant des ressources Cyanide pour",
+            "and": "et",
+            "license_before": "Projet distribué sous la",
+            "license_after": "licence",
+            "community": "Ce projet communautaire, non commercial et à but non lucratif, est développé sur du temps libre. Son code source est ouvert aux contributions et aux forks, dans le respect de sa licence et des crédits ci-dessus.",
+            "disclaimer": "Ce projet n’est ni approuvé, ni soutenu, ni sanctionné par Games Workshop.",
+            "rights": "Blood Bowl, Games Workshop et tous les noms, logos, illustrations, personnages et éléments associés sont des marques ou œuvres protégées appartenant à leurs détenteurs respectifs. Tous droits réservés."
+        }
     }
 }
