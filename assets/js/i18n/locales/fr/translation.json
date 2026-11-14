@@ -24,7 +24,10 @@
             "reset_all": "Effacer",
             "choose_preset": "Choisir un préréglage",
             "load_preset": "Charger un préréglage",
-            "preset_notice": "Ces préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux utilisateurs possédant les livres correspondants et ne remplacent pas les règles officielles."
+            "preset_notice": "Ces préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux utilisateurs possédant les livres correspondants et ne remplacent pas les règles officielles.",
+            "preset_search_placeholder": "Saisissez une équipe ou un poste…",
+            "no_preset_match": "Aucun préréglage correspondant",
+            "player_preset_source": "Profils de la Saison 3 classés par équipe, recoupés avec BBTC et traduits à partir des équivalences NRData vérifiées."
         },
         "caracteristics": {
             "player_stats": "Statistiques du Joueur",
@@ -39,7 +42,7 @@
             "GP": "PO",
             "skills_traits": "Compétences & Traits",
             "plays_for": "Joue pour",
-            "special_rules": "Rêgles spéciales",
+            "special_rules": "Règles spéciales",
             "rulename": "Nom de la règle: texte",
             "player_development": "Développement du joueur",
             "keywords": "Mots-clefs",
