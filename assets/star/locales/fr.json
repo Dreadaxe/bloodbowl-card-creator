@@ -1,0 +1,2425 @@
+{
+  "schemaVersion": "1.0.0",
+  "language": "fr-FR",
+  "source": {
+    "title": "Blood Bowl – Règles condensées, saison 3",
+    "url": "http://empireoublie.free.fr/docs/compil_saison3.pdf",
+    "sourceUpdated": "2026-09-03",
+    "pages": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  "counts": {
+    "starPlayerEntries": 63,
+    "cardProfiles": 66,
+    "pairGroups": 3
+  },
+  "conventions": {
+    "stats": "Les valeurs AG, CP et AR sont stockées sans le signe + ; null représente le tiret du tableau.",
+    "cost": "Coût en pièces d’or sous forme d’entier.",
+    "pairCost": "Pour un membre d’un duo, cost est le coût total de la paire et pairId identifie le groupe.",
+    "normalization": "Les coquilles manifestes d’extraction ou de frappe ont été corrigées sans modifier le sens des règles.",
+    "cardExports": "Le recto utilise le format Players du créateur de cartes. Le verso utilise le format Special Cards : nom du champion en titre, nom de la règle en texte introductif et règle complète dans le bloc Effect."
+  },
+  "pairGroups": [
+    {
+      "id": "grak-et-crumbleofruit",
+      "displayNameFr": "Grak & Crumbleofruit",
+      "displayNameVo": "Grak & Crumbleberry",
+      "members": [
+        "grak",
+        "crumbleofruit"
+      ],
+      "cost": 250000
+    },
+    {
+      "id": "perss-et-dribl",
+      "displayNameFr": "Perss’ & Dribl’",
+      "displayNameVo": "Drull & Dribl",
+      "members": [
+        "perss",
+        "dribl"
+      ],
+      "cost": 230000
+    },
+    {
+      "id": "lucien-et-valen-swift",
+      "displayNameFr": "Lucien & Valen Swift",
+      "displayNameVo": "Lucien & Valen Swift",
+      "members": [
+        "lucien-swift",
+        "valen-swift"
+      ],
+      "cost": 300000
+    }
+  ],
+  "starPlayers": [
+    {
+      "id": "akhorne-lecureuil",
+      "nameFr": "Akhorne l’Écureuil",
+      "nameVo": "Akhorne the Squirrel",
+      "page": 16,
+      "cost": 80000,
+      "stats": {
+        "movement": 7,
+        "strength": 1,
+        "agility": 2,
+        "passing": null,
+        "armour": 6
+      },
+      "keywords": [
+        "Écureuil",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Toutes"
+      ],
+      "skills": [
+        "Griffes",
+        "Intrépide",
+        "Esquive",
+        "Frénésie",
+        "Rétablissement",
+        "Solitaire (4+)",
+        "Sans Ballon",
+        "Glissade contrôlée",
+        "Minus",
+        "Microbe"
+      ],
+      "specialRule": {
+        "name": "Rage Aveugle",
+        "text": "Akhorne a le droit de relancer le D6 lors du jet pour la Compétence Intrépide."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "anqi-panqi",
+      "nameFr": "Anqi Panqi",
+      "page": 16,
+      "cost": 190000,
+      "stats": {
+        "movement": 7,
+        "strength": 4,
+        "agility": 5,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Homme-lézard",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Blocage",
+        "Instable",
+        "Projection",
+        "Solitaire (4+)",
+        "Stabilité"
+      ],
+      "specialRule": {
+        "name": "Coup Sauvage",
+        "text": "Une fois par match, quand Anqi fait une Action de Blocage contre un Joueur adverse, il a le droit de relancer certains ou tous les Dés de Blocage."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "barik-tirloin",
+      "nameFr": "Barik Tirloin",
+      "nameVo": "Barik Farblast",
+      "page": 16,
+      "cost": 80000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 4,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Nain",
+        "Lanceur"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Canonnier",
+        "Crâne Épais",
+        "Passe",
+        "Passe Désespérée",
+        "Prise Sûre",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Et Boum !",
+        "text": "Chaque fois que Barik fait une Passe Désespérée, il peut relancer n’importe quels résultats de déviation pour déterminer où le ballon atterrit, et tout coéquipier qui tente de Réceptionner le ballon applique un modificateur de +1 au jet."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "bilerot-vomipeau",
+      "nameFr": "Bilerot Vomipeau",
+      "nameVo": "Bilerot Vomitflesh",
+      "page": 16,
+      "cost": 180000,
+      "stats": {
+        "movement": 4,
+        "strength": 5,
+        "agility": 4,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Humain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Favoris de Nurgle"
+      ],
+      "skills": [
+        "Agresseur Solitaire",
+        "Instable",
+        "Joueur Déloyal",
+        "Présence Perturbante",
+        "Régénération",
+        "Répulsion",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Régurgitation Putride",
+        "text": "Une fois par mi-temps, Bilerot peut utiliser l’Action Spéciale Gerbe de Vomi. Elle peut être utilisée même si Bilerot a déjà effectué une Action de Blocage à ce Tour."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "boa-konssstriktor",
+      "nameFr": "Boa Kon’ssstriktor",
+      "page": 16,
+      "cost": 180000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 9
+      },
+      "keywords": [
+        "Homme-serpent",
+        "Coureur"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Esquive",
+        "Glissade Contrôlée",
+        "Libération Contrôlée",
+        "Parade",
+        "Queue Préhensile",
+        "Regard Hypnotique",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Regarde-moi Dans les Yeux",
+        "text": "Une fois par match, si Boa commence son activation en Marquant un joueur adverse en possession du ballon, il peut jeter un D6. Sur 1, rien ne se passe. Sur 2+, le joueur adverse perd le ballon, Boa prend immédiatement possession du ballon, et l’activation de Boa prend immédiatement fin."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "bolgrot-lecrabouilleur",
+      "nameFr": "Bolgrot l’Écrabouilleur",
+      "nameVo": "Ripper Bolgrot",
+      "page": 16,
+      "cost": 250000,
+      "stats": {
+        "movement": 5,
+        "strength": 6,
+        "agility": 5,
+        "passing": 4,
+        "armour": 10
+      },
+      "keywords": [
+        "Troll",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Châtaigne",
+        "Lancer de Coéquipier",
+        "Projection",
+        "Solitaire (4+)",
+        "Régénération",
+        "Dans le Mille"
+      ],
+      "specialRule": {
+        "name": "Cerveau des Trolls",
+        "text": "Une fois par mi-temps, Bolgrot peut relancer un unique dé jeté dans le cadre d’un jet de dé unique, d’un jet de plusieurs dés ou d’un groupe de dés, mais il ne peut pas s’agir d’un dé jeté dans le cadre d’un Jet d’Armure, d’un Jet de Blessure ni d’un Jet d’Élimination."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "boomer-morvonez",
+      "nameFr": "Boomer Morvonez",
+      "nameVo": "Bomber Dribblesnot",
+      "page": 16,
+      "cost": 80000,
+      "stats": {
+        "movement": 6,
+        "strength": 2,
+        "agility": 3,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Bombardier",
+        "Esquive",
+        "Minus",
+        "Poids Plume",
+        "Précision",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Ka boum !",
+        "text": "Une fois par match, si un joueur adverse Réceptionne une Bombe lancée par Boomer, vous avez le droit de décider qu’elle explose plutôt que de laisser le joueur adverse tenter immédiatement de la renvoyer."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "captaine-karina-von-riesz",
+      "nameFr": "Capt’aine Karina Von Riesz",
+      "nameVo": "Captain Karina Von Riesz",
+      "page": 16,
+      "cost": 230000,
+      "stats": {
+        "movement": 7,
+        "strength": 4,
+        "agility": 2,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Vampire",
+        "Coureur"
+      ],
+      "leagues": [
+        "Spot de Sylvanie"
+      ],
+      "skills": [
+        "Esquive",
+        "Regard Hypnotique",
+        "Régénération",
+        "Rétablissement",
+        "Soif de Sang (2+)",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Morceau de Choix",
+        "text": "Une fois par match, quand Karina a raté un jet de Soif de Sang, elle a le droit de mordre un joueur adverse ayant 3 ou moins en F comme si c’était un coéquipier Trois-quart Sbire. Cette règle spéciale ne permet pas à Karina de mordre des Star Players."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "cindy-piffretarte",
+      "nameFr": "Cindy Piffretarte",
+      "nameVo": "Cindy Piewhistle",
+      "page": 16,
+      "cost": 100000,
+      "stats": {
+        "movement": 5,
+        "strength": 2,
+        "agility": 3,
+        "passing": 3,
+        "armour": 7
+      },
+      "keywords": [
+        "Halfling",
+        "Spécial"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Coupe du Dé à Coudre"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Bombardier",
+        "Esquive",
+        "Minus",
+        "Précision",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Buffet à Volonté",
+        "text": "Une fois par match, Cindy peut effectuer 2 Actions Spéciales de Lancer de Bombe au lieu d’une ; mais elle doit s’engager à le faire avant de faire la première Action. En ce cas, immédiatement après avoir fait la deuxième Action Spéciale de Lancer de Bombe, jetez un D6. Sur 1-3, Cindy est immédiatement Expulsée."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "comte-luthor-von-drakenborg",
+      "nameFr": "Comte Luthor Von Drakenborg",
+      "nameVo": "Count Luthor Von Drakenborg",
+      "page": 16,
+      "cost": 300000,
+      "stats": {
+        "movement": 6,
+        "strength": 5,
+        "agility": 2,
+        "passing": 3,
+        "armour": 10
+      },
+      "keywords": [
+        "Vampire",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Spot de Sylvanie"
+      ],
+      "skills": [
+        "Blocage",
+        "Glissade Contrôlée",
+        "Regard Hypnotique",
+        "Régénération",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Star du Show",
+        "text": "Une fois par match, quand le Comte Luthor marque un Touchdown, son Coach gagne 1 Relance d’Équipe jusqu’à la fin de la Phase suivante. Si cette Relance d’Équipe n’est pas utilisée avant la fin de la Phase suivante, elle est perdue."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "eldril-fendlabise",
+      "nameFr": "Eldril Fendlabise",
+      "nameVo": "Eldril Sidewinder",
+      "page": 16,
+      "cost": 220000,
+      "stats": {
+        "movement": 8,
+        "strength": 3,
+        "agility": 2,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Elfe",
+        "Receveur"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Esquive",
+        "Nerfs d’Acier",
+        "Réception",
+        "Regard Hypnotique",
+        "Solitaire (4+)",
+        "Sur le Ballon"
+      ],
+      "specialRule": {
+        "name": "Danse Hypnotisante",
+        "text": "Une fois par mi-temps, Eldril peut relancer le dé quand il effectue une Action Spéciale de Regard Hypnotique."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "erable-hautbocage",
+      "nameFr": "Érable Hautbocage",
+      "nameVo": "Maple Highgrove",
+      "page": 17,
+      "cost": 210000,
+      "stats": {
+        "movement": 3,
+        "strength": 5,
+        "agility": 5,
+        "passing": 5,
+        "armour": 11
+      },
+      "keywords": [
+        "Homme-arbre",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Bagarreur",
+        "Châtaigne",
+        "Crâne Épais",
+        "Projection",
+        "Solitaire (4+)",
+        "Stabilité",
+        "Tentacules"
+      ],
+      "specialRule": {
+        "name": "Sarments Cruels",
+        "text": "Une fois par mi-temps, quand Érable annonce une Action de Blocage, il peut le faire contre un joueur adverse qui est à 2 cases de lui, selon toutes les règles normales pour effectuer une Action de Blocage, sauf qu’il ne peut pas poursuivre."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "estelle-la-veneaux",
+      "nameFr": "Estelle La Veneaux",
+      "page": 17,
+      "cost": 190000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Humain",
+        "Trois-quart"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Esquive",
+        "Garde",
+        "Glissade Contrôlée",
+        "Présence Perturbante",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Malédiction Funeste",
+        "text": "Une fois par match, au début de l’activation d’Estelle, elle a le droit de choisir un joueur adverse à 5 cases ou moins d’elle puis de jeter un D6. Sur 2+, le joueur choisi devient Déconcentré et on ne peut pas l’activer au Tour suivant de son équipe."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "fungus-le-cingle",
+      "nameFr": "Fungus le Cinglé",
+      "nameVo": "Fungus The Loon",
+      "page": 17,
+      "cost": 80000,
+      "stats": {
+        "movement": 4,
+        "strength": 7,
+        "agility": 3,
+        "passing": null,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Chaîne & Boulet",
+        "Châtaigne",
+        "Minus",
+        "Sans Ballon",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Derviche Tourbillonnant",
+        "text": "Une fois par Activation, Fungus peut relancer le D6 quand il détermine dans quelle direction il se déplace."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "glart-lavollee",
+      "nameFr": "Glart Lavollée",
+      "nameVo": "Glart Smahrip",
+      "page": 17,
+      "cost": 175000,
+      "stats": {
+        "movement": 5,
+        "strength": 4,
+        "agility": 4,
+        "passing": 6,
+        "armour": 9
+      },
+      "keywords": [
+        "Skaven",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Blocage",
+        "Griffes",
+        "Juggernaut",
+        "Projection",
+        "Solitaire (4+)",
+        "Stabilité"
+      ],
+      "specialRule": {
+        "name": "Ruée Frénétique",
+        "text": "Une fois par mi-temps, quand Glart déclare une Action de Blitz, il peut gagner la Compétence Frénésie jusqu’à la fin de son activation. Glart ne peut pas utiliser la Compétence Projection à un Tour auquel il utilise cette règle spéciale."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "gloriel-efflorescente",
+      "nameFr": "Gloriel Efflorescente",
+      "nameVo": "Gloriel Summerbloom",
+      "page": 17,
+      "cost": 150000,
+      "stats": {
+        "movement": 7,
+        "strength": 2,
+        "agility": 2,
+        "passing": 2,
+        "armour": 8
+      },
+      "keywords": [
+        "Elfe",
+        "Lanceur"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Esquive",
+        "Glissade Contrôlée",
+        "Passe",
+        "Précision",
+        "Prise Sûre",
+        "Solitaire (3+)"
+      ],
+      "specialRule": {
+        "name": "Tout ou Rien",
+        "text": "Une fois par match, quand Gloriel est activée, elle peut utiliser cette règle spéciale. En ce cas, Gloriel gagne la Compétence Passe Désespérée jusqu’à la fin de son activation."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "glotl-stop",
+      "nameFr": "Glotl Stop",
+      "page": 17,
+      "cost": 260000,
+      "stats": {
+        "movement": 6,
+        "strength": 6,
+        "agility": 5,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Homme-lézard",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Châtaigne",
+        "Crâne Épais",
+        "Frénésie",
+        "Queue Préhensile",
+        "Sauvagerie Animale",
+        "Solitaire (4+)",
+        "Stabilité"
+      ],
+      "specialRule": {
+        "name": "Sauvagerie Primordiale",
+        "text": "Une fois par match, quand Glotl rate un jet de Sauvagerie Animale, il peut s’en prendre à un joueur adverse plutôt qu’à un coéquipier."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "gobbo-le-noir",
+      "nameFr": "Gobbo le Noir",
+      "nameVo": "The Black Gobbo",
+      "page": 17,
+      "cost": 210000,
+      "stats": {
+        "movement": 6,
+        "strength": 2,
+        "agility": 3,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Bombardier",
+        "Esquive",
+        "Glissade Contrôlée",
+        "Minus",
+        "Poignard",
+        "Présence Perturbante",
+        "Solitaire (3+)",
+        "Sournois"
+      ],
+      "specialRule": {
+        "name": "Le plus Sournois de Tous",
+        "text": "Gobbo peut faire 1 agression par tour sans qu’elle compte comme l’agression de l’équipe."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "grak",
+      "nameFr": "Grak",
+      "nameVo": "Grak",
+      "pairId": "grak-et-crumbleofruit",
+      "page": 17,
+      "cost": 250000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 4,
+        "passing": 4,
+        "armour": 10
+      },
+      "keywords": [
+        "Ogre",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Toutes"
+      ],
+      "skills": [
+        "Botter de Coéquipier",
+        "Cerveau Lent",
+        "Châtaigne",
+        "Crâne Épais",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Je Te Porte",
+        "text": "Grak & Crumbleberry doivent être embauchés en tant que paire. De plus, une fois par mi-temps, si Grak commence son activation adjacent à Crumbleberry, il peut le ramasser : retirez Crumbleberry du terrain temporairement. À la fin de l’activation de Grak, placez Crumbleberry sur une case inoccupée adjacente à Grak."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "crumbleofruit",
+      "nameFr": "Crumbleofruit",
+      "nameVo": "Crumbleberry",
+      "pairId": "grak-et-crumbleofruit",
+      "page": 17,
+      "cost": 250000,
+      "stats": {
+        "movement": 5,
+        "strength": 2,
+        "agility": 3,
+        "passing": 5,
+        "armour": 7
+      },
+      "keywords": [
+        "Halfling",
+        "Trois-quarts"
+      ],
+      "leagues": [
+        "Toutes"
+      ],
+      "skills": [
+        "Esquive",
+        "Minus",
+        "Poids Plume",
+        "Prise Sûre",
+        "Solitaire (4+)",
+        "Vol Fatal"
+      ],
+      "specialRule": {
+        "name": "Je Te Porte",
+        "text": "Grak & Crumbleberry doivent être embauchés en tant que paire. De plus, une fois par mi-temps, si Grak commence son activation adjacent à Crumbleberry, il peut le ramasser : retirez Crumbleberry du terrain temporairement. À la fin de l’activation de Grak, placez Crumbleberry sur une case inoccupée adjacente à Grak."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "grashnak-noirsabot",
+      "nameFr": "Grashnak Noirsabot",
+      "nameVo": "Grashnak Blackhoof",
+      "page": 17,
+      "cost": 240000,
+      "stats": {
+        "movement": 6,
+        "strength": 6,
+        "agility": 4,
+        "passing": 6,
+        "armour": 9
+      },
+      "keywords": [
+        "Minotaure",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Clash du Chaos"
+      ],
+      "skills": [
+        "Châtaigne",
+        "Cornes",
+        "Crâne Épais",
+        "Frénésie",
+        "Fureur Débridée",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Encorné par le Taureau",
+        "text": "Une fois par match, quand Grashnak effectue une Action de Blocage dans le cadre d’une Action de Blitz, il peut lancer 1 Dé de Blocage supplémentaire contre le joueur adverse quelle que soit sa Force, jusqu’à un maximum de 3 Dés de Blocage. Si Grashnak effectue une seconde Action de Blocage en raison de la Compétence Frénésie, la seconde Action de Blocage bénéficie aussi de cette règle."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "gretchen-wachter",
+      "nameFr": "Gretchen Wächter",
+      "page": 17,
+      "cost": 180000,
+      "stats": {
+        "movement": 7,
+        "strength": 3,
+        "agility": 2,
+        "passing": null,
+        "armour": 9
+      },
+      "keywords": [
+        "Mort-vivant",
+        "Spectre",
+        "Spécial"
+      ],
+      "leagues": [
+        "Spot de Sylvanie"
+      ],
+      "skills": [
+        "Esquive",
+        "Glissade Contrôlée",
+        "Poursuite",
+        "Présence Perturbante",
+        "Régénération",
+        "Répulsion",
+        "Rétablissement",
+        "Sans Ballon",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Éthérée",
+        "text": "Une fois par match, quand Gretchen est activée, elle peut utiliser cette règle spéciale. Jusqu’à la fin de son activation, Gretchen n’a pas à faire de jet d’Esquive pour quitter une case dans la Zone de Tacle d’un joueur adverse."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "griff-oberwald",
+      "nameFr": "Griff Oberwald",
+      "page": 17,
+      "cost": 300000,
+      "stats": {
+        "movement": 7,
+        "strength": 4,
+        "agility": 2,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Équilibre",
+        "Esquive",
+        "Parade",
+        "Sprint",
+        "Solitaire (3+)"
+      ],
+      "specialRule": {
+        "name": "Grand Professionnel",
+        "text": "Une fois par match, Griff peut appliquer un modificateur de +1 à un Test d’Agilité qu’il a fait. Ce modificateur peut être appliqué après avoir fait le jet."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": true
+    },
+    {
+      "id": "grim-croc-dacier",
+      "nameFr": "Grim Croc d’Acier",
+      "nameVo": "Grim Ironjaw",
+      "page": 18,
+      "cost": 190000,
+      "stats": {
+        "movement": 5,
+        "strength": 4,
+        "agility": 3,
+        "passing": 6,
+        "armour": 9
+      },
+      "keywords": [
+        "Nain",
+        "Spécial"
+      ],
+      "leagues": [
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Solitaire (4+)",
+        "Blocage",
+        "Intrépide",
+        "Frénésie",
+        "Haine (Gros Bras)",
+        "Blocage Multiple",
+        "Crâne Épais"
+      ],
+      "specialRule": {
+        "name": "Tueur",
+        "text": "Une fois par match, quand un Gros Bras adverse est Plaqué suite à une Action de Blocage effectuée par Grim, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d’Armure ou au Jet de Blessure. Ce modificateur peut être appliqué après avoir fait le jet."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "grombrindal",
+      "nameFr": "Grombrindal",
+      "page": 18,
+      "cost": 170000,
+      "stats": {
+        "movement": 5,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 10
+      },
+      "keywords": [
+        "Nain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Coupe du Dé à Coudre",
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Châtaigne",
+        "Crâne Épais",
+        "Équilibre",
+        "Esquive en Force",
+        "Intrépide",
+        "Solitaire (4+)",
+        "Stabilité"
+      ],
+      "specialRule": {
+        "name": "Sagesse du Nain Blanc",
+        "text": "Une fois par match, quand Grombrindal est activé, il peut choisir un coéquipier à 2 cases ou moins. Ce coéquipier gagne une des Compétences suivantes jusqu’à la fin du tour : Châtaigne, Équilibre, Esquive en Force, Intrépide."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "grondant-peaudemouton",
+      "nameFr": "Grondant Peaudemouton",
+      "nameVo": "Rumbelow Sheepskin",
+      "page": 18,
+      "cost": 170000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": 5,
+        "armour": 8
+      },
+      "keywords": [
+        "Halfling",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Coupe du Dé à Coudre"
+      ],
+      "skills": [
+        "Blocage",
+        "Cornes",
+        "Juggernaut",
+        "Solitaire (4+)",
+        "Tacle",
+        "Crâne Épais"
+      ],
+      "specialRule": {
+        "name": "Bélier",
+        "text": "Une fois par match, quand un joueur adverse est Plaqué suite à une Action de Blocage effectuée par Grondant, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d’Armure ou au Jet de Blessure. Ce modificateur peut être appliqué après avoir fait le jet."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "guffle-gouffrapus",
+      "nameFr": "Guffle Gouffrapus",
+      "nameVo": "Guffle Pusmaw",
+      "page": 18,
+      "cost": 150000,
+      "stats": {
+        "movement": 5,
+        "strength": 4,
+        "agility": 4,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Humain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Favoris de Nurgle"
+      ],
+      "skills": [
+        "Contagieux",
+        "Grande Gueule",
+        "Nerfs d’Acier",
+        "Répulsion",
+        "Solitaire (4+)",
+        "Sur le ballon"
+      ],
+      "specialRule": {
+        "name": "Casse-croûte",
+        "text": "Une fois par match, si Guffle Marque un joueur adverse qui Réceptionne le ballon, il peut faire immédiatement un Jet d’Armure contre le joueur. Si l’Armure de la cible est pénétrée, Guffle prend immédiatement possession du ballon. Aucun Turnover ne survient suite à l’usage de cette règle spéciale."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "hakflem-pointu",
+      "nameFr": "Hakflem Pointu",
+      "nameVo": "Hakflem Skuttlespike",
+      "page": 18,
+      "cost": 200000,
+      "stats": {
+        "movement": 8,
+        "strength": 3,
+        "agility": 2,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Skaven",
+        "Coureur"
+      ],
+      "leagues": [
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Bras Supplémentaires",
+        "Deux Têtes",
+        "Esquive",
+        "Queue Préhensile",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Traître",
+        "text": "Une fois par match, si Hakflem est adjacent à un coéquipier qui est en possession du ballon quand il est activé, Hakflem a le droit d’entrer en possession du ballon. S’il le fait, le coéquipier est immédiatement Plaqué. Cela n’entraîne pas de Turnover même si le coéquipier est Éliminé."
+      },
+      "pairId": null,
+      "megaStar": true
+    },
+    {
+      "id": "helmut-wulf",
+      "nameFr": "Helmut Wulf",
+      "page": 18,
+      "cost": 140000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": null,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Spécial"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Pro",
+        "Sans Ballon",
+        "Solitaire (4+)",
+        "Stabilité",
+        "Tronçonneuse"
+      ],
+      "specialRule": {
+        "name": "Vieux Pro",
+        "text": "Une fois par match, Helmut peut utiliser sa Compétence Pro pour relancer un unique dé d’un Jet d’Armure."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "hthark-limplacable",
+      "nameFr": "H’thark l’Implacable",
+      "nameVo": "H’thark the Unstoppable",
+      "page": 18,
+      "cost": 300000,
+      "stats": {
+        "movement": 6,
+        "strength": 6,
+        "agility": 4,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Nain",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Favoris de Hashut"
+      ],
+      "skills": [
+        "Blocage",
+        "Crâne Épais",
+        "Défenseur",
+        "Équilibre",
+        "Esquive en Force",
+        "Instable",
+        "Juggernaut",
+        "Solitaire (4+)",
+        "Sprint"
+      ],
+      "specialRule": {
+        "name": "Élan Implacable",
+        "text": "Chaque fois que H’thark effectue une Action de Blocage dans le cadre d’une Action de Blitz, il peut relancer un unique Dé de Blocage."
+      },
+      "pairId": null,
+      "megaStar": true
+    },
+    {
+      "id": "ivan-lanimal-suaire",
+      "nameFr": "Ivan « l’Animal » Suaire",
+      "nameVo": "Ivan ‘The Animal’ Deathshroud",
+      "page": 18,
+      "cost": 210000,
+      "stats": {
+        "movement": 6,
+        "strength": 4,
+        "agility": 4,
+        "passing": 5,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Squelette",
+        "Mort-vivant",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Spot de Sylvanie"
+      ],
+      "skills": [
+        "Arracher le Ballon",
+        "Blocage",
+        "Haine (Nain)",
+        "Juggernaut",
+        "Présence Perturbante",
+        "Régénération",
+        "Solitaire (4+)",
+        "Tacle"
+      ],
+      "specialRule": {
+        "name": "Fléau des Nains",
+        "text": "Une fois par match, quand un joueur adverse est Plaqué suite à une Action de Blocage effectuée par Ivan, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d’Armure ou au Jet de Blessure. Si c’est contre un joueur Nain, ce peut être un modificateur de +2 à la place."
+      },
+      "pairId": null,
+      "megaStar": true
+    },
+    {
+      "id": "ivar-eriksson",
+      "nameFr": "Ivar Eriksson",
+      "page": 18,
+      "cost": 215000,
+      "stats": {
+        "movement": 6,
+        "strength": 4,
+        "agility": 3,
+        "passing": 4,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Garde",
+        "Solitaire (4+)",
+        "Tacle"
+      ],
+      "specialRule": {
+        "name": "Maraudage",
+        "text": "Une fois par Phase, quand Ivar commence son activation, il peut choisir un coéquipier Démarqué à 5 cases ou moins. Le joueur choisi peut immédiatement se déplacer d’une case, mais à l’issue de ce déplacement il doit Marquer un joueur adverse."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "jeremiah-kool",
+      "nameFr": "Jeremiah Kool",
+      "page": 18,
+      "cost": 300000,
+      "stats": {
+        "movement": 8,
+        "strength": 3,
+        "agility": 1,
+        "passing": 2,
+        "armour": 9
+      },
+      "keywords": [
+        "Elfe",
+        "Coureur"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Blocage",
+        "Esquive",
+        "Délestage",
+        "Glissade Contrôlée",
+        "Nerfs d’Acier",
+        "Réception Plongeante",
+        "Passe",
+        "Solitaire (4+)",
+        "Sur le Ballon"
+      ],
+      "specialRule": {
+        "name": "La Lame Éclair",
+        "text": "Une fois par match, au début de son activation, Jeremiah peut annoncer une Action Spéciale de Poignard contre un joueur adverse qu’il Marque. Après avoir fait cette action spéciale, Jeremiah peut ensuite effectuer une Action de Mouvement avant que son activation prenne fin."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "jordel-flechevive",
+      "nameFr": "Jordel Flêchevive",
+      "nameVo": "Jordell Freshbreeze",
+      "page": 18,
+      "cost": 280000,
+      "stats": {
+        "movement": 8,
+        "strength": 3,
+        "agility": 1,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Elfe",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques",
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Appuis Sûrs",
+        "Blocage",
+        "Esquive",
+        "Glissade Contrôlée",
+        "Réception Plongeante",
+        "Saut",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Vif comme la Bise",
+        "text": "Une fois par match, Jordel a le droit de réussir un seul Test d’Esquive, de Saut ou pour Foncer sur 2+, quels que soient les modificateurs."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "josef-bugman",
+      "nameFr": "Josef Bugman",
+      "page": 19,
+      "cost": 180000,
+      "stats": {
+        "movement": 5,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 9
+      },
+      "keywords": [
+        "Nain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Crâne Épais",
+        "Ivrogne",
+        "Parade",
+        "Solitaire (4+)",
+        "Tacle",
+        "Provocation"
+      ],
+      "specialRule": {
+        "name": "Robustesse des Nains",
+        "text": "Une fois par match, quand on pénètre l’armure de Josef suite à un Jet d’Armure, vous avez le droit de faire relancer le Jet d’Armure."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "karla-von-kill",
+      "nameFr": "Karla Von Kill",
+      "nameVo": "Karla von Kill",
+      "page": 19,
+      "cost": 210000,
+      "stats": {
+        "movement": 6,
+        "strength": 4,
+        "agility": 3,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Blocage",
+        "Esquive",
+        "Intrépide",
+        "Rétablissement",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Indomptable",
+        "text": "Une fois par match, quand Karla réussit son jet pour la Compétence Intrépide, elle peut augmenter sa Caractéristique de Force afin qu’elle soit le double de celle de la cible de l’Action de Blocage."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "kiroth-oeildekraken",
+      "nameFr": "Kiroth Œildekraken",
+      "nameVo": "Kiroth Krakeneye",
+      "page": 19,
+      "cost": 160000,
+      "stats": {
+        "movement": 7,
+        "strength": 3,
+        "agility": 2,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Elfe",
+        "Coureur"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Présence Perturbante",
+        "Répulsion",
+        "Solitaire (4+)",
+        "Sur le Ballon",
+        "Tacle",
+        "Tentacules"
+      ],
+      "specialRule": {
+        "name": "Encre Noire",
+        "text": "Une fois par match, au début de n’importe laquelle de ses activations, Kiroth a le droit de choisir un joueur adverse qu’il Marque. Le joueur choisi devient Déconcentré jusqu’à sa prochaine activation."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "kreek-arracherouille",
+      "nameFr": "Kreek Arracherouille",
+      "nameVo": "Kreek Rustgouger",
+      "page": 19,
+      "cost": 180000,
+      "stats": {
+        "movement": 5,
+        "strength": 7,
+        "agility": 4,
+        "passing": null,
+        "armour": 10
+      },
+      "keywords": [
+        "Skaven",
+        "Gros Bras",
+        "Spécial"
+      ],
+      "leagues": [
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Chaîne & Boulet",
+        "Châtaigne",
+        "Queue Préhensile",
+        "Sans Ballon",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Je Reviendrai !",
+        "text": "La première fois pendant le match que Kreek est censé être Expulsé en raison du Trait Arme Secrète, il n’est pas Expulsé et peut continuer à prendre part au match. Le Coach de Kreek ne peut pas Contester la Décision quand Kreek utilise cette règle spéciale."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "lord-borak-le-destructeur",
+      "nameFr": "Lord Borak le Destructeur",
+      "nameVo": "Lord Borak the Despoiler",
+      "page": 19,
+      "cost": 270000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 3,
+        "passing": 5,
+        "armour": 10
+      },
+      "keywords": [
+        "Humain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Clash du Chaos"
+      ],
+      "skills": [
+        "Blocage",
+        "Châtaigne",
+        "Chef",
+        "Joueur Déloyal",
+        "Solitaire (3+)",
+        "Sournois",
+        "Coup de Crampons"
+      ],
+      "specialRule": {
+        "name": "Seigneur du Chaos",
+        "text": "Une fois par match, quand Lord Borak effectue une Action de Blocage, il peut relancer un unique Dé de Blocage."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "max-eclaterate",
+      "nameFr": "Max Éclaterate",
+      "nameVo": "Max Spleenripper",
+      "page": 19,
+      "cost": 130000,
+      "stats": {
+        "movement": 5,
+        "strength": 4,
+        "agility": 4,
+        "passing": null,
+        "armour": 9
+      },
+      "keywords": [
+        "Humain",
+        "Spécial"
+      ],
+      "leagues": [
+        "Favoris de Khorne"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Sans Ballon",
+        "Solitaire (4+)",
+        "Tronçonneuse"
+      ],
+      "specialRule": {
+        "name": "Carnage Maximal",
+        "text": "Une fois par match, après que Max a effectué une Action Spéciale d’Attaque de Tronçonneuse, il peut immédiatement effectuer une autre Action Spéciale d’Attaque de Tronçonneuse qui cible un joueur adverse différent."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "morg-n-thorg",
+      "nameFr": "Morg ‘n’ Thorg",
+      "page": 19,
+      "cost": 340000,
+      "stats": {
+        "movement": 6,
+        "strength": 6,
+        "agility": 3,
+        "passing": 4,
+        "armour": 11
+      },
+      "keywords": [
+        "Ogre",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Toutes sauf Spot de Sylvanie"
+      ],
+      "skills": [
+        "Solitaire (4+)",
+        "Blocage",
+        "Châtaigne",
+        "Crâne Épais",
+        "Lancer de Coéquipier",
+        "Haine (Morts-vivants)",
+        "Dans le Mille"
+      ],
+      "specialRule": {
+        "name": "La Baliste",
+        "text": "Une fois par match, quand Morg effectue une Action de Lancer de Coéquipier, il peut relancer le Test de Capacité de Passe."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": true
+    },
+    {
+      "id": "nobbla-la-teigne",
+      "nameFr": "Nobbla La Teigne",
+      "nameVo": "Nobbla Blackwart",
+      "page": 19,
+      "cost": 120000,
+      "stats": {
+        "movement": 6,
+        "strength": 2,
+        "agility": 3,
+        "passing": null,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Blocage",
+        "Esquive",
+        "Minus",
+        "Saboteur",
+        "Sans Ballon",
+        "Solitaire (4+)",
+        "Tronçonneuse"
+      ],
+      "specialRule": {
+        "name": "Fô les kogner tant k’ils sont à terre !",
+        "text": "Une fois par match, Nobbla peut utiliser l’Action Spéciale d’Attaque de Tronçonneuse contre un joueur adverse À Terre ou Sonné. Ceci ne compte pas comme une Action d’Agression et Nobbla ne peut pas être Expulsé quand il utilise cette règle spéciale."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "perss",
+      "nameFr": "Perss’",
+      "nameVo": "Drull",
+      "pairId": "perss-et-dribl",
+      "page": 19,
+      "cost": 230000,
+      "stats": {
+        "movement": 8,
+        "strength": 2,
+        "agility": 3,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Skink",
+        "Spécial"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Esquive",
+        "Glissade Contrôlée",
+        "Minus",
+        "Poignard",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Duo Sournois",
+        "text": "Perss’ et Dribl’ doivent être embauchés en tant que paire. De plus, chaque fois que Perss’ ou Dribl’ effectue soit une Action d’Agression soit une Action Spéciale de Poignard contre un joueur adverse Marqué à la fois par Perss’ et Dribl’, ils peuvent appliquer un modificateur de +1 au jet."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "dribl",
+      "nameFr": "Dribl’",
+      "nameVo": "Dribl",
+      "pairId": "perss-et-dribl",
+      "page": 19,
+      "cost": 230000,
+      "stats": {
+        "movement": 8,
+        "strength": 2,
+        "agility": 3,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Skink",
+        "Spécial"
+      ],
+      "leagues": [
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Agression Éclair",
+        "Esquive",
+        "Glissade Contrôlée",
+        "Joueur Déloyal",
+        "Minus",
+        "Solitaire (4+)",
+        "Sournois"
+      ],
+      "specialRule": {
+        "name": "Duo Sournois",
+        "text": "Perss’ et Dribl’ doivent être embauchés en tant que paire. De plus, chaque fois que Perss’ ou Dribl’ effectue soit une Action d’Agression soit une Action Spéciale de Poignard contre un joueur adverse Marqué à la fois par Perss’ et Dribl’, ils peuvent appliquer un modificateur de +1 au jet."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "puggy-haleinedebacon",
+      "nameFr": "Puggy Haleinedebacon",
+      "nameVo": "Puggy Baconbreath",
+      "page": 19,
+      "cost": 130000,
+      "stats": {
+        "movement": 5,
+        "strength": 3,
+        "agility": 3,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Halfling",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Coupe du Dé à Coudre",
+        "Classique du Vieux Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Esquive",
+        "Minus",
+        "Nerfs d’Acier",
+        "Poids Plume",
+        "Solitaire (3+)"
+      ],
+      "specialRule": {
+        "name": "Chance du Halfling",
+        "text": "Une fois par match, Puggy peut relancer un unique dé jeté dans le cadre d’un jet de dé unique, d’un jet de plusieurs dés ou d’un groupe de dés, mais il ne peut pas s’agir d’un dé jeté dans le cadre d’un Jet d’Armure, d’un Jet de Blessure ni d’un Jet d’Élimination."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "racine-dutronc",
+      "nameFr": "Racine Dutronc",
+      "nameVo": "Deeproot Strongbranch",
+      "page": 19,
+      "cost": 280000,
+      "stats": {
+        "movement": 2,
+        "strength": 7,
+        "agility": 5,
+        "passing": 4,
+        "armour": 11
+      },
+      "keywords": [
+        "Homme-arbre",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Blocage",
+        "Bras Musclé",
+        "Châtaigne",
+        "Crâne Épais",
+        "Dans le Mille",
+        "Lancer de Coéquipier",
+        "Solitaire (4+)",
+        "Stabilité",
+        "Timmm–ber !"
+      ],
+      "specialRule": {
+        "name": "Fiable",
+        "text": "Si Racine fait une Maladresse sur Lancer quand il effectue une Action de Lancer de Coéquipier, le joueur lancé Rebondit normalement mais atterrit sans mal automatiquement."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "rashnak-lamedansledos",
+      "nameFr": "Rashnak Lamedansledos",
+      "nameVo": "Rashnak Backstabber",
+      "page": 20,
+      "cost": 130000,
+      "stats": {
+        "movement": 7,
+        "strength": 3,
+        "agility": 3,
+        "passing": 5,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides"
+      ],
+      "skills": [
+        "Glissade Contrôlée",
+        "Poignard",
+        "Poursuite",
+        "Solitaire (4+)",
+        "Sournois"
+      ],
+      "specialRule": {
+        "name": "Expert en Toxines",
+        "text": "Une fois par match, quand Rashnak réussit à pénétrer l’armure d’un joueur adverse suite à une Action Spéciale de Poignard, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet de Blessure. Ce modificateur peut être appliqué après avoir fait le jet."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "rodney-pechegardon",
+      "nameFr": "Rodney Pêchegardon",
+      "nameVo": "Rodney Roachbait",
+      "page": 20,
+      "cost": 70000,
+      "stats": {
+        "movement": 6,
+        "strength": 2,
+        "agility": 3,
+        "passing": 4,
+        "armour": 7
+      },
+      "keywords": [
+        "Gnome",
+        "Spécial"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Solitaire (4+)",
+        "Réception",
+        "Réception plongeante",
+        "Rétablissement",
+        "Glissade contrôlée",
+        "Sur le ballon",
+        "Minus",
+        "Lutte"
+      ],
+      "specialRule": {
+        "name": "Prise du Jour",
+        "text": "Une fois par mi-temps, si Rodney est Debout et commence son activation à 3 cases ou moins d’un ballon au sol, il peut jeter un D6. Sur 1-2, rien ne se passe. Sur 3+, Rodney prend immédiatement possession du ballon."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "rowana-pieforestier",
+      "nameFr": "Rowana Piéforestier",
+      "nameVo": "Rowana Forestfoot",
+      "page": 20,
+      "cost": 160000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Gnome",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Esquive",
+        "Délestage",
+        "Garde",
+        "Cornes",
+        "Rétablissement",
+        "Saut",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Bond en avant",
+        "text": "Une fois par match, après avoir déclaré qu’elle voulait sauter et avant de jeter le dé, Rowana peut choisir d’utiliser cette règle spéciale. Si elle le fait, Rowana ne souffre d’aucun modificateur négatif sur son test d’Agilité pour sauter et peut choisir de relancer le résultat."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "roxanna-onglenoirs",
+      "nameFr": "Roxanna Onglenoirs",
+      "nameVo": "Roxanna Darknail",
+      "page": 20,
+      "cost": 270000,
+      "stats": {
+        "movement": 8,
+        "strength": 3,
+        "agility": 1,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Elfe",
+        "Spécial"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Esquive",
+        "Frénésie",
+        "Juggernaut",
+        "Rétablissement",
+        "Saut",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Ongles Acérés",
+        "text": "Une fois par mi-temps, quand Roxanna annonce une Action de Blitz, elle gagne la Compétence Griffes jusqu’à la fin de son activation."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "scrappa-malocrane",
+      "nameFr": "Scrappa Malocrâne",
+      "nameVo": "Scrappa Sorehead",
+      "page": 20,
+      "cost": 120000,
+      "stats": {
+        "movement": 7,
+        "strength": 2,
+        "agility": 3,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Gobelin",
+        "Spécial"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides",
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Esquive",
+        "Équilibre",
+        "Joueur Déloyal",
+        "Minus",
+        "Monté sur Ressort",
+        "Poids Plume",
+        "Solitaire (4+)",
+        "Sprint"
+      ],
+      "specialRule": {
+        "name": "Scllboing !",
+        "text": "Une fois par match, quand Scrappa tente d’intercepter une Action de Passe, il peut jeter un D6. Sur 2+, Scrappa n’a pas besoin de faire un jet pour Intercepter : à la place, il Intercepte automatiquement l’Action de Passe et prend possession du ballon."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "scyla-anfingrimm",
+      "nameFr": "Scyla Anfingrimm",
+      "page": 20,
+      "cost": 200000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 4,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Rejeton",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Favoris de Khorne"
+      ],
+      "skills": [
+        "Châtaigne",
+        "Crâne Épais",
+        "Frénésie",
+        "Fureur Débridée",
+        "Griffes",
+        "Queue Préhensile",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Fureur du Dieu du Sang",
+        "text": "Une fois par match, si Scyla obtient un 1 pour son jet de Fureur Débridée après avoir annoncé une Action de Blocage, alors, au lieu d’appliquer les effets habituels de Fureur Débridée, Scyla peut effectuer deux Actions de Blocage à la place. La première Action de Blocage doit être entièrement résolue, y compris l’utilisation de la Compétence Frénésie, avant d’effectuer la seconde."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "skitter-pic-pic",
+      "nameFr": "Skitter Pic-Pic",
+      "nameVo": "Skitter Stab-stab",
+      "page": 20,
+      "cost": 170000,
+      "stats": {
+        "movement": 9,
+        "strength": 2,
+        "agility": 2,
+        "passing": 4,
+        "armour": 8
+      },
+      "keywords": [
+        "Skaven",
+        "Coureur"
+      ],
+      "leagues": [
+        "Défi des Bas-Fonds"
+      ],
+      "skills": [
+        "Esquive",
+        "Solitaire (4+)",
+        "Queue Préhensile",
+        "Poursuite",
+        "Poignard"
+      ],
+      "specialRule": {
+        "name": "Maître Assassin",
+        "text": "Une fois par match, quand Skitter effectue une Action Spéciale de Poignard, il a le droit de relancer le Jet d’Armure."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "skrane-demitaille",
+      "nameFr": "Skrâne Demitaille",
+      "nameVo": "Skrull Halfheight",
+      "page": 20,
+      "cost": 150000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 4,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Nain",
+        "Squelette",
+        "Mort-vivant",
+        "Lanceur"
+      ],
+      "leagues": [
+        "Spot de Sylvanie",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Crâne Épais",
+        "Nerfs d’Acier",
+        "Passe",
+        "Précision",
+        "Prise Sûre",
+        "Régénération",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Fort en Jeu de Passe",
+        "text": "Une fois par match, quand Skrâne effectue une Action de Passe, il peut modifier le résultat du Test de Compétence de Passe de la valeur de sa caractéristique de F, jusqu’à un maximum de 6."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "skrorg-gelfourure",
+      "nameFr": "Skrorg Gelfourure",
+      "nameVo": "Skrorg Snowpelt",
+      "page": 20,
+      "cost": 240000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 4,
+        "passing": 6,
+        "armour": 9
+      },
+      "keywords": [
+        "Yéti",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Châtaigne",
+        "Griffes",
+        "Juggernaut",
+        "Présence Perturbante",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Faire Vibrer le Public",
+        "text": "Une fois par match, quand Skrorg provoque le retrait d’un joueur adverse en raison d’une Élimination suite à une Action de Blocage, le Coach de Skrorg gagne 1 Relance d’Équipe jusqu’à la fin de la Phase en cours. Si cette Relance d’Équipe n’a pas été utilisée d’ici la fin de la Phase, elle est perdue."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "lucien-swift",
+      "nameFr": "Lucien Swift",
+      "nameVo": "Lucien Swift",
+      "pairId": "lucien-et-valen-swift",
+      "page": 20,
+      "cost": 300000,
+      "stats": {
+        "movement": 7,
+        "strength": 3,
+        "agility": 2,
+        "passing": 3,
+        "armour": 9
+      },
+      "keywords": [
+        "Elfe",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Blocage",
+        "Châtaigne",
+        "Solitaire (4+)",
+        "Tacle"
+      ],
+      "specialRule": {
+        "name": "Travail en Tandem",
+        "text": "Les Jumeaux Swift doivent être embauchés en tant que paire. De plus, si Lucien effectue une Action de Blocage contre un joueur adverse que Valen Marque aussi, Lucien peut relancer un unique Dé de Blocage. De plus, si Valen effectue une Action de Passe qui cible une case où se trouve Lucien, alors Valen ne subit aucun modificateur au Test de CP en raison de la portée de l’Action de Passe."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "valen-swift",
+      "nameFr": "Valen Swift",
+      "nameVo": "Valen Swift",
+      "pairId": "lucien-et-valen-swift",
+      "page": 20,
+      "cost": 300000,
+      "stats": {
+        "movement": 7,
+        "strength": 3,
+        "agility": 2,
+        "passing": 2,
+        "armour": 9
+      },
+      "keywords": [
+        "Elfe",
+        "Lanceur"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques"
+      ],
+      "skills": [
+        "Nerfs d’Acier",
+        "Passe",
+        "Passe Assurée",
+        "Précision",
+        "Prise Sûre",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Travail en Tandem",
+        "text": "Les Jumeaux Swift doivent être embauchés en tant que paire. De plus, si Lucien effectue une Action de Blocage contre un joueur adverse que Valen Marque aussi, Lucien peut relancer un unique Dé de Blocage. De plus, si Valen effectue une Action de Passe qui cible une case où se trouve Lucien, alors Valen ne subit aucun modificateur au Test de CP en raison de la portée de l’Action de Passe."
+      },
+      "megaStar": false
+    },
+    {
+      "id": "thorsson-gueuledebiere",
+      "nameFr": "Thorsson Gueuledebière",
+      "nameVo": "Thorsson Stoutmead",
+      "page": 20,
+      "cost": 170000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 4,
+        "passing": 3,
+        "armour": 8
+      },
+      "keywords": [
+        "Humain",
+        "Trois-quarts"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Crâne Épais",
+        "Ivrogne",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Coup de Fût de Bière",
+        "text": "Une fois par Phase, au début de son activation, Thorsson peut choisir un joueur adverse à 3 cases ou moins et jeter un D6. Sur 3+, le joueur choisi est immédiatement Plaqué. Sur 2, rien ne se passe. Sur 1, Thorsson Chute. Après avoir utilisé cette règle spéciale, l’activation de Thorsson prend fin."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "varag-mache-goule",
+      "nameFr": "Varag Mâche Goule",
+      "nameVo": "Varag Ghoul-Chewer",
+      "page": 21,
+      "cost": 260000,
+      "stats": {
+        "movement": 6,
+        "strength": 5,
+        "agility": 3,
+        "passing": 5,
+        "armour": 10
+      },
+      "keywords": [
+        "Orque",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Bagarre des Terres Arides"
+      ],
+      "skills": [
+        "Solitaire (4+)",
+        "Blocage",
+        "Rétablissement",
+        "Châtaigne",
+        "Crâne Épais",
+        "Instable",
+        "Haine (Morts-vivants)"
+      ],
+      "specialRule": {
+        "name": "’Krazer et ’Klater",
+        "text": "Une fois par match, quand un joueur adverse est Plaqué suite à une Action de Blocage effectuée par Varag, ce dernier peut relancer le Jet d’Armure."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "vrilleclaire-eclalumineux",
+      "nameFr": "Vrilléclaire Eclalumineux",
+      "nameVo": "Swiftvine Glimmershad",
+      "page": 21,
+      "cost": 110000,
+      "stats": {
+        "movement": 7,
+        "strength": 2,
+        "agility": 3,
+        "passing": 5,
+        "armour": 7
+      },
+      "keywords": [
+        "Fiel-Follet",
+        "Spécial"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Glissade Contrôlée",
+        "Minus",
+        "Parade",
+        "Présence Perturbante",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Explosion de Fureur",
+        "text": "Une fois par mi-temps, tant qu’elle est Debout au début de son activation, Vrilléclaire peut se placer adjacente à un joueur adverse Debout à 3 cases ou moins d’elle et faire immédiatement une Action Spéciale de Poignard contre lui. Elle peut ensuite se placer sur une case inoccupée à 3 cases ou moins de sa nouvelle position. Puis son activation prend immédiatement fin. Ceci compte comme l’Action de Blitz de l’équipe pour le Tour."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "whilhelm-chaney",
+      "nameFr": "Whilhelm Chaney",
+      "nameVo": "Wilhelm Chaney",
+      "page": 21,
+      "cost": 220000,
+      "stats": {
+        "movement": 8,
+        "strength": 4,
+        "agility": 3,
+        "passing": 4,
+        "armour": 9
+      },
+      "keywords": [
+        "Loup-garou",
+        "Mort-vivant",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Spot de Sylvanie"
+      ],
+      "skills": [
+        "Frénésie",
+        "Griffes",
+        "Lutte",
+        "Réception",
+        "Régénération",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Mutilation Sauvage",
+        "text": "Une fois par match, quand Whilhelm fait un Jet de Blessure contre un joueur adverse, il a le droit de relancer le résultat."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "willow-rosebark",
+      "nameFr": "Willow Rosebark",
+      "page": 21,
+      "cost": 160000,
+      "stats": {
+        "movement": 5,
+        "strength": 4,
+        "agility": 3,
+        "passing": 5,
+        "armour": 9
+      },
+      "keywords": [
+        "Dryade",
+        "Blitzer"
+      ],
+      "leagues": [
+        "Ligue Sylvestre"
+      ],
+      "skills": [
+        "Crâne Épais",
+        "Glissade Contrôlée",
+        "Intrépide",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Fureur Sylvestre",
+        "text": "Une fois par match, quand Willow effectue une Action de Blocage ayant pour conséquence qu’elle est Plaquée, elle a le droit de relancer un unique Dé de Blocage."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "withergrasp-doubledrool",
+      "nameFr": "Withergrasp Doubledrool",
+      "page": 21,
+      "cost": 170000,
+      "stats": {
+        "movement": 6,
+        "strength": 3,
+        "agility": 3,
+        "passing": 4,
+        "armour": 9
+      },
+      "keywords": [
+        "Homme-bête",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Favoris de Nurgle"
+      ],
+      "skills": [
+        "Deux Têtes",
+        "Lutte",
+        "Queue Préhensile",
+        "Répulsion",
+        "Solitaire (4+)",
+        "Tacle",
+        "Tentacules"
+      ],
+      "specialRule": {
+        "name": "Attention !",
+        "text": "La première fois à chaque Phase que Withergrasp est la cible d’une Action de Blocage effectuée par un joueur adverse, il compte comme ayant la Compétence Esquive."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "zug-la-bete",
+      "nameFr": "Zug la Bête",
+      "nameVo": "Mighty Zug",
+      "page": 21,
+      "cost": 220000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 4,
+        "passing": 6,
+        "armour": 10
+      },
+      "keywords": [
+        "Humain",
+        "Bloqueur"
+      ],
+      "leagues": [
+        "Classique du Vieux Monde",
+        "Super-ligue du Bord du Monde"
+      ],
+      "skills": [
+        "Blocage",
+        "Châtaigne",
+        "Instable",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "Coup Destructeur",
+        "text": "Une fois par match, quand un joueur adverse est Plaqué suite à une Action de Blocage effectuée par Zug, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d’Armure. Ce modificateur peut être appliqué après avoir fait le jet."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "zzharg-le-borgne",
+      "nameFr": "Zzharg le Borgne",
+      "nameVo": "Zzharg Madeye",
+      "page": 21,
+      "cost": 130000,
+      "stats": {
+        "movement": 4,
+        "strength": 4,
+        "agility": 4,
+        "passing": 3,
+        "armour": 10
+      },
+      "keywords": [
+        "Nain",
+        "Spécial"
+      ],
+      "leagues": [
+        "Favoris de Hashut"
+      ],
+      "skills": [
+        "Arme Secrète",
+        "Canonnier",
+        "Crâne Épais",
+        "Nerfs d’Acier",
+        "Passe Désespérée",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "« La Poudre Résout tous les Problèmes »",
+        "text": "Une fois par mi-temps, au début de son activation, Zzharg peut choisir un joueur adverse Debout à 3 cases ou moins et jeter un D6. Sur 3+, le joueur choisi est touché. Sur 2, le Coach adverse choisit un joueur (de n’importe quelle équipe, mais pas Zzharg) à 3 cases ou moins de celui initialement choisi pour qu’il soit touché. Sur 1, Zzharg est touché. Faites un Jet d’Armure pour le joueur touché. Puis l’activation de Zzharg prend immédiatement fin."
+      },
+      "pairId": null,
+      "megaStar": false
+    },
+    {
+      "id": "zolcath-le-zoat",
+      "nameFr": "Zolcath le Zoat",
+      "page": 21,
+      "cost": 220000,
+      "stats": {
+        "movement": 5,
+        "strength": 5,
+        "agility": 4,
+        "passing": 5,
+        "armour": 10
+      },
+      "keywords": [
+        "Zoat",
+        "Gros Bras"
+      ],
+      "leagues": [
+        "Ligue des Royaumes Elfiques",
+        "Super-ligue de Lustrie"
+      ],
+      "skills": [
+        "Châtaigne",
+        "Équilibre",
+        "Juggernaut",
+        "Présence Perturbante",
+        "Queue Préhensile",
+        "Régénération",
+        "Solitaire (4+)"
+      ],
+      "specialRule": {
+        "name": "« Excusez-moi, êtes-vous un Zoat ? »",
+        "text": "Une fois par match, quand Zolcath est activé, il peut choisir un joueur adverse à 3 cases ou moins. Le joueur choisi perd immédiatement sa Zone de Tacle jusqu’à sa prochaine activation."
+      },
+      "nameVo": null,
+      "pairId": null,
+      "megaStar": false
+    }
+  ]
+}
+
