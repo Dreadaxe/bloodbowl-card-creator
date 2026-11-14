@@ -584,3 +584,116 @@ async function writeControls(cardData) {
     // render the updated info
     render(cardData);
 }
+
+
+const playerPresetProfiles = new Map();
+
+function playerPresetLanguage() {
+    return window.i18next && String(i18next.resolvedLanguage || i18next.language).startsWith("fr")
+        ? "fr"
+        : "en";
+}
+
+function playerPresetText(value) {
+    if (!value) return "";
+    return value[playerPresetLanguage()] || value.en || value.fr || "";
+}
+
+function setPlayerSkillAccess(cardData, prefix, codes) {
+    const categories = {
+        A: "agility",
+        D: "devious",
+        G: "general",
+        M: "mutations",
+        P: "passing",
+        S: "strength"
+    };
+
+    Object.values(categories).forEach(category => {
+        cardData[prefix + "_" + category] = false;
+    });
+    (codes || []).forEach(code => {
+        const category = categories[code];
+        if (category) cardData[prefix + "_" + category] = true;
+    });
+}
+
+async function waitForPlayerPresetI18n() {
+    if (window.i18next && i18next.isInitialized) return;
+    await new Promise(resolve => {
+        if (!window.i18next) {
+            resolve();
+            return;
+        }
+        i18next.on("initialized", resolve);
+    });
+}
+
+async function loadPlayerPresetIndex() {
+    await waitForPlayerPresetI18n();
+
+    const response = await fetch("assets/player-presets.json?v=20261114-1");
+    if (!response.ok) {
+        throw new Error("Unable to load player presets (" + response.status + ")");
+    }
+
+    const data = await response.json();
+    const select = document.getElementById("playerPreset");
+    if (!select) return;
+
+    playerPresetProfiles.clear();
+    select.replaceChildren();
+
+    data.teams.forEach(team => {
+        const group = document.createElement("optgroup");
+        group.label = playerPresetText(team.name);
+
+        team.positions.forEach(position => {
+            const profile = { team, position };
+            playerPresetProfiles.set(position.id, profile);
+            group.append(new Option(playerPresetText(position.name), position.id));
+        });
+
+        select.append(group);
+    });
+
+    const first = select.querySelector("option");
+    select.value = first ? first.value : "";
+    window.BloodBowlPresetCombobox?.refresh(select);
+}
+
+async function loadPlayerPresetForEditing(id) {
+    const profile = playerPresetProfiles.get(id);
+    if (!profile) return null;
+
+    const cardData = defaultCardData();
+    const position = profile.position;
+    const cost = String(position.cost || 0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    cardData.cardName = playerPresetText(position.name);
+    cardData.teamName = playerPresetText(profile.team.name);
+    cardData.showTeamName = true;
+    cardData.footer = cost;
+    cardData.ma = position.stats.ma;
+    cardData.st = position.stats.st;
+    cardData.ag = position.stats.ag;
+    cardData.pa = position.stats.pa;
+    cardData.av = position.stats.av;
+    cardData.cardText = (position.skills || []).map(playerPresetText).join(", ");
+    cardData.keywords = (position.roles || []).map(playerPresetText).join(", ");
+
+    setPlayerSkillAccess(cardData, "p", position.primary);
+    setPlayerSkillAccess(cardData, "s", position.secondary);
+
+    document.getElementById("removeBorder").checked = false;
+    document.getElementById("dashLine").checked = false;
+    await writeControls(cardData);
+    return { cardName: cardData.cardName };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("embedded") !== "1") {
+        loadPlayerPresetIndex().catch(console.error);
+    }
+});
