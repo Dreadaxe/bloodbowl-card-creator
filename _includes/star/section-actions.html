@@ -32,15 +32,12 @@
 </div>
 
 <div class="form-group mt-3">
-    <label for="starPresetSearch" data-i18n="print.search">Search Star Players</label>
-    <input class="form-control" id="starPresetSearch" type="search"
-        data-i18n="[placeholder]print.search_placeholder" placeholder="Type a name…"
-        autocomplete="off" aria-controls="preset">
-</div>
-
-<div class="form-group mt-3">
-    <label for="preset" data-i18n="card.action.choose_preset">Choose preset</label>
-    <select class="form-select" id="preset" name="preset" oninput="">
+    <label for="presetCombobox" data-i18n="card.action.choose_preset">Choose preset</label>
+    <select class="form-select" id="preset" name="preset"
+        data-searchable-preset
+        data-preset-placeholder-key="card.action.preset_search_placeholder"
+        data-preset-placeholder="Type to filter presets…"
+        data-load-button="loadPreset">
         <option value="Akhorne_The_Squirrel.json">Akhorne The Squirrel</option>
         <option value="Anqi_Panqi.json">Anqi Panqi</option>
         <option value="Barik_Farblast.json">Barik Farblast</option>
