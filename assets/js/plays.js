@@ -499,18 +499,36 @@ async function getPlayList(){
 }
 
 function loadPlayFromList(){
-    var x = document.getElementById("sel").selectedIndex;
-    var y = document.getElementById("sel").options;
-    console.log("Index: " + y[x].index + " is " + y[x].text);
+    const select = document.getElementById("sel");
+    const index = Number(select.value);
+    if (!Number.isInteger(index) || index < 0) return;
+
     getPlayList()
-    // log response or catch error of fetch promise
-    .then((data) => writeControls(data[y[x].index]));
+        .then(data => {
+            if (data[index]) writeControls(data[index]);
+        });
 }
 
 function updatePlayListDropdown(data){
-    $.each(data, function(i, option) {
-        $('#sel').append($('<option/>').attr("value", option.playName).text(option.teamName + " - " + option.playName));
+    const select = document.getElementById("sel");
+    const groups = new Map();
+    select.replaceChildren();
+
+    data.forEach((option, index) => {
+        const teamName = option.teamName || "General";
+        let group = groups.get(teamName);
+        if (!group) {
+            group = document.createElement("optgroup");
+            group.label = teamName;
+            groups.set(teamName, group);
+            select.append(group);
+        }
+        group.append(new Option(option.playName, String(index)));
     });
+
+    const first = select.querySelector("option");
+    select.value = first ? first.value : "";
+    window.BloodBowlPresetCombobox?.refresh(select);
 }
 
 function onImageSelectChange() {
