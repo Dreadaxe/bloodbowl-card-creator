@@ -3,78 +3,77 @@
         "title": "Blood Bowl Card Creator",
         "description": "A client-side web app for creating custom, print-ready Blood Bowl tabletop game cards."
     },
-    "nav":{
-        "players" : "Players",
-        "star_players" : "Star Players",
-        "special_cards" : "Special Cards",
-        "card_back" : "Card Back",
-        "plays" : "Plays",
-        "print_sheets" : "Print",
-        "instructions" : "Instructions"
+    "nav": {
+        "players": "Players",
+        "star_players": "Star Players",
+        "special_cards": "Special Cards",
+        "card_back": "Card Back",
+        "plays": "Plays",
+        "print_sheets": "Print",
+        "instructions": "Instructions",
+        "support_dreadaxe": "Support Dreadaxe"
     },
-    "card":{
-        "action":{
-            "remove_border":"Remove border to add bleed area for printing",
-            "add_dash":"Add dash line border",
-            "save_as_image":"Save as image",
-            "send_to_print":"Send to print",
-            "save_as_file":"Save as file",
-            "load":"Load card file",
-            "reset_all":"Reset all",
-            "choose_preset":"Choose preset",
-            "load_preset":"Load preset",
-            "preset_notice":"These presets reproduce data from official publications. They are intended for users who own the corresponding books and do not replace the official rules."
+    "card": {
+        "action": {
+            "remove_border": "Remove border to add bleed area for printing",
+            "add_dash": "Add dash line border",
+            "save_as_image": "Save as image",
+            "send_to_print": "Send to print",
+            "save_as_file": "Save as file",
+            "load": "Load card file",
+            "reset_all": "Reset all",
+            "choose_preset": "Choose preset",
+            "load_preset": "Load preset",
+            "preset_notice": "These presets reproduce data from official publications. They are intended for users who own the corresponding books and do not replace the official rules."
         },
-        "caracteristics":{
-            "player_stats" : "Player Stats",
-            "player_name" : "Player name",
-            "team_name" : "Team name",
-            "show_team_name" : "Show Team name",
-            "MA" : "MA",
-            "ST" : "ST",
-            "AG" : "AG",
-            "PA" : "PA",
-            "AV" : "AV",
-            "GP" : "GP",
-            "skills_traits" : "Skills & Traits",
-            "plays_for" : "Plays For",
-            "special_rules" : "Special rules",
-            "rulename" : "Rulename: text",
-            "player_development" : "Player developement",
-            "keywords" : "Keywords",
-            "primary_skills" : "Primary Skills",
-            "secondary_skills" : "Secondary Skills",
-            "agility_box" : "A",
-            "devious_box" : "D",
-            "general_box" : "G",
-            "mutations_box" : "M",
-            "passing_box" :"P",
-            "strength_box" : "S",
-            "agility" : "Agility",
-            "devious" : "Devious",
-            "general" : "General",
-            "mutations" : "Mutations",
-            "passing" :"Passing",
-            "strength" : "Strength",
+        "caracteristics": {
+            "player_stats": "Player Stats",
+            "player_name": "Player name",
+            "team_name": "Team name",
+            "show_team_name": "Show Team name",
+            "MA": "MA",
+            "ST": "ST",
+            "AG": "AG",
+            "PA": "PA",
+            "AV": "AV",
+            "GP": "GP",
+            "skills_traits": "Skills & Traits",
+            "plays_for": "Plays For",
+            "special_rules": "Special rules",
+            "rulename": "Rulename: text",
+            "player_development": "Player developement",
+            "keywords": "Keywords",
+            "primary_skills": "Primary Skills",
+            "secondary_skills": "Secondary Skills",
+            "agility_box": "A",
+            "devious_box": "D",
+            "general_box": "G",
+            "mutations_box": "M",
+            "passing_box": "P",
+            "strength_box": "S",
+            "agility": "Agility",
+            "devious": "Devious",
+            "general": "General",
+            "mutations": "Mutations",
+            "passing": "Passing",
+            "strength": "Strength",
             "primary": "Primary",
-            "secondary" : "Secondary",
-            "body_text" : "Body text",
-            "clear" : "Clear"
+            "secondary": "Secondary",
+            "body_text": "Body text",
+            "clear": "Clear"
         },
-        "deployement":{
-
-        },
-        "special":{
-            "card_details" : "Card Details",
+        "deployement": {},
+        "special": {
+            "card_details": "Card Details",
             "card_name": "Card Name",
-            "font_size" : "Font Size",
-            "timing" :"Timing",
-            "timing_text" : "Timing Text",
-            "duration" : "Duration",
-            "duration_text" : "Duration Text",
-            "effect" : "Effect",
-            "effect_text" : "Effect Text",
-            "footer" : "Footer"
+            "font_size": "Font Size",
+            "timing": "Timing",
+            "timing_text": "Timing Text",
+            "duration": "Duration",
+            "duration_text": "Duration Text",
+            "effect": "Effect",
+            "effect_text": "Effect Text",
+            "footer": "Footer"
         },
         "card_back": {
             "simple_background": "Simple background",
@@ -82,7 +81,7 @@
             "background_header": "Background with Header",
             "background_logo_header": "Background with Logo and Header"
         },
-        "image":{
+        "image": {
             "background": "Background",
             "blue_textured": "Blue textured",
             "light_blue": "Light blue",
@@ -96,16 +95,14 @@
             "choose_icon": "Choose icon",
             "center_image": "Center image",
             "load_icon": "Load icon (recommended 100x100 px)",
-            "load_image" : "Load image",
-            "x_offset" : "X offset (↔)",
-            "y_offset" : "Y offset (↕)",
+            "load_image": "Load image",
+            "x_offset": "X offset (↔)",
+            "y_offset": "Y offset (↕)",
             "scale_percent": "Scale (%)"
         }
     },
-    "plays":{
-
-    },
-    "print":{
+    "plays": {},
+    "print": {
         "title": "Print sheets",
         "intro": "Choose Star Players and arrange them on print-ready A4 sheets, nine cards per page.",
         "search": "Search Star Players",
@@ -145,5 +142,83 @@
         "page_summary": "{{sheets}} sheets · {{pages}} pages",
         "renderer_timeout": "The card renderer did not start. Reload the page and try again.",
         "unknown_error": "Unable to generate print sheets."
+    },
+    "instructions": {
+        "title": "Blood Bowl Card Creator",
+        "intro": "Create, save and print cards for Players, Star Players, Special Plays, card backs and playbooks.",
+        "local_storage": "The editor runs directly in your browser. Cards and preferences saved locally remain on your device until you reset them.",
+        "preset_warning": {
+            "title": "About official presets",
+            "text": "Some presets reproduce data from official publications. They are intended for people who own the corresponding books and do not replace the official rules."
+        },
+        "editor": {
+            "title": "Create and edit a card",
+            "step_1": "Choose an editor from the navigation bar: Players, Star Players, Special Cards, Card Back or Plays.",
+            "step_2": "Fill in the fields or load a preset. The card preview updates as you work.",
+            "step_3": "Use Save as image to export a PNG, or Save as file to keep an editable JSON card.",
+            "step_4": "Reload that JSON file later with Load card file. Reset clears locally saved data and restores the defaults."
+        },
+        "a4": {
+            "title": "Print nine cards on an A4 sheet",
+            "step_1": "From any editor, choose Send to print. Star Players can also be selected directly from the Print tab.",
+            "step_2": "Choose and rearrange up to nine cards per page. You can return to edit a card without losing the selection.",
+            "step_3": "Enable cut marks, print bleed, dashed borders or square corners as needed.",
+            "step_4": "Print on A4 paper at 100% scale, with no automatic browser scaling. Check the preview before duplex printing.",
+            "button": "Prepare a print sheet"
+        },
+        "professional": {
+            "title": "Professional printing",
+            "intro": "You can also send the exported card images to a local or online professional printer.",
+            "size": "Ask for a finished card size of 63 × 88 mm and confirm the required image resolution and colour profile.",
+            "bleed": "If the printer requires bleed, enable “Remove border to add bleed area for printing” before exporting each card.",
+            "marks": "Do not add cut marks to individual card files unless the printer specifically requests them.",
+            "proof": "Order a proof or a small test run before a large order, especially for colour, text size and front/back alignment.",
+            "mpc_title": "Historical MakePlayingCards settings",
+            "mpc_note": "The Noxoffa version listed the following MakePlayingCards settings. They are kept for reference; the project is not affiliated with this company."
+        },
+        "gimp": {
+            "title": "Historical GIMP method",
+            "intro": "This method remains available if you prefer to compose an A4 page manually:",
+            "step_1_before": "Install",
+            "step_2_before": "Open the",
+            "template_link": "A4 XCF template",
+            "step_3": "Use File → Open as Layers to add the PNG files, then place them in the nine slots.",
+            "step_4": "Set the page margins to 0 and print at 100% scale.",
+            "blank_alt": "Blank A4 template in GIMP",
+            "result_alt": "Completed A4 sheet in GIMP"
+        },
+        "lineage": {
+            "title": "Project versions and lineage",
+            "intro": "This project is the result of several successive forks. Each version keeps the previous work and adds its own improvements.",
+            "version": "Version",
+            "changes": "Main changes",
+            "links": "Links",
+            "site": "Site",
+            "source": "Source code",
+            "barry": "Created the first Blood Bowl version, adapted from the Warcry card generator.",
+            "graylikeme": "Continued the editor and added the Devious skill category.",
+            "turficon": "Added card backs, internationalisation, French localisation and other improvements.",
+            "noxoffa": "Separated the Player and Star Player editors; added 66 Season 3 Star Player presets, new backgrounds and icons, light/dark themes, four languages and Bootstrap 5.",
+            "current": "current version",
+            "dreadaxe": "Added nine-card A4 print sheets, a shared print queue for all editors, live card editing, cross-tab persistence, cut marks and border options, Star Player search and French localisation work based on BBTC data.",
+            "summary": "Lineage: Barry Sheppard → Graylikeme → Turficon → Noxoffa → Dreadaxe."
+        },
+        "support": {
+            "title": "Support Noxomant",
+            "text": "Noxomant’s historical Ko-fi button is kept here so each project version can clearly identify its own support link.",
+            "button": "Buy Noxomant a coffee on Ko-fi",
+            "iframe_title": "Support Noxomant on Ko-fi"
+        },
+        "credits": {
+            "title": "Credits, licence and disclaimer",
+            "art_before": "Artwork from the BB Magic Set Editor by jtv123, presented on",
+            "logos_before": "Logos from Cyanide resources for",
+            "and": "and",
+            "license_before": "Project distributed under the",
+            "license_after": "licence",
+            "community": "This community project is non-commercial and non-profit, and is developed in personal free time. Its source code is open to contributions and forks, subject to its licence and the credits above.",
+            "disclaimer": "This project is not endorsed, supported or sanctioned by Games Workshop.",
+            "rights": "Blood Bowl, Games Workshop and all associated names, logos, illustrations, characters and elements are trademarks or protected works belonging to their respective owners. All rights reserved."
+        }
     }
 }
