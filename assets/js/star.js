@@ -556,8 +556,8 @@ function normalizeStarPresetSearch(value) {
     return String(value || "")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
-        .replace(/œ/g, "oe")
-        .replace(/æ/g, "ae")
+        .replace(/œ/gi, "oe")
+        .replace(/æ/gi, "ae")
         .toLocaleLowerCase()
         .trim();
 }
