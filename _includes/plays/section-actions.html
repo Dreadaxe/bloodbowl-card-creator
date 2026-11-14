@@ -21,8 +21,12 @@
     </div>
 </div>
 
-<div class="mt-4">
-    <select class="form-select" id="sel" onchange="loadPlayFromList()">
+<div class="form-group mt-4">
+    <label for="selCombobox" data-i18n="card.action.choose_preset">Choose preset</label>
+    <select class="form-select" id="sel" onchange="loadPlayFromList()"
+        data-searchable-preset
+        data-preset-placeholder-key="card.action.preset_search_placeholder"
+        data-preset-placeholder="Type to filter presets…">
     </select>
 </div>
 
