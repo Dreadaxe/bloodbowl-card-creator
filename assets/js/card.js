@@ -500,7 +500,7 @@ function warfoRoundedRectPath(context, x, y, width, height, radius) {
 function warfoFitFont(context, value, maxWidth, startSize, family) {
     let size = startSize;
     do {
-        context.font = "bold " + size + "px " + family;
+        context.font = size + "px " + family;
         size -= 1;
     } while (size > 14 && context.measureText(String(value || "")).width > maxWidth);
     return Math.max(size + 1, 14);
@@ -843,6 +843,9 @@ function warfoDrawBottomBadge(context) {
 
 async function renderWarfoCard(cardData) {
     const version = ++warfoRenderVersion;
+    if (document.fonts?.load) {
+        await document.fonts.load('58px gutcruncher');
+    }
     await document.fonts.ready;
     await pageReady();
     const image = await warfoLoadImage(cardData.imageUrl);
@@ -878,8 +881,8 @@ async function renderWarfoCard(cardData) {
     context.textAlign = "left";
     context.textBaseline = "middle";
     const title = String(cardData.cardName || "");
-    const titleSize = warfoFitFont(context, title.toUpperCase(), 520, 58, "brothers-regular");
-    context.font = "bold " + titleSize + "px brothers-regular";
+    const titleSize = warfoFitFont(context, title.toUpperCase(), 520, 58, "gutcruncher");
+    context.font = titleSize + "px gutcruncher";
     context.fillText(title.toUpperCase(), 255, 78);
 
     if (cardData.showTeamName && String(cardData.teamName || "").trim()) {

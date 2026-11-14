@@ -1,5 +1,13 @@
 @import url("../vendors/bootstrap.min.css");
 
+@font-face {
+    font-family: "gutcruncher";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("../fonts/Gutcruncher.otf") format("opentype");
+}
+
 /*::-moz-selection {
     !* Code for Firefox *!
     color: black;
