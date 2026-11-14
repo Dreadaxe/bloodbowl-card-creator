@@ -24,7 +24,10 @@
             "reset_all": "Restablecer todo",
             "choose_preset": "Elegir ajuste preestablecido",
             "load_preset": "Cargar ajuste preestablecido",
-            "preset_notice": "Estos preajustes reproducen datos de publicaciones oficiales. Están destinados a usuarios que posean los libros correspondientes y no sustituyen las reglas oficiales."
+            "preset_notice": "Estos preajustes reproducen datos de publicaciones oficiales. Están destinados a usuarios que posean los libros correspondientes y no sustituyen las reglas oficiales.",
+            "preset_search_placeholder": "Escribe un equipo o una posición…",
+            "no_preset_match": "No hay preajustes coincidentes",
+            "player_preset_source": "Perfiles de la tercera temporada agrupados por equipo, contrastados con BBTC y traducidos con las equivalencias verificadas de NRData."
         },
         "caracteristics": {
             "player_stats": "Estadísticas del jugador",
