@@ -694,6 +694,12 @@ async function loadPlayerPresetForEditing(id) {
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("embedded") !== "1") {
+        const select = document.getElementById("playerPreset");
+        select?.addEventListener("change", () => {
+            if (select.value) {
+                loadPlayerPresetForEditing(select.value).catch(console.error);
+            }
+        });
         loadPlayerPresetIndex().catch(console.error);
     }
 });
