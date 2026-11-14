@@ -8,22 +8,22 @@
     <label class="form-check-label" for="dashLine" data-i18n="card.action.add_dash">Add dash line border</label>
 </div>
 
-<div class="mt-4">
-    <button  type="button" class="btn btn-primary" id="saveCanvasButton" onclick="saveCardAsImage()">
-        <span data-i18n="card.action.save_as_image"/>
-    </button>
-</div>
-
-<div class="mt-4">
-    <button type="button" class="btn btn-success" onclick="sendCurrentCardToPrint('special', this)">
-        <span data-i18n="card.action.send_to_print">Send to print</span>
-    </button>
-</div>
-
-<div class="mt-4">
-    <button type="button" class="btn btn-primary" id="saveButton" onclick="onSaveClicked()">
-        <span data-i18n="card.action.save_as_file"/>
-    </button>
+<div class="row g-2 mt-4">
+    <div class="col-12 col-sm-4 d-grid">
+        <button type="button" class="btn btn-sm btn-primary h-100" id="saveCanvasButton" onclick="saveCardAsImage()">
+            <span data-i18n="card.action.save_as_image"/>
+        </button>
+    </div>
+    <div class="col-12 col-sm-4 d-grid">
+        <button type="button" class="btn btn-sm btn-success h-100" onclick="sendCurrentCardToPrint('special', this)">
+            <span data-i18n="card.action.send_to_print">Send to print</span>
+        </button>
+    </div>
+    <div class="col-12 col-sm-4 d-grid">
+        <button type="button" class="btn btn-sm btn-primary h-100" id="saveButton" onclick="onSaveClicked()">
+            <span data-i18n="card.action.save_as_file"/>
+        </button>
+    </div>
 </div>
 
 <div class="mt-4">
