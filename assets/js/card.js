@@ -169,12 +169,16 @@ drawTeamName = function (value, isShowTeamName) {
     getContext().rotate(+5 * Math.PI / 180);
 }
 
+function getPriceBadgeCenterX() {
+    return window.BloodBowlCardStyles?.current() === "classic" ? 142 : 162;
+}
+
 drawFooter = function (value) {
     getContext().font = '28px brothers-regular';
     getContext().fillStyle = 'white';
     getContext().textAlign = "center";
     getContext().textBaseline = "middle";
-    writeScaled(value, { x: 164, y: 1013 });
+    writeScaled(value, { x: getPriceBadgeCenterX(), y: 1013 });
 }
 
 drawKeywords = function (value) {
@@ -228,7 +232,7 @@ drawGoldPrice = function (value, x, y){
     getContext().shadowBlur = 2
     getContext().shadowOffsetX = 2;
     getContext().shadowOffsetY = 2;
-    writeScaled(value, { x: 162, y: 975 });
+    writeScaled(value, { x: getPriceBadgeCenterX(), y: 975 });
     getContext().shadowColor = "";
     getContext().shadowBlur = 0
     getContext().shadowOffsetX = 0;
