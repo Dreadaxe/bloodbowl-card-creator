@@ -36,8 +36,7 @@
     <select class="form-select" id="preset" name="preset"
         data-searchable-preset
         data-preset-placeholder-key="card.action.preset_search_placeholder"
-        data-preset-placeholder="Type to filter presets…"
-        data-load-button="loadPreset">
+        data-preset-placeholder="Type to filter presets…">
         <option value="Akhorne_The_Squirrel.json">Akhorne The Squirrel</option>
         <option value="Anqi_Panqi.json">Anqi Panqi</option>
         <option value="Barik_Farblast.json">Barik Farblast</option>
@@ -110,11 +109,6 @@
     </p>
 </div>
 
-<div class="mt-4">
-    <button type="button" class="btn btn-primary" id="loadPreset" data-i18n="card.action.load_preset" onclick="loadStarPresetForEditing(preset.value)">
-        Load preset
-    </button>
-</div>
 
 <div class="mt-4">
     <button type="button" class="btn btn-outline-danger" id="clearCacheButton" onclick="onClearCache()">
