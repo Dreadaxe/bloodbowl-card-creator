@@ -1,118 +1,128 @@
-<div class="container-fluid">
-    <div class="row mt-3">
+<main class="container py-4">
+    <header class="mb-4">
+        <h1 class="display-5">Créateur de cartes Blood Bowl</h1>
+        <p class="lead mb-2">Créez, sauvegardez et imprimez vos cartes de joueurs, champions, cartes spéciales, dos de carte et tactiques de jeu.</p>
+        <p class="text-body-secondary mb-0">L’éditeur fonctionne directement dans votre navigateur. Les cartes et préférences enregistrées localement restent sur votre appareil jusqu’à leur réinitialisation.</p>
+    </header>
 
-        <div class="col-lg-8">
-            <div class="jumbotron">
-                <h4 class="display-4">Blood Bowl Card Creator</h4>
-                <hr class="my-4">
-                <p> Using this is simple enough:</p>
-                <ul>
-
-                    <li>Type in the name of the card in the Card name section,
-                        add the card body text in the Body Text section, and type the card type in the footer.</li>
-                    <li>The body text will attempt to carriage turn text that runs on, but you can also force returns by
-                        adding
-                        them in.</li>
-                    <li>Cards can be downloaded as a png by pressing 'Save card as image'.</li>
-                    <li>Cards an be saved as a json file by pressing 'Save card as file', you can then later upload the json
-                        file using the choose file
-                        button. This can be handy if you type up a card and then notice a typo later.</li>
-                    <li>Reset All will nuke everything back to default entries.</li>
-
-                </ul>
-                <ul>
-
-                </ul>
-
-                <p>Printing yourself on A4</p>
-                <ul>
-                    <li>Download and install
-                        <a href="https://www.gimp.org">GIMP</a>
-                        (fully-free image editor)
-                    </li>
-                    <li>Open this template in GIMP: <a href="assets/page_template.xcf" download>Page Template for A4 format</a></li>
-                    <img src="assets/img/template_image.PNG" class="img-fluid img-thumbnail" style="max-width: 300px">
-                    <li>File -> "Open as Layers"</li>
-                    <li>Choose images for printing</li>
-                    <li>Place images in the cells</li>
-                    <img src="assets/img/template_result.PNG" class="img-fluid img-thumbnail" style="max-width: 300px">
-                    <li>Check page settings (change margins to 0)</li>
-                    <div>File -> Page Setup</div>
-                    <img src="assets/img/settings_check.PNG" class="img-fluid img-thumbnail" style="max-width: 300px">
-                    <li>File -> Print...</li>
-                </ul>
-
-                <p>Printing Service</p>
-                <p>To print the cards I use Printing Company - <a href="https://www.makeplayingcards.com">makeplayingcards.com</a> with the following details</p>
-                <ul>
-                    <li>Custom Game Cards (63 X 88mm) Playing Cards</li>
-                    <li>2.48"x3.46" (63x88mm) (55 Cards)</li>
-                    <li>Card Stock: (S33) Superior Smooth</li>
-                    <li> Finishing: MPC Game Card Finish</li>
-                </ul>
-
-                <p>Special Thanks</p>
-                <ul>
-                    <li><a href="https://github.com/barrysheppard">Barry Sheppard</a> - for start the project</li>
-                    <li><a href="https://github.com/graylikeme">Graylikeme</a> - for add Devious</li>
-                    <li><a href="https://github.com/turficon">Turficon</a> - for Card Back, i18n implementation(French localization) and other improvements</li>
-                </ul>
-                <p> If you have any problems or have any suggestions please contact aleksander.silyuk@gmail.com</p>
-
-                <p class="lead">Art taken from the BB Magic Set Editor by jtv123 on <a href="https://www.reddit.com/r/bloodbowl/comments/s79fcc/blood_bowl_star_playerpositionalspecial_plays/">Reddit</a>.</p>
-                <p class="lead">Logos from the Cyanide Site from <a href="http://download.cyanide-studio.com/images-bb2/logos/">BB2</a> and  <a href="http://download.cyanide-studio.com/images-bb3/logos/">BB3</a>.</p>
-
-                <p class="lead"> <a href="https://noxoffa.github.io/bloodbowl-card-creator">This</a> project was modified and forked from this
-                    <a href="https://github.com/turficon/bloodbowl-card-creator">one</a>, which in turn was forked from
-                    <a href="https://github.com/graylikeme/bloodbowl-card-creator">here</a>, and that one was forked from
-                    <a href="https://github.com/barrysheppard/bloodbowl-card-creator">here</a>.</p>
-                <p class="lead"><a href="https://github.com/barrysheppard/bloodbowl-card-creator" target="_blank">This</a>
-                            is a
-                            heavily hacked version of the <a
-                                href="https://barrysheppard.github.io/warcry-card-creator/index.html">Warcry card
-                                generator</a>
-                            which
-                            in turn is a fork of <a href="https://hennirocks.github.io/warcry-card-creator/">Hennirocks
-                                version</a> which was fork of <a href="https://rachelnertia.github.io/warcry-card-creator"
-                                target="_blank">@rachelnertia's work</a>.
-                </p>
-                <p>
-                    <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="license" target="_blank">
-                        <img alt="Creative Commons license agreement" src="assets/img/creativecommons-by-nc.svg"
-                            height="31">
-                    </a>
-                    <a id="octocat" href="https://github.com/barrysheppard/warcry-card-creator" target="_blank">
-                        <svg width="31" height="31" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z" />
-                        </svg>
-                    </a>
-                </p>
-                <p>Please note that this is a non-commercial and non-profit project created by an enthusiast of
-                    Games
-                    Workshop products. This project is created and gets updated in personal freetime, it may get
-                    abandoned
-                    on the long run. Being open source, feel free to fork this project and help adapt and
-                    improve it.</p>
-                <p><strong>This project is in no way endorsed or sanctioned by Games Workshop.</strong> Should
-                    the owner
-                    wish to authorise or cease usage then please <a href="https://github.com/Noxoffa"
-                        target="_blank">get in touch</a>.</p>
-                <p><small>Warhammer Age of Sigmar: Warcry &copy; Copyright Games Workshop Ltd. GW, Games
-                        Workshop, Citadel,
-                        White Dwarf, Space Marine, 40K, Warhammer, Warhammer 40,000, the 'Aquila' Double-headed
-                        Eagle logo,
-                        Warhammer Age of Sigmar, Battletome, Stormcast Eternals, and all associated logos,
-                        illustrations,
-                        images, names, creatures, races, vehicles, locations, weapons, characters, and the
-                        distinctive
-                        likenesses thereof, are either &reg; or &trade;, and/or &copy; Games Workshop Limited,
-                        variably
-                        registered around the world. All Rights Reserved.</small></p>
-            </div>
-        </div>
-
-        <div class="col-lg-4"></div>
-
+    <div class="alert alert-warning" role="alert">
+        <h2 class="h5 alert-heading">À propos des préréglages officiels</h2>
+        <p class="mb-0">Certains préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux personnes possédant les livres correspondants et ne remplacent pas les règles officielles.</p>
     </div>
-</div>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h2 class="h3 card-title">Créer et modifier une carte</h2>
+            <ol class="mb-0">
+                <li class="mb-2">Choisissez un éditeur dans la barre de navigation : <strong>Joueurs</strong>, <strong>Star Players</strong>, <strong>Cartes spéciales</strong>, <strong>Dos de carte</strong> ou <strong>Tactiques de jeu</strong>.</li>
+                <li class="mb-2">Renseignez les champs ou chargez un préréglage. L’aperçu de la carte est mis à jour au fur et à mesure.</li>
+                <li class="mb-2">Utilisez <strong>Sauvegarder comme image</strong> pour obtenir un PNG, ou <strong>Sauvegarder comme fichier</strong> pour conserver une carte modifiable au format JSON.</li>
+                <li>Rechargez ensuite ce fichier JSON avec <strong>Charger une carte</strong>. La réinitialisation efface les données enregistrées localement pour repartir des valeurs par défaut.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h2 class="h3 card-title">Imprimer neuf cartes sur une feuille A4</h2>
+            <ol>
+                <li class="mb-2">Depuis n’importe quel éditeur, cliquez sur <strong>Envoyer à l’impression</strong>. Pour les champions, vous pouvez aussi les sélectionner directement dans l’onglet <strong>Impression</strong>.</li>
+                <li class="mb-2">Dans la feuille d’impression, choisissez et réorganisez jusqu’à neuf cartes par page. Vous pouvez revenir modifier une carte sans perdre votre sélection.</li>
+                <li class="mb-2">Activez selon vos besoins les marques de coupe, la marge d’impression, les pointillés ou les angles droits.</li>
+                <li>Imprimez au format <strong>A4</strong>, à l’échelle <strong>100 %</strong>, sans ajustement automatique du navigateur. Vérifiez l’aperçu avant de lancer une impression recto verso.</li>
+            </ol>
+            <a class="btn btn-primary" href="print.html">Préparer une feuille d’impression</a>
+
+            <details class="mt-4">
+                <summary class="fw-semibold">Méthode historique avec GIMP</summary>
+                <div class="mt-3">
+                    <p>Cette méthode reste disponible pour composer manuellement une page :</p>
+                    <ol>
+                        <li>Installez <a href="https://www.gimp.org" target="_blank" rel="noopener noreferrer">GIMP</a>.</li>
+                        <li>Ouvrez le <a href="assets/page_template.xcf" download>modèle A4 au format XCF</a>.</li>
+                        <li>Ajoutez les PNG avec <em>Fichier → Ouvrir en tant que calques</em>, puis placez-les dans les neuf emplacements.</li>
+                        <li>Réglez les marges à 0 dans la mise en page et imprimez à 100 %.</li>
+                    </ol>
+                    <div class="d-flex flex-wrap gap-3">
+                        <img src="assets/img/template_image.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Modèle A4 vierge dans GIMP">
+                        <img src="assets/img/template_result.PNG" class="img-fluid img-thumbnail" style="max-width: 280px" alt="Exemple de feuille A4 remplie dans GIMP">
+                    </div>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h3">Versions et filiation du projet</h2>
+        <p>Le projet est le résultat de plusieurs forks successifs. Chaque version conserve le travail précédent et ajoute ses propres évolutions.</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Version</th>
+                        <th scope="col">Principales évolutions</th>
+                        <th scope="col">Liens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Barry Sheppard</th>
+                        <td>Création de la première version Blood Bowl, adaptée du générateur de cartes Warcry.</td>
+                        <td><a href="https://barrysheppard.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/barrysheppard/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Graylikeme</th>
+                        <td>Poursuite de l’éditeur et ajout de la catégorie de compétences <em>Devious</em>.</td>
+                        <td><a href="https://graylikeme.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/graylikeme/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Turficon</th>
+                        <td>Ajout des dos de carte, de l’internationalisation, de la traduction française et de diverses améliorations.</td>
+                        <td><a href="https://turficon.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/turficon/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Noxoffa</th>
+                        <td>Séparation des éditeurs Joueurs et Star Players, ajout de 66 préréglages de champions de la Saison 3, nouveaux fonds et pictogrammes, thèmes clair/sombre, quatre langues et migration vers Bootstrap 5.</td>
+                        <td><a href="https://noxoffa.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/Noxoffa/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                    </tr>
+                    <tr class="table-primary">
+                        <th scope="row">Dreadaxe — version actuelle</th>
+                        <td>Feuilles A4 de neuf cartes, file d’impression commune à tous les éditeurs, modification des cartes à la volée, persistance entre les onglets, marques de coupe et options de bordure, recherche de champions et travail de localisation française à partir des données BBTC.</td>
+                        <td><a href="https://dreadaxe.github.io/bloodbowl-card-creator/" target="_blank" rel="noopener noreferrer">Site</a> · <a href="https://github.com/Dreadaxe/bloodbowl-card-creator" target="_blank" rel="noopener noreferrer">Code source</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="small text-body-secondary">Filiation : Barry Sheppard → Graylikeme → Turficon → Noxoffa → Dreadaxe.</p>
+    </section>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h2 class="h3 card-title">Soutenir Noxomant</h2>
+            <p>Le bouton Ko-fi historique de Noxomant a été déplacé ici afin que chaque version du projet puisse identifier clairement son propre moyen de soutien.</p>
+            <p>
+                <a class="btn btn-danger" href="https://ko-fi.com/noxomant" target="_blank" rel="noopener noreferrer">Offrir un café à Noxomant sur Ko-fi</a>
+            </p>
+            <iframe
+                src="https://ko-fi.com/noxomant/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true"
+                title="Soutenir Noxomant sur Ko-fi"
+                loading="lazy"
+                style="border: 0; width: 100%; max-width: 480px; height: 500px; background: #f9f9f9;">
+            </iframe>
+        </div>
+    </section>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h2 class="h3 card-title">Crédits, licence et avertissement</h2>
+            <ul>
+                <li>Illustrations issues du <em>BB Magic Set Editor</em> de jtv123, présenté sur <a href="https://www.reddit.com/r/bloodbowl/comments/s79fcc/blood_bowl_star_playerpositionalspecial_plays/" target="_blank" rel="noopener noreferrer">Reddit</a>.</li>
+                <li>Logos provenant des ressources Cyanide pour <a href="http://download.cyanide-studio.com/images-bb2/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 2</a> et <a href="http://download.cyanide-studio.com/images-bb3/logos/" target="_blank" rel="noopener noreferrer">Blood Bowl 3</a>.</li>
+                <li>Projet distribué sous licence <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">Creative Commons BY-NC 4.0</a>.</li>
+            </ul>
+            <p>Ce projet communautaire, non commercial et à but non lucratif, est développé sur du temps libre. Son code source est ouvert aux contributions et aux forks, dans le respect de sa licence et des crédits ci-dessus.</p>
+            <p class="mb-2"><strong>Ce projet n’est ni approuvé, ni soutenu, ni sanctionné par Games Workshop.</strong></p>
+            <p class="small text-body-secondary mb-0">Blood Bowl, Games Workshop et tous les noms, logos, illustrations, personnages et éléments associés sont des marques ou œuvres protégées appartenant à leurs détenteurs respectifs. Tous droits réservés.</p>
+        </div>
+    </section>
+</main>
