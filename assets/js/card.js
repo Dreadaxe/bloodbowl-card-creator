@@ -506,44 +506,30 @@ function warfoFitFont(context, value, maxWidth, startSize, family) {
     return Math.max(size + 1, 14);
 }
 
-function warfoSmallCapsGlyphs(value) {
+function warfoTitleCase(value) {
     let isWordStart = true;
-    return Array.from(String(value || "").toLocaleUpperCase()).map(function (character) {
+    return Array.from(String(value || "").toLocaleLowerCase()).map(function (character) {
         const isLetterOrNumber = character.toLocaleUpperCase() !== character.toLocaleLowerCase() || /[0-9]/.test(character);
-        const glyph = {
-            character,
-            large: isLetterOrNumber && isWordStart
-        };
-
         if (isLetterOrNumber) {
+            const renderedCharacter = isWordStart ? character.toLocaleUpperCase() : character;
             isWordStart = false;
-        } else if (/\s|[-–—/]/.test(character)) {
+            return renderedCharacter;
+        }
+        if (/\s|[-–—/]/.test(character)) {
             isWordStart = true;
         }
-        return glyph;
-    });
+        return character;
+    }).join("");
 }
 
-function warfoMeasureSmallCapsTitle(context, glyphs, fullSize, letterSpacing) {
-    return glyphs.reduce(function (width, glyph, index) {
-        const glyphSize = glyph.large ? fullSize : Math.round(fullSize * 0.72);
-        context.font = glyphSize + "px gutcruncher";
-        return width + context.measureText(glyph.character).width + (index < glyphs.length - 1 ? letterSpacing : 0);
-    }, 0);
-}
-
-function warfoDrawSmallCapsTitle(context, value, x, y, maxWidth) {
-    const glyphs = warfoSmallCapsGlyphs(value);
-    const letterSpacing = 1.5;
-    let fullSize = 64;
-
-    while (fullSize > 28 && warfoMeasureSmallCapsTitle(context, glyphs, fullSize, letterSpacing) > maxWidth) {
-        fullSize -= 1;
-    }
+function warfoDrawTitle(context, value, x, y, maxWidth) {
+    const title = warfoTitleCase(value);
+    const titleSize = warfoFitFont(context, title, maxWidth, 64, "gutcruncher");
+    const headerAngle = Math.atan2(49 - 142, 822 - 205);
 
     context.save();
     context.translate(x, y);
-    context.rotate(-4 * Math.PI / 180);
+    context.rotate(headerAngle);
     context.textAlign = "left";
     context.textBaseline = "alphabetic";
     context.fillStyle = "#ffffff";
@@ -551,15 +537,8 @@ function warfoDrawSmallCapsTitle(context, value, x, y, maxWidth) {
     context.shadowOffsetX = 4;
     context.shadowOffsetY = 4;
     context.shadowBlur = 0;
-
-    let cursorX = 0;
-    glyphs.forEach(function (glyph, index) {
-        const glyphSize = glyph.large ? fullSize : Math.round(fullSize * 0.72);
-        context.font = glyphSize + "px gutcruncher";
-        context.fillText(glyph.character, cursorX, 0);
-        cursorX += context.measureText(glyph.character).width;
-        if (index < glyphs.length - 1) cursorX += letterSpacing;
-    });
+    context.font = titleSize + "px gutcruncher";
+    context.fillText(title, 0, 0);
     context.restore();
 }
 
@@ -877,7 +856,14 @@ function warfoLoadImage(source) {
     });
 }
 
-function warfoDrawBottomBadge(context) {
+function warfoDrawBottomBadge(context, logoImage) {
+    if (logoImage) {
+        context.save();
+        context.drawImage(logoImage, 667, 979, 126, 126);
+        context.restore();
+        return;
+    }
+
     context.save();
     context.translate(725, 1048);
     context.fillStyle = "#34528e";
@@ -905,7 +891,10 @@ async function renderWarfoCard(cardData) {
     }
     await document.fonts.ready;
     await pageReady();
-    const image = await warfoLoadImage(cardData.imageUrl);
+    const [image, seasonThreeLogo] = await Promise.all([
+        warfoLoadImage(cardData.imageUrl),
+        warfoLoadImage("assets/img/logos/BloodBowl_Season3.png")
+    ]);
     if (version !== warfoRenderVersion) return;
 
     const context = getContext();
@@ -938,7 +927,7 @@ async function renderWarfoCard(cardData) {
     context.textAlign = "left";
     context.textBaseline = "middle";
     const title = String(cardData.cardName || "");
-    warfoDrawSmallCapsTitle(context, title, 255, 96, 520);
+    warfoDrawTitle(context, title, 255, 96, 520);
 
     if (cardData.showTeamName && String(cardData.teamName || "").trim()) {
         context.font = "bold 20px franklin-gothic-book";
@@ -1008,7 +997,7 @@ async function renderWarfoCard(cardData) {
     context.textAlign = "left";
     context.font = "bold 30px brothers-regular";
     context.fillText(i18next.t("card.caracteristics.GP") + " " + String(cardData.footer || "—"), 55, 1092);
-    warfoDrawBottomBadge(context);
+    warfoDrawBottomBadge(context, seasonThreeLogo);
 
     context.restore();
 
