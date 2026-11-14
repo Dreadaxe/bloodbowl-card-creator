@@ -552,51 +552,6 @@ window.BloodBowlStarRenderer = Object.freeze({
     renderPreset: renderStarPresetForPrint
 });
 
-function normalizeStarPresetSearch(value) {
-    return String(value || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/œ/gi, "oe")
-        .replace(/æ/gi, "ae")
-        .toLocaleLowerCase()
-        .trim();
-}
-
-function setupStarPresetSearch(select, presets) {
-    const search = document.getElementById("starPresetSearch");
-    const loadButton = document.getElementById("loadPreset");
-    if (!search) return;
-
-    const searchablePresets = presets.map(preset => ({
-        file: preset.file,
-        name: preset.name,
-        normalizedName: normalizeStarPresetSearch(preset.name)
-    }));
-
-    const filter = () => {
-        const query = normalizeStarPresetSearch(search.value);
-        const selectedFile = select.value;
-        const matches = searchablePresets.filter(preset =>
-            query === "" || preset.normalizedName.includes(query)
-        );
-        const nextFile = matches.some(preset => preset.file === selectedFile)
-            ? selectedFile
-            : (matches[0]?.file || "");
-        const fragment = document.createDocumentFragment();
-
-        matches.forEach(preset => {
-            fragment.append(new Option(preset.name, preset.file));
-        });
-        select.replaceChildren(fragment);
-        select.value = nextFile;
-        select.disabled = matches.length === 0;
-        if (loadButton) loadButton.disabled = matches.length === 0;
-    };
-
-    search.addEventListener("input", filter);
-    filter();
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("embedded") === "1") {
@@ -614,6 +569,6 @@ document.addEventListener("DOMContentLoaded", () => {
         presets.forEach((preset, index) => {
             select.options[index].textContent = preset.name;
         });
-        setupStarPresetSearch(select, presets);
+        window.BloodBowlPresetCombobox?.refresh(select);
     }).catch(console.error);
 });
