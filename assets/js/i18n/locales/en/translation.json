@@ -25,6 +25,9 @@
             "choose_preset": "Choose preset",
             "load_preset": "Load preset",
             "preset_notice": "These presets reproduce data from official publications. They are intended for users who own the corresponding books and do not replace the official rules.",
+            "card_style": "Card style",
+            "style_season3": "Season 3",
+            "style_classic": "Classic (Barry / MSE)",
             "preset_search_placeholder": "Type to filter presets…",
             "no_preset_match": "No matching preset",
             "player_preset_source": "Third Season profiles grouped by team, cross-checked with BBTC and translated from the verified NRData mapping."

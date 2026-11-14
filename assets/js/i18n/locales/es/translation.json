@@ -25,6 +25,9 @@
             "choose_preset": "Elegir ajuste preestablecido",
             "load_preset": "Cargar ajuste preestablecido",
             "preset_notice": "Estos preajustes reproducen datos de publicaciones oficiales. Están destinados a usuarios que posean los libros correspondientes y no sustituyen las reglas oficiales.",
+            "card_style": "Estilo de carta",
+            "style_season3": "Temporada 3",
+            "style_classic": "Clásico (Barry / MSE)",
             "preset_search_placeholder": "Escribe un equipo o una posición…",
             "no_preset_match": "No hay preajustes coincidentes",
             "player_preset_source": "Perfiles de la tercera temporada agrupados por equipo, contrastados con BBTC y traducidos con las equivalencias verificadas de NRData."
