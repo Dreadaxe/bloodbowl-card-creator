@@ -22,7 +22,8 @@
             "load":"Cargar archivo de tarjeta",
             "reset_all":"Restablecer todo",
             "choose_preset":"Elegir ajuste preestablecido",
-            "load_preset":"Cargar ajuste preestablecido"
+            "load_preset":"Cargar ajuste preestablecido",
+            "preset_notice":"Estos preajustes reproducen datos de publicaciones oficiales. Están destinados a usuarios que posean los libros correspondientes y no sustituyen las reglas oficiales."
         },
         "caracteristics":{
             "player_stats" : "Estadísticas del jugador",

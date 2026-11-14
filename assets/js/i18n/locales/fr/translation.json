@@ -22,7 +22,8 @@
             "load":"Charger une carte",
             "reset_all":"Effacer",
             "choose_preset":"Choisir un préréglage",
-            "load_preset":"Charger un préréglage"
+            "load_preset":"Charger un préréglage",
+            "preset_notice":"Ces préréglages reproduisent des données issues de publications officielles. Ils sont destinés aux utilisateurs possédant les livres correspondants et ne remplacent pas les règles officielles."
         },
         "caracteristics":{
             "player_stats" : "Statistiques du Joueur",

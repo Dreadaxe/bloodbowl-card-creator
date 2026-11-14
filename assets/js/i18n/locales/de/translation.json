@@ -22,7 +22,8 @@
             "load":"Kartendatei laden",
             "reset_all":"Alles zurücksetzen",
             "choose_preset":"Voreinstellung wählen",
-            "load_preset":"Voreinstellung laden"
+            "load_preset":"Voreinstellung laden",
+            "preset_notice":"Diese Voreinstellungen geben Daten aus offiziellen Publikationen wieder. Sie sind für Nutzer gedacht, die die entsprechenden Bücher besitzen, und ersetzen nicht die offiziellen Regeln."
         },
         "caracteristics":{
             "player_stats" : "Spielerstatistiken",

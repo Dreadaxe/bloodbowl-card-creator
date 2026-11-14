@@ -22,7 +22,8 @@
             "load":"Load card file",
             "reset_all":"Reset all",
             "choose_preset":"Choose preset",
-            "load_preset":"Load preset"
+            "load_preset":"Load preset",
+            "preset_notice":"These presets reproduce data from official publications. They are intended for users who own the corresponding books and do not replace the official rules."
         },
         "caracteristics":{
             "player_stats" : "Player Stats",
