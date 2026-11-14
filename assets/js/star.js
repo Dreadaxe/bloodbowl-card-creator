@@ -562,6 +562,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const select = document.getElementById("preset");
         if (!select) return;
 
+        select.addEventListener("change", () => {
+            if (select.value) {
+                loadStarPresetForEditing(select.value).catch(console.error);
+            }
+        });
+
         let presets = [...select.options].map(option => ({ file: option.value, name: option.textContent }));
         if (window.BloodBowlStarLocales) {
             presets = await BloodBowlStarLocales.localizePresetList(presets);
