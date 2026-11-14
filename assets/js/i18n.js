@@ -47,7 +47,7 @@ initI18n = function () {
       fallbackLng: "en",
       backend: {
       
-        loadPath: 'assets/js/i18n/locales/{{lng}}/{{ns}}.json?v=20261114-2'
+        loadPath: 'assets/js/i18n/locales/{{lng}}/{{ns}}.json?v=20261114-4'
       }
     }, (err, t) => {
       if (err) return console.error(err);
