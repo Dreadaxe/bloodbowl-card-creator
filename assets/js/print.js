@@ -278,8 +278,6 @@ function getSelectedEntries() {
                 id: record.id,
                 name: record.name,
                 blob: record.blob,
-                backBlob: record.backBlob || null,
-                record,
                 quantity: normalizeQuantity(quantity.value)
             };
         })
@@ -372,6 +370,9 @@ async function loadPresetIndex() {
         throw new Error(`Unable to load Star Player list (${response.status})`);
     }
     presets = await response.json();
+    if (window.BloodBowlStarLocales) {
+        presets = await BloodBowlStarLocales.localizePresetList(presets);
+    }
 
     const list = document.getElementById("starList");
     const fragment = document.createDocumentFragment();
@@ -485,19 +486,13 @@ function createQueuedCardRow(record, autoSelect) {
     reopenButton.type = "button";
     reopenButton.dataset.i18n = "print.reopen_editor";
     reopenButton.textContent = translate("print.reopen_editor", { defaultValue: "Edit" });
-    if (!record.data && !record.bbtc?.data && !record.bbtc?.rules?.length) {
-        reopenButton.disabled = true;
-        reopenButton.title = translate('print.image_only_card', {defaultValue:'This older card only contains an image. Import its profile again to edit it.'});
-    }
     reopenButton.addEventListener("click", async () => {
         try {
             await persistPrintState();
-            const target = new URL(window.BloodBowlQueueEditor.sourcePage(record), window.location.href);
-            target.searchParams.set('queueCard', record.id);
-            window.location.href = target.href;
         } catch (error) {
             console.error(error);
-            setError(error.message);
+        } finally {
+            window.location.href = record.sourcePage || "index.html";
         }
     });
 
@@ -513,13 +508,8 @@ function createQueuedCardRow(record, autoSelect) {
     return row;
 }
 
-async function loadPrintQueue(options = {}) {
+async function loadPrintQueue() {
     if (!window.BloodBowlPrintQueue) return;
-    const previous = new Map([...document.querySelectorAll(".queued-card-item")].map(row => [row.dataset.id, {
-        checked: row.querySelector(".queued-card-checkbox").checked,
-        quantity: row.querySelector(".queued-card-quantity").value
-    }]));
-    const selectIds = new Set(options.selectIds || []);
     queuedRecords = await BloodBowlPrintQueue.getAll();
     const addedId = new URLSearchParams(window.location.search).get("added");
     const frontRecords = queuedRecords.filter(record => record.type !== "back");
@@ -529,12 +519,7 @@ async function loadPrintQueue(options = {}) {
     const panel = document.getElementById("queuedCardsPanel");
     const list = document.getElementById("queuedCardList");
     panel.classList.toggle("d-none", frontRecords.length === 0);
-    list.replaceChildren(...frontRecords.map(record => {
-        const saved = previous.get(record.id);
-        const row = createQueuedCardRow(record, record.id === addedId || selectIds.has(record.id) || Boolean(saved?.checked));
-        if (saved) row.querySelector(".queued-card-quantity").value = saved.quantity;
-        return row;
-    }));
+    list.replaceChildren(...frontRecords.map(record => createQueuedCardRow(record, record.id === addedId)));
     if (addedId) {
         const cleanUrl = new URL(window.location.href);
         cleanUrl.searchParams.delete("added");
@@ -553,7 +538,7 @@ function updateQueuedBackNotice() {
             defaultValue: `Queued back: ${queuedBack.name}`
         })
         : "";
-    const hasBack = Boolean(queuedBack || rememberedBackFile || document.getElementById("backImage").files.length || queuedRecords.some(record => record.backBlob));
+    const hasBack = Boolean(queuedBack || rememberedBackFile || document.getElementById("backImage").files.length);
     document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
 }
 
@@ -572,17 +557,15 @@ async function removeQueuedBack() {
     await removeQueuedRecord(queuedBack.id);
 }
 
-function waitForFrameRenderer(frameId = "cardRendererFrame", api = "BloodBowlStarRenderer") {
+function waitForFrameRenderer(frameId = "cardRendererFrame") {
     const frame = document.getElementById(frameId);
     const startedAt = Date.now();
 
     return new Promise((resolve, reject) => {
         const check = () => {
             try {
-                const target = frame.contentWindow;
-                const renderer = target && target[api];
-                if (renderer && typeof renderer.renderData === "function" &&
-                    (api === "BloodBowlStarRenderer" || target.document.readyState === 'complete' && target.i18next?.isInitialized)) {
+                const renderer = frame.contentWindow && frame.contentWindow.BloodBowlStarRenderer;
+                if (renderer && typeof renderer.renderPreset === "function") {
                     resolve(renderer);
                     return;
                 }
@@ -605,17 +588,6 @@ function waitForFrameRenderer(frameId = "cardRendererFrame", api = "BloodBowlSta
 
 function waitForRenderer() {
     return waitForFrameRenderer("cardRendererFrame");
-}
-
-function waitForQueuedRenderer(sourcePage) {
-    const id = 'queued-renderer-' + sourcePage.replace(/[^a-z0-9]/gi,'-');
-    if (!document.getElementById(id)) {
-        const frame = document.createElement('iframe'); frame.id=id;
-        frame.src=sourcePage+'?embedded=1&queueRender=1'; frame.title='Card renderer';
-        frame.style.cssText='position:fixed;left:-10000px;width:1000px;height:1200px;visibility:hidden';
-        document.body.append(frame);
-    }
-    return waitForFrameRenderer(id,'BloodBowlCardRenderer');
 }
 
 function updateEditedRow(file) {
@@ -907,7 +879,7 @@ function mirrorBackEntries(frontEntries, backEntry, flip) {
         const column = index % PRINT_CONSTANTS.columns;
         const targetRow = flip === "short" ? (PRINT_CONSTANTS.rows - 1 - row) : row;
         const targetColumn = flip === "long" ? (PRINT_CONSTANTS.columns - 1 - column) : column;
-        backs[(targetRow * PRINT_CONSTANTS.columns) + targetColumn] = entry.back || backEntry;
+        backs[(targetRow * PRINT_CONSTANTS.columns) + targetColumn] = backEntry;
     });
     return backs;
 }
@@ -946,50 +918,22 @@ async function generateSheets(requestedVersion) {
             let sourceBlob;
             if (entry.kind === "preset") {
                 const editedData = editedCards.get(entry.file);
-                const renderOptions = {
-                    ...editedData?.printOptions,
-                    removeBorder: includeBleed || Boolean(editedData?.printOptions?.removeBorder),
-                    dashLine: Boolean(editedData?.printOptions?.dashLine)
-                };
+                const renderOptions = editedData && editedData.printOptions
+                    ? editedData.printOptions
+                    : { removeBorder: includeBleed, dashLine: false };
                 const result = editedData
                     ? await renderer.renderData(editedData, renderOptions)
                     : await renderer.renderPreset(entry.file, renderOptions);
                 sourceBlob = result.blob;
             } else {
                 sourceBlob = entry.blob;
-                const data = await BloodBowlQueueEditor.editableData(entry.record);
-                if (data && ['index.html','star.html','special.html'].includes(BloodBowlQueueEditor.sourcePage(entry.record))) {
-                    const cardRenderer = await waitForQueuedRenderer(BloodBowlQueueEditor.sourcePage(entry.record));
-                    const result = await cardRenderer.renderData(data, {
-                        removeBorder:includeBleed || Boolean(data.printOptions?.removeBorder),
-                        dashLine:Boolean(data.printOptions?.dashLine),language:entry.record.bbtc?.language
-                    });
-                    sourceBlob=result.blob;
-                }
             }
 
             const prepared = await prepareCardBlob(sourceBlob, includeBleed);
-            let individualBack = null;
-            if (entry.backBlob) {
-                let sourceBack = entry.backBlob;
-                const data = await BloodBowlQueueEditor.editableData(entry.record,'back');
-                if (data) {
-                    const cardRenderer = await waitForQueuedRenderer('special.html');
-                    const result = await cardRenderer.renderData(data,{removeBorder:includeBleed,dashLine:false,language:entry.record.bbtc?.language});
-                    sourceBack=result.blob;
-                }
-                const preparedBack = await prepareCardBlob(sourceBack, includeBleed);
-                individualBack = {
-                    name: entry.name,
-                    url: registerNextObjectUrl(preparedBack.blob),
-                    fullBleed: preparedBack.fullBleed
-                };
-            }
             renderedCards.set(entry.key, {
                 name: entry.name,
                 url: registerNextObjectUrl(prepared.blob),
-                fullBleed: prepared.fullBleed,
-                back: individualBack
+                fullBleed: prepared.fullBleed
             });
             renderedCount += 1;
             setProgress(renderedCount, selected.length);
@@ -1013,7 +957,6 @@ async function generateSheets(requestedVersion) {
         const cards = selected.flatMap(entry =>
             Array.from({ length: entry.quantity }, () => renderedCards.get(entry.key))
         );
-        const hasBacks = Boolean(backEntry) || cards.some(card => card.back);
         const preview = document.getElementById("printPreview");
         preview.replaceChildren();
 
@@ -1024,7 +967,7 @@ async function generateSheets(requestedVersion) {
             sheetCount += 1;
             const options = { includeBleed, showPageMarks };
             preview.append(createPrintPage(frontEntries, "front", sheetCount, options));
-            if (hasBacks) {
+            if (backEntry) {
                 preview.append(createPrintPage(
                     mirrorBackEntries(frontEntries, backEntry, duplexFlip),
                     "back",
@@ -1036,8 +979,8 @@ async function generateSheets(requestedVersion) {
 
         document.getElementById("pageSummary").textContent = translate("print.page_summary", {
             sheets: sheetCount,
-            pages: sheetCount * (hasBacks ? 2 : 1),
-            defaultValue: `${sheetCount} sheets · ${sheetCount * (hasBacks ? 2 : 1)} pages`
+            pages: sheetCount * (backEntry ? 2 : 1),
+            defaultValue: `${sheetCount} sheets · ${sheetCount * (backEntry ? 2 : 1)} pages`
         });
         revokeRenderedUrls();
         renderedObjectUrls = nextObjectUrls.splice(0);
@@ -1062,7 +1005,8 @@ function onBackImageChanged() {
         ? { name: selectedBackFile.name, blob: selectedBackFile }
         : null;
     updateRememberedBackNotice();
-    updateQueuedBackNotice();
+    const hasBack = Boolean(rememberedBackFile || queuedBack);
+    document.getElementById("duplexOptions").classList.toggle("d-none", !hasBack);
     scheduleSheetRender({ immediate: true });
 }
 
@@ -1114,5 +1058,3 @@ window.addEventListener("pagehide", () => {
     persistPrintState().catch(console.error);
     revokeRenderedUrls();
 });
-
-
