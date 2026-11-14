@@ -549,192 +549,256 @@ function warfoSkillList(cardData, prefix) {
     }).join(", ");
 }
 
-function warfoPortraitPath(context) {
+function warfoPolygon(context, points) {
     context.beginPath();
-    context.moveTo(435, 380);
-    context.lineTo(435, 175);
-    context.quadraticCurveTo(435, 75, 590, 62);
-    context.quadraticCurveTo(745, 75, 745, 175);
-    context.lineTo(745, 380);
+    points.forEach(function (point, index) {
+        if (index === 0) context.moveTo(point[0], point[1]);
+        else context.lineTo(point[0], point[1]);
+    });
     context.closePath();
 }
 
-function warfoDrawPortrait(context, cardData, image) {
+function warfoDrawPaper(context) {
+    const paperGradient = context.createLinearGradient(190, 120, 822, 990);
+    paperGradient.addColorStop(0, "#eee5d2");
+    paperGradient.addColorStop(0.5, "#f8f4e9");
+    paperGradient.addColorStop(1, "#ded1b9");
+    context.fillStyle = paperGradient;
+    warfoPolygon(context, [[170, 155], [822, 55], [822, 1015], [170, 1080]]);
+    context.fill();
+
     context.save();
-    warfoPortraitPath(context);
+    warfoPolygon(context, [[170, 155], [822, 55], [822, 1015], [170, 1080]]);
     context.clip();
-
-    const portraitGradient = context.createLinearGradient(435, 62, 745, 380);
-    portraitGradient.addColorStop(0, "#6b6452");
-    portraitGradient.addColorStop(1, "#252018");
-    context.fillStyle = portraitGradient;
-    context.fillRect(430, 55, 322, 333);
-
-    if (image) {
-        const properties = cardData.imageProperties || {};
-        const scaleControl = Number(properties.scalePercent || 100) / 100;
-        const targetWidth = 310;
-        const targetHeight = 318;
-        const coverScale = Math.max(targetWidth / image.width, targetHeight / image.height) * scaleControl;
-        const width = image.width * coverScale;
-        const height = image.height * coverScale;
-        const offsetX = Number(properties.offsetX || 0) * 0.55;
-        const offsetY = Number(properties.offsetY || 0) * 0.55;
-        const x = 590 - width / 2 + offsetX;
-        const y = 220 - height / 2 + offsetY;
-        context.drawImage(image, x, y, width, height);
-    } else {
-        context.fillStyle = "rgba(231, 220, 183, 0.24)";
+    for (let i = 0; i < 46; i += 1) {
+        const x = 185 + ((i * 109) % 625);
+        const y = 85 + ((i * 173) % 930);
+        context.strokeStyle = i % 4 === 0 ? "rgba(113, 83, 46, 0.11)" : "rgba(255, 255, 255, 0.18)";
+        context.lineWidth = i % 5 === 0 ? 3 : 1;
         context.beginPath();
-        context.arc(590, 183, 56, 0, Math.PI * 2);
-        context.fill();
-        context.beginPath();
-        context.ellipse(590, 330, 125, 115, 0, Math.PI, Math.PI * 2);
-        context.fill();
+        context.moveTo(x, y);
+        context.quadraticCurveTo(x + 30, y - 10, x + 75, y + 5);
+        context.stroke();
     }
-    context.restore();
-
-    context.save();
-    context.strokeStyle = "#d2bd7d";
-    context.lineWidth = 7;
-    warfoPortraitPath(context);
-    context.stroke();
-    context.strokeStyle = "rgba(48, 31, 14, 0.9)";
-    context.lineWidth = 2;
-    context.stroke();
     context.restore();
 }
 
-function warfoDrawStatIcon(context, type, cx, cy) {
+function warfoTeamInitials(teamName) {
+    const initials = String(teamName || "BB").trim().split(/\s+/).map(function (word) {
+        return word.charAt(0);
+    }).join("").slice(0, 2).toUpperCase();
+    return initials || "BB";
+}
+
+function warfoDrawTeamBadge(context, cardData) {
+    const cx = 116;
+    const cy = 104;
+    const radius = 79;
+
     context.save();
     context.translate(cx, cy);
-    context.strokeStyle = "#eee4c4";
-    context.fillStyle = "#eee4c4";
+
+    context.fillStyle = "#c8c3ad";
+    for (let i = 0; i < 12; i += 1) {
+        context.save();
+        context.rotate((Math.PI * 2 * i) / 12);
+        context.beginPath();
+        context.moveTo(-7, -radius - 5);
+        context.lineTo(0, -radius - 22);
+        context.lineTo(7, -radius - 5);
+        context.closePath();
+        context.fill();
+        context.restore();
+    }
+
+    const badgeGradient = context.createRadialGradient(-18, -24, 8, 0, 0, radius);
+    badgeGradient.addColorStop(0, "#b9d67a");
+    badgeGradient.addColorStop(0.55, "#5e8d39");
+    badgeGradient.addColorStop(1, "#274f31");
+    context.fillStyle = badgeGradient;
+    context.beginPath();
+    context.arc(0, 0, radius, 0, Math.PI * 2);
+    context.fill();
+    context.strokeStyle = "#e1dcc6";
+    context.lineWidth = 10;
+    context.stroke();
+    context.strokeStyle = "#6a6b66";
+    context.lineWidth = 3;
+    context.stroke();
+
+    context.save();
+    context.rotate(-0.72);
+    context.fillStyle = "#d8d8cd";
+    context.fillRect(-9, -58, 18, 105);
+    context.fillStyle = "#efb323";
+    context.fillRect(-17, 31, 34, 24);
+    context.strokeStyle = "#323b32";
+    context.lineWidth = 3;
+    context.strokeRect(-17, 31, 34, 24);
+    context.restore();
+
+    context.save();
+    context.rotate(0.72);
+    context.fillStyle = "#d8d8cd";
+    context.fillRect(-9, -58, 18, 105);
+    context.fillStyle = "#efb323";
+    context.fillRect(-17, 31, 34, 24);
+    context.strokeStyle = "#323b32";
+    context.lineWidth = 3;
+    context.strokeRect(-17, 31, 34, 24);
+    context.restore();
+
+    context.fillStyle = "rgba(24, 50, 32, 0.78)";
+    context.beginPath();
+    context.arc(0, 0, 27, 0, Math.PI * 2);
+    context.fill();
+    context.fillStyle = "#f4f0df";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = "bold 26px brothers-regular";
+    context.fillText(warfoTeamInitials(cardData.teamName), 0, 2);
+    context.restore();
+}
+
+function warfoDrawSideIcon(context, type, cx, cy) {
+    context.save();
+    context.translate(cx, cy);
+    context.fillStyle = "#ffffff";
+    context.strokeStyle = "#ffffff";
     context.lineWidth = 6;
     context.lineJoin = "round";
     context.lineCap = "round";
 
     if (type === "movement") {
         context.beginPath();
-        context.moveTo(-30, 16);
-        context.lineTo(-9, -21);
-        context.lineTo(9, -12);
-        context.lineTo(25, 15);
-        context.lineTo(35, 19);
-        context.lineTo(31, 32);
-        context.lineTo(-17, 32);
-        context.quadraticCurveTo(-37, 29, -30, 16);
+        context.moveTo(-31, 16);
+        context.lineTo(-10, -25);
+        context.lineTo(9, -15);
+        context.lineTo(27, 13);
+        context.lineTo(37, 17);
+        context.lineTo(31, 33);
+        context.lineTo(-19, 33);
+        context.quadraticCurveTo(-39, 29, -31, 16);
         context.closePath();
         context.fill();
-        context.strokeStyle = "#3a2d1d";
+        context.strokeStyle = "#cf0811";
         context.lineWidth = 4;
         context.beginPath();
-        context.moveTo(-7, -8);
-        context.lineTo(12, 2);
-        context.moveTo(-13, 2);
-        context.lineTo(18, 16);
+        context.moveTo(-10, -7);
+        context.lineTo(15, 8);
+        context.moveTo(-16, 4);
+        context.lineTo(18, 21);
         context.stroke();
     } else if (type === "strength") {
         context.beginPath();
-        context.moveTo(-31, 24);
-        context.lineTo(-27, -4);
-        context.lineTo(-12, -10);
-        context.lineTo(-5, -30);
-        context.lineTo(9, -27);
-        context.lineTo(12, -10);
-        context.lineTo(24, -18);
-        context.lineTo(35, -6);
-        context.lineTo(27, 9);
-        context.lineTo(15, 30);
-        context.lineTo(-9, 35);
+        context.moveTo(-34, 27);
+        context.lineTo(-31, 1);
+        context.lineTo(-19, -10);
+        context.lineTo(-8, -7);
+        context.lineTo(-2, -29);
+        context.lineTo(13, -26);
+        context.lineTo(15, -8);
+        context.lineTo(28, -15);
+        context.quadraticCurveTo(44, -1, 29, 16);
+        context.lineTo(17, 34);
+        context.lineTo(-8, 37);
         context.closePath();
         context.fill();
-        context.strokeStyle = "#3a2d1d";
+        context.strokeStyle = "#cf0811";
         context.lineWidth = 4;
         context.beginPath();
-        context.moveTo(-22, 7);
-        context.quadraticCurveTo(0, 18, 25, 4);
+        context.moveTo(-25, 8);
+        context.quadraticCurveTo(0, 20, 28, 3);
         context.stroke();
     } else if (type === "agility") {
-        context.save();
-        context.rotate(-0.35);
         context.beginPath();
-        context.ellipse(0, 0, 39, 25, 0, 0, Math.PI * 2);
-        context.fillStyle = "#8e5c28";
+        context.moveTo(-40, 31);
+        context.quadraticCurveTo(-10, -41, 42, -30);
+        context.quadraticCurveTo(16, -8, 45, 2);
+        context.quadraticCurveTo(13, 4, 33, 25);
+        context.quadraticCurveTo(4, 13, 8, 40);
+        context.quadraticCurveTo(-10, 15, -40, 31);
+        context.closePath();
         context.fill();
-        context.stroke();
-        context.strokeStyle = "#eee4c4";
+        context.strokeStyle = "#cf0811";
+        context.lineWidth = 4;
+        [-14, 2, 18].forEach(function (offset) {
+            context.beginPath();
+            context.moveTo(-18 + offset / 4, offset + 4);
+            context.quadraticCurveTo(7, offset - 11, 31, offset - 8);
+            context.stroke();
+        });
+    } else if (type === "passing") {
+        context.save();
+        context.rotate(-0.36);
+        context.beginPath();
+        context.ellipse(0, 0, 42, 27, 0, 0, Math.PI * 2);
+        context.fill();
+        context.strokeStyle = "#cf0811";
         context.lineWidth = 4;
         context.beginPath();
-        context.moveTo(-16, 0);
-        context.lineTo(16, 0);
-        [-9, 0, 9].forEach(function (x) {
-            context.moveTo(x, -7);
-            context.lineTo(x, 7);
+        context.moveTo(-17, 0);
+        context.lineTo(17, 0);
+        [-10, 0, 10].forEach(function (x) {
+            context.moveTo(x, -8);
+            context.lineTo(x, 8);
         });
         context.stroke();
         context.restore();
-    } else if (type === "passing") {
-        context.beginPath();
-        context.moveTo(-34, 24);
-        context.quadraticCurveTo(-5, -35, 36, -25);
-        context.quadraticCurveTo(14, -6, 40, 4);
-        context.quadraticCurveTo(10, 4, 29, 23);
-        context.quadraticCurveTo(3, 11, 6, 37);
-        context.quadraticCurveTo(-8, 15, -34, 24);
-        context.closePath();
-        context.fill();
-        context.strokeStyle = "#3a2d1d";
-        context.lineWidth = 4;
-        [-14, 0, 14].forEach(function (y, index) {
-            context.beginPath();
-            context.moveTo(-17 + index * 5, y + 5);
-            context.quadraticCurveTo(5, y - 9, 27, y - 7);
-            context.stroke();
-        });
     } else {
         context.beginPath();
-        context.moveTo(0, -38);
-        context.lineTo(34, -23);
-        context.lineTo(28, 13);
-        context.quadraticCurveTo(20, 35, 0, 43);
-        context.quadraticCurveTo(-20, 35, -28, 13);
-        context.lineTo(-34, -23);
+        context.moveTo(-38, -11);
+        context.quadraticCurveTo(-30, -40, 0, -43);
+        context.quadraticCurveTo(30, -40, 38, -11);
+        context.lineTo(38, 19);
+        context.lineTo(23, 19);
+        context.lineTo(23, 40);
+        context.lineTo(9, 40);
+        context.lineTo(9, 20);
+        context.lineTo(-9, 20);
+        context.lineTo(-9, 40);
+        context.lineTo(-23, 40);
+        context.lineTo(-23, 19);
+        context.lineTo(-38, 19);
         context.closePath();
         context.fill();
-        context.strokeStyle = "#3a2d1d";
+        context.strokeStyle = "#cf0811";
         context.lineWidth = 4;
         context.beginPath();
-        context.moveTo(0, -27);
-        context.lineTo(0, 30);
-        context.moveTo(-21, -13);
-        context.lineTo(21, -13);
+        context.moveTo(-27, -10);
+        context.lineTo(27, -10);
+        context.moveTo(0, -37);
+        context.lineTo(0, 11);
         context.stroke();
     }
     context.restore();
 }
 
-function warfoDrawTexture(context, bounds) {
-    const gradient = context.createLinearGradient(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height);
-    gradient.addColorStop(0, "#34281b");
-    gradient.addColorStop(0.45, "#17130f");
-    gradient.addColorStop(1, "#2b2117");
-    context.fillStyle = gradient;
-    warfoRoundedRectPath(context, bounds.x, bounds.y, bounds.width, bounds.height, bounds.radius);
-    context.fill();
-
+function warfoDrawPlayerImage(context, cardData, image) {
     context.save();
-    warfoRoundedRectPath(context, bounds.x, bounds.y, bounds.width, bounds.height, bounds.radius);
+    warfoPolygon(context, [[205, 142], [822, 49], [822, 649], [205, 710]]);
     context.clip();
-    for (let i = 0; i < 34; i += 1) {
-        const x = bounds.x + 24 + ((i * 83) % Math.max(1, bounds.width - 48));
-        const y = bounds.y + 22 + ((i * 137) % Math.max(1, bounds.height - 44));
-        context.strokeStyle = i % 3 === 0 ? "rgba(236, 213, 157, 0.10)" : "rgba(0, 0, 0, 0.16)";
-        context.lineWidth = i % 4 === 0 ? 3 : 1;
+
+    if (image) {
+        const properties = cardData.imageProperties || {};
+        const scaleControl = Number(properties.scalePercent || 100) / 100;
+        const baseScale = Math.min(560 / image.width, 520 / image.height);
+        const scale = Math.max(0.05, baseScale * scaleControl);
+        const width = image.width * scale;
+        const height = image.height * scale;
+        const offsetX = Number(properties.offsetX || 0) * 0.55;
+        const offsetY = Number(properties.offsetY || 0) * 0.55;
+        const x = 535 - width / 2 + offsetX;
+        const y = 402 - height / 2 + offsetY;
+        context.drawImage(image, x, y, width, height);
+    } else {
+        context.fillStyle = "rgba(76, 74, 66, 0.18)";
         context.beginPath();
-        context.moveTo(x, y);
-        context.quadraticCurveTo(x + 24, y - 7, x + 55, y + 3);
-        context.stroke();
+        context.arc(535, 315, 60, 0, Math.PI * 2);
+        context.fill();
+        context.beginPath();
+        context.ellipse(535, 500, 135, 145, 0, Math.PI, Math.PI * 2);
+        context.fill();
     }
     context.restore();
 }
@@ -752,6 +816,27 @@ function warfoLoadImage(source) {
     });
 }
 
+function warfoDrawBottomBadge(context) {
+    context.save();
+    context.translate(725, 1048);
+    context.fillStyle = "#34528e";
+    context.beginPath();
+    context.arc(0, 0, 46, 0, Math.PI * 2);
+    context.fill();
+    context.strokeStyle = "#d7d7d0";
+    context.lineWidth = 7;
+    context.stroke();
+    context.strokeStyle = "#9aa3b4";
+    context.lineWidth = 2;
+    context.stroke();
+    context.fillStyle = "#ffffff";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = "bold 31px brothers-regular";
+    context.fillText("BB", 0, 2);
+    context.restore();
+}
+
 async function renderWarfoCard(cardData) {
     const version = ++warfoRenderVersion;
     await document.fonts.ready;
@@ -763,147 +848,111 @@ async function renderWarfoCard(cardData) {
     const canvas = getCanvas();
     const removeBorder = Boolean(document.getElementById("removeBorder")?.checked);
     const dashedBorder = Boolean(document.getElementById("dashLine")?.checked);
-    const bounds = removeBorder
-        ? { x: 0, y: 0, width: canvas.width, height: canvas.height, radius: 0 }
-        : { x: 35, y: 35, width: 752, height: 1052, radius: 34 };
+    const inset = removeBorder ? 0 : 35;
+    const width = canvas.width - inset * 2;
+    const height = canvas.height - inset * 2;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "#0e0c09";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    warfoDrawTexture(context, bounds);
-
     context.save();
-    context.strokeStyle = "#d2bd7d";
-    context.lineWidth = 7;
-    warfoRoundedRectPath(context, bounds.x + 13, bounds.y + 13, bounds.width - 26, bounds.height - 26, Math.max(0, bounds.radius - 10));
-    context.stroke();
-    context.strokeStyle = "rgba(88, 58, 25, 0.95)";
-    context.lineWidth = 2;
-    warfoRoundedRectPath(context, bounds.x + 23, bounds.y + 23, bounds.width - 46, bounds.height - 46, Math.max(0, bounds.radius - 16));
-    context.stroke();
-    context.restore();
+    context.translate(inset, inset);
+    context.scale(width / 822, height / 1122);
 
-    warfoDrawPortrait(context, cardData, image);
+    context.fillStyle = "#2d478a";
+    context.fillRect(0, 0, 822, 1122);
+    warfoDrawPaper(context);
 
-    const teamName = cardData.showTeamName ? cardData.teamName : "";
+    context.fillStyle = "#ffffff";
+    warfoPolygon(context, [[0, 1065], [822, 932], [822, 947], [0, 1080]]);
+    context.fill();
+    context.fillStyle = "#d5060d";
+    warfoPolygon(context, [[0, 1074], [822, 941], [822, 1122], [0, 1122]]);
+    context.fill();
+
+    warfoDrawPlayerImage(context, cardData, image);
+
+    context.fillStyle = "#ffffff";
     context.textAlign = "left";
     context.textBaseline = "middle";
-    context.fillStyle = "#f3e8c7";
-    const teamSize = warfoFitFont(context, teamName, 330, 43, "brothers-regular");
-    context.font = "bold " + teamSize + "px brothers-regular";
-    context.fillText(teamName, 78, 102);
+    const title = String(cardData.cardName || "");
+    const titleSize = warfoFitFont(context, title.toUpperCase(), 520, 58, "brothers-regular");
+    context.font = "bold " + titleSize + "px brothers-regular";
+    context.fillText(title.toUpperCase(), 255, 78);
 
-    context.fillStyle = "#d2bd7d";
-    context.font = "bold 24px brothers-regular";
-    context.fillText(i18next.t("card.caracteristics.GP"), 78, 178);
-    context.fillStyle = "#f7efd8";
-    context.font = "bold 36px brothers-regular";
-    context.fillText(String(cardData.footer || "—"), 78, 216);
+    if (cardData.showTeamName && String(cardData.teamName || "").trim()) {
+        context.font = "bold 20px franklin-gothic-book";
+        context.fillStyle = "rgba(255, 255, 255, 0.82)";
+        context.fillText(String(cardData.teamName).toUpperCase(), 260, 123);
+    }
 
-    context.strokeStyle = "rgba(210, 189, 125, 0.85)";
-    context.lineWidth = 3;
-    context.beginPath();
-    context.moveTo(78, 252);
-    context.lineTo(385, 252);
-    context.stroke();
-
-    context.fillStyle = "rgba(210, 189, 125, 0.20)";
-    warfoRoundedRectPath(context, 78, 276, 305, 92, 12);
-    context.fill();
-    context.strokeStyle = "#9e8249";
-    context.lineWidth = 2;
-    context.stroke();
-    context.fillStyle = "#eee4c4";
-    context.font = "bold 24px brothers-regular";
-    context.fillText(i18next.t("card.caracteristics.player_name"), 96, 304);
-    context.font = "20px franklin-gothic-book";
-    context.fillStyle = "#c8b98f";
-    context.fillText(i18next.t("card.action.style_warfo"), 96, 342);
-
-    context.fillStyle = "rgba(0, 0, 0, 0.34)";
-    warfoRoundedRectPath(context, 64, 403, 694, 166, 18);
-    context.fill();
-    context.strokeStyle = "#9e8249";
-    context.lineWidth = 3;
-    context.stroke();
+    warfoDrawTeamBadge(context, cardData);
 
     const statTypes = ["movement", "strength", "agility", "passing", "armour"];
     const statValues = [cardData.ma, cardData.st, cardData.ag, cardData.pa, cardData.av];
     const statKeys = ["MA", "ST", "AG", "PA", "AV"];
     statTypes.forEach(function (type, index) {
-        const cx = 133 + index * 139;
-        if (index > 0) {
-            context.strokeStyle = "rgba(210, 189, 125, 0.28)";
-            context.lineWidth = 2;
-            context.beginPath();
-            context.moveTo(cx - 69, 422);
-            context.lineTo(cx - 69, 551);
-            context.stroke();
-        }
-        warfoDrawStatIcon(context, type, cx, 463);
-        context.fillStyle = "#f5ecd2";
+        const y = 239 + index * 135;
+        context.fillStyle = "#d3060f";
+        warfoPolygon(context, [[0, y + 10], [245, y], [245, y + 105], [0, y + 129]]);
+        context.fill();
+        context.strokeStyle = "#ffffff";
+        context.lineWidth = 6;
+        context.beginPath();
+        context.moveTo(0, y + 129);
+        context.lineTo(245, y + 105);
+        context.stroke();
+
+        warfoDrawSideIcon(context, type, 63, y + 58);
+        context.fillStyle = "#ffffff";
         context.textAlign = "center";
-        context.font = "bold 34px brothers-regular";
-        const suffix = index >= 2 && Number(statValues[index]) > 0 ? "+" : "";
-        const displayValue = Number(statValues[index]) > 0 ? String(statValues[index]) + suffix : "—";
-        context.fillText(displayValue, cx, 526);
-        context.fillStyle = "#bba66d";
-        context.font = "bold 16px franklin-gothic-book";
-        context.fillText(i18next.t("card.caracteristics." + statKeys[index]), cx, 550);
+        context.textBaseline = "middle";
+        context.font = "bold 72px brothers-regular";
+        const rawValue = Number(statValues[index]);
+        const suffix = index >= 2 && rawValue > 0 ? "+" : "";
+        const displayValue = rawValue > 0 ? String(rawValue) + suffix : "—";
+        context.fillText(displayValue, 170, y + 58);
+        context.font = "bold 15px franklin-gothic-book";
+        context.fillText(i18next.t("card.caracteristics." + statKeys[index]), 63, y + 111);
     });
 
-    context.save();
-    context.fillStyle = "#d3c08a";
-    context.beginPath();
-    context.moveTo(76, 613);
-    context.lineTo(113, 585);
-    context.lineTo(708, 585);
-    context.lineTo(746, 613);
-    context.lineTo(708, 641);
-    context.lineTo(113, 641);
-    context.closePath();
+    context.fillStyle = "#ffffff";
+    warfoPolygon(context, [[248, 651], [822, 594], [822, 962], [248, 1056]]);
     context.fill();
-    context.fillStyle = "#211a12";
-    context.textAlign = "center";
-    const nameSize = warfoFitFont(context, cardData.cardName, 570, 46, "brothers-regular");
-    context.font = "bold " + nameSize + "px brothers-regular";
-    context.fillText(String(cardData.cardName || ""), 411, 615);
-    context.restore();
 
+    context.fillStyle = "#080808";
     context.textAlign = "left";
-    context.fillStyle = "#d2bd7d";
-    context.font = "bold 27px brothers-regular";
-    context.fillText(i18next.t("card.caracteristics.skills_traits").toUpperCase(), 78, 690);
-    context.fillStyle = "#f0e8d2";
-    context.font = "25px franklin-gothic-book";
-    warfoWrapText(context, cardData.cardText, 78, 728, 666, 31, 4);
+    context.textBaseline = "middle";
+    context.font = "bold 43px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.skills_traits").replace(/\s*&\s*.*/, "").toUpperCase() + " :", 278, 690);
 
-    let lowerY = 855;
+    context.font = "31px franklin-gothic-book";
+    warfoWrapText(context, cardData.cardText, 278, 741, 506, 37, 5);
+
+    let detailsY = 884;
     if (String(cardData.keywords || "").trim()) {
-        context.fillStyle = "#bba66d";
-        context.font = "italic 21px franklin-gothic-book";
-        warfoWrapText(context, cardData.keywords, 78, lowerY, 666, 26, 2);
-        lowerY += 58;
+        context.fillStyle = "#3d3d3d";
+        context.font = "italic 22px franklin-gothic-book";
+        warfoWrapText(context, cardData.keywords, 278, detailsY, 500, 28, 2);
+        detailsY += 60;
     }
 
-    context.fillStyle = "#d2bd7d";
-    context.font = "bold 25px brothers-regular";
-    context.fillText(i18next.t("card.caracteristics.player_development").toUpperCase(), 78, lowerY);
-    context.fillStyle = "#f0e8d2";
-    context.font = "20px franklin-gothic-book";
-    const primaryLabel = i18next.t("card.caracteristics.primary") + ": ";
-    const secondaryLabel = i18next.t("card.caracteristics.secondary") + ": ";
-    warfoWrapText(context, primaryLabel + warfoSkillList(cardData, "p"), 78, lowerY + 36, 666, 25, 2);
-    warfoWrapText(context, secondaryLabel + warfoSkillList(cardData, "s"), 78, lowerY + 88, 666, 25, 2);
+    const primary = warfoSkillList(cardData, "p");
+    const secondary = warfoSkillList(cardData, "s");
+    context.fillStyle = "#222222";
+    context.font = "19px franklin-gothic-book";
+    warfoWrapText(context, i18next.t("card.caracteristics.primary") + " : " + primary, 278, detailsY, 500, 24, 2);
+    warfoWrapText(context, i18next.t("card.caracteristics.secondary") + " : " + secondary, 278, detailsY + 52, 500, 24, 2);
 
-    context.textAlign = "right";
-    context.fillStyle = "rgba(210, 189, 125, 0.66)";
-    context.font = "italic 16px franklin-gothic-book";
-    context.fillText("Prototype inspiré de dede_51 / WarFo", 744, 1055);
+    context.fillStyle = "#ffffff";
+    context.textAlign = "left";
+    context.font = "bold 30px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.GP") + " " + String(cardData.footer || "—"), 55, 1092);
+    warfoDrawBottomBadge(context);
+
+    context.restore();
 
     if (dashedBorder) {
         context.save();
-        context.strokeStyle = "#f4ead0";
+        context.strokeStyle = "#1c1c1c";
         context.lineWidth = 2;
         context.setLineDash([8, 8]);
         context.strokeRect(35, 35, 752, 1052);
