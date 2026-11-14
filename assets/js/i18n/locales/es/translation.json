@@ -30,7 +30,8 @@
             "style_classic": "Clásico (Barry / MSE)",
             "preset_search_placeholder": "Escribe un equipo o una posición…",
             "no_preset_match": "No hay preajustes coincidentes",
-            "player_preset_source": "Perfiles de la tercera temporada agrupados por equipo, contrastados con BBTC y traducidos con las equivalencias verificadas de NRData."
+            "player_preset_source": "Perfiles de la tercera temporada agrupados por equipo, contrastados con BBTC y traducidos con las equivalencias verificadas de NRData.",
+            "style_warfo": "Ilustrado — prototipo dede_51 / WarFo"
         },
         "caracteristics": {
             "player_stats": "Estadísticas del jugador",

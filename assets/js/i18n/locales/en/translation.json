@@ -30,7 +30,8 @@
             "style_classic": "Classic (Barry / MSE)",
             "preset_search_placeholder": "Type to filter presets…",
             "no_preset_match": "No matching preset",
-            "player_preset_source": "Third Season profiles grouped by team, cross-checked with BBTC and translated from the verified NRData mapping."
+            "player_preset_source": "Third Season profiles grouped by team, cross-checked with BBTC and translated from the verified NRData mapping.",
+            "style_warfo": "Illustrated — dede_51 / WarFo prototype"
         },
         "caracteristics": {
             "player_stats": "Player Stats",

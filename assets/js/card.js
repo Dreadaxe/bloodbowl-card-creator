@@ -475,7 +475,447 @@ function drawNumber(num,x, y, plus){
     }
 }
 
+
+let warfoRenderVersion = 0;
+
+function warfoRoundedRectPath(context, x, y, width, height, radius) {
+    const r = Math.min(radius, width / 2, height / 2);
+    context.beginPath();
+    context.moveTo(x + r, y);
+    context.lineTo(x + width - r, y);
+    context.quadraticCurveTo(x + width, y, x + width, y + r);
+    context.lineTo(x + width, y + height - r);
+    context.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+    context.lineTo(x + r, y + height);
+    context.quadraticCurveTo(x, y + height, x, y + height - r);
+    context.lineTo(x, y + r);
+    context.quadraticCurveTo(x, y, x + r, y);
+    context.closePath();
+}
+
+function warfoFitFont(context, value, maxWidth, startSize, family) {
+    let size = startSize;
+    do {
+        context.font = "bold " + size + "px " + family;
+        size -= 1;
+    } while (size > 14 && context.measureText(String(value || "")).width > maxWidth);
+    return Math.max(size + 1, 14);
+}
+
+function warfoWrapText(context, value, x, y, maxWidth, lineHeight, maxLines) {
+    const words = String(value || "").trim().split(/\s+/).filter(Boolean);
+    const lines = [];
+    let line = "";
+
+    words.forEach(function (word) {
+        const candidate = line ? line + " " + word : word;
+        if (line && context.measureText(candidate).width > maxWidth) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = candidate;
+        }
+    });
+    if (line) lines.push(line);
+
+    const visibleLines = lines.slice(0, maxLines);
+    if (lines.length > maxLines && visibleLines.length) {
+        let last = visibleLines[visibleLines.length - 1];
+        while (last && context.measureText(last + "…").width > maxWidth) {
+            last = last.slice(0, -1);
+        }
+        visibleLines[visibleLines.length - 1] = last.trimEnd() + "…";
+    }
+
+    visibleLines.forEach(function (textLine, index) {
+        context.fillText(textLine, x, y + index * lineHeight);
+    });
+    return visibleLines.length;
+}
+
+function warfoSkillList(cardData, prefix) {
+    const categories = [
+        ["agility", "card.caracteristics.agility"],
+        ["devious", "card.caracteristics.devious"],
+        ["general", "card.caracteristics.general"],
+        ["mutations", "card.caracteristics.mutations"],
+        ["passing", "card.caracteristics.passing"],
+        ["strength", "card.caracteristics.strength"]
+    ];
+    return categories.filter(function (entry) {
+        return Boolean(cardData[prefix + "_" + entry[0]]);
+    }).map(function (entry) {
+        return i18next.t(entry[1]);
+    }).join(", ");
+}
+
+function warfoPortraitPath(context) {
+    context.beginPath();
+    context.moveTo(435, 380);
+    context.lineTo(435, 175);
+    context.quadraticCurveTo(435, 75, 590, 62);
+    context.quadraticCurveTo(745, 75, 745, 175);
+    context.lineTo(745, 380);
+    context.closePath();
+}
+
+function warfoDrawPortrait(context, cardData, image) {
+    context.save();
+    warfoPortraitPath(context);
+    context.clip();
+
+    const portraitGradient = context.createLinearGradient(435, 62, 745, 380);
+    portraitGradient.addColorStop(0, "#6b6452");
+    portraitGradient.addColorStop(1, "#252018");
+    context.fillStyle = portraitGradient;
+    context.fillRect(430, 55, 322, 333);
+
+    if (image) {
+        const properties = cardData.imageProperties || {};
+        const scaleControl = Number(properties.scalePercent || 100) / 100;
+        const targetWidth = 310;
+        const targetHeight = 318;
+        const coverScale = Math.max(targetWidth / image.width, targetHeight / image.height) * scaleControl;
+        const width = image.width * coverScale;
+        const height = image.height * coverScale;
+        const offsetX = Number(properties.offsetX || 0) * 0.55;
+        const offsetY = Number(properties.offsetY || 0) * 0.55;
+        const x = 590 - width / 2 + offsetX;
+        const y = 220 - height / 2 + offsetY;
+        context.drawImage(image, x, y, width, height);
+    } else {
+        context.fillStyle = "rgba(231, 220, 183, 0.24)";
+        context.beginPath();
+        context.arc(590, 183, 56, 0, Math.PI * 2);
+        context.fill();
+        context.beginPath();
+        context.ellipse(590, 330, 125, 115, 0, Math.PI, Math.PI * 2);
+        context.fill();
+    }
+    context.restore();
+
+    context.save();
+    context.strokeStyle = "#d2bd7d";
+    context.lineWidth = 7;
+    warfoPortraitPath(context);
+    context.stroke();
+    context.strokeStyle = "rgba(48, 31, 14, 0.9)";
+    context.lineWidth = 2;
+    context.stroke();
+    context.restore();
+}
+
+function warfoDrawStatIcon(context, type, cx, cy) {
+    context.save();
+    context.translate(cx, cy);
+    context.strokeStyle = "#eee4c4";
+    context.fillStyle = "#eee4c4";
+    context.lineWidth = 6;
+    context.lineJoin = "round";
+    context.lineCap = "round";
+
+    if (type === "movement") {
+        context.beginPath();
+        context.moveTo(-30, 16);
+        context.lineTo(-9, -21);
+        context.lineTo(9, -12);
+        context.lineTo(25, 15);
+        context.lineTo(35, 19);
+        context.lineTo(31, 32);
+        context.lineTo(-17, 32);
+        context.quadraticCurveTo(-37, 29, -30, 16);
+        context.closePath();
+        context.fill();
+        context.strokeStyle = "#3a2d1d";
+        context.lineWidth = 4;
+        context.beginPath();
+        context.moveTo(-7, -8);
+        context.lineTo(12, 2);
+        context.moveTo(-13, 2);
+        context.lineTo(18, 16);
+        context.stroke();
+    } else if (type === "strength") {
+        context.beginPath();
+        context.moveTo(-31, 24);
+        context.lineTo(-27, -4);
+        context.lineTo(-12, -10);
+        context.lineTo(-5, -30);
+        context.lineTo(9, -27);
+        context.lineTo(12, -10);
+        context.lineTo(24, -18);
+        context.lineTo(35, -6);
+        context.lineTo(27, 9);
+        context.lineTo(15, 30);
+        context.lineTo(-9, 35);
+        context.closePath();
+        context.fill();
+        context.strokeStyle = "#3a2d1d";
+        context.lineWidth = 4;
+        context.beginPath();
+        context.moveTo(-22, 7);
+        context.quadraticCurveTo(0, 18, 25, 4);
+        context.stroke();
+    } else if (type === "agility") {
+        context.save();
+        context.rotate(-0.35);
+        context.beginPath();
+        context.ellipse(0, 0, 39, 25, 0, 0, Math.PI * 2);
+        context.fillStyle = "#8e5c28";
+        context.fill();
+        context.stroke();
+        context.strokeStyle = "#eee4c4";
+        context.lineWidth = 4;
+        context.beginPath();
+        context.moveTo(-16, 0);
+        context.lineTo(16, 0);
+        [-9, 0, 9].forEach(function (x) {
+            context.moveTo(x, -7);
+            context.lineTo(x, 7);
+        });
+        context.stroke();
+        context.restore();
+    } else if (type === "passing") {
+        context.beginPath();
+        context.moveTo(-34, 24);
+        context.quadraticCurveTo(-5, -35, 36, -25);
+        context.quadraticCurveTo(14, -6, 40, 4);
+        context.quadraticCurveTo(10, 4, 29, 23);
+        context.quadraticCurveTo(3, 11, 6, 37);
+        context.quadraticCurveTo(-8, 15, -34, 24);
+        context.closePath();
+        context.fill();
+        context.strokeStyle = "#3a2d1d";
+        context.lineWidth = 4;
+        [-14, 0, 14].forEach(function (y, index) {
+            context.beginPath();
+            context.moveTo(-17 + index * 5, y + 5);
+            context.quadraticCurveTo(5, y - 9, 27, y - 7);
+            context.stroke();
+        });
+    } else {
+        context.beginPath();
+        context.moveTo(0, -38);
+        context.lineTo(34, -23);
+        context.lineTo(28, 13);
+        context.quadraticCurveTo(20, 35, 0, 43);
+        context.quadraticCurveTo(-20, 35, -28, 13);
+        context.lineTo(-34, -23);
+        context.closePath();
+        context.fill();
+        context.strokeStyle = "#3a2d1d";
+        context.lineWidth = 4;
+        context.beginPath();
+        context.moveTo(0, -27);
+        context.lineTo(0, 30);
+        context.moveTo(-21, -13);
+        context.lineTo(21, -13);
+        context.stroke();
+    }
+    context.restore();
+}
+
+function warfoDrawTexture(context, bounds) {
+    const gradient = context.createLinearGradient(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height);
+    gradient.addColorStop(0, "#34281b");
+    gradient.addColorStop(0.45, "#17130f");
+    gradient.addColorStop(1, "#2b2117");
+    context.fillStyle = gradient;
+    warfoRoundedRectPath(context, bounds.x, bounds.y, bounds.width, bounds.height, bounds.radius);
+    context.fill();
+
+    context.save();
+    warfoRoundedRectPath(context, bounds.x, bounds.y, bounds.width, bounds.height, bounds.radius);
+    context.clip();
+    for (let i = 0; i < 34; i += 1) {
+        const x = bounds.x + 24 + ((i * 83) % Math.max(1, bounds.width - 48));
+        const y = bounds.y + 22 + ((i * 137) % Math.max(1, bounds.height - 44));
+        context.strokeStyle = i % 3 === 0 ? "rgba(236, 213, 157, 0.10)" : "rgba(0, 0, 0, 0.16)";
+        context.lineWidth = i % 4 === 0 ? 3 : 1;
+        context.beginPath();
+        context.moveTo(x, y);
+        context.quadraticCurveTo(x + 24, y - 7, x + 55, y + 3);
+        context.stroke();
+    }
+    context.restore();
+}
+
+function warfoLoadImage(source) {
+    return new Promise(function (resolve) {
+        if (!source) {
+            resolve(null);
+            return;
+        }
+        const image = new Image();
+        image.onload = function () { resolve(image); };
+        image.onerror = function () { resolve(null); };
+        image.src = source;
+    });
+}
+
+async function renderWarfoCard(cardData) {
+    const version = ++warfoRenderVersion;
+    await document.fonts.ready;
+    await pageReady();
+    const image = await warfoLoadImage(cardData.imageUrl);
+    if (version !== warfoRenderVersion) return;
+
+    const context = getContext();
+    const canvas = getCanvas();
+    const removeBorder = Boolean(document.getElementById("removeBorder")?.checked);
+    const dashedBorder = Boolean(document.getElementById("dashLine")?.checked);
+    const bounds = removeBorder
+        ? { x: 0, y: 0, width: canvas.width, height: canvas.height, radius: 0 }
+        : { x: 35, y: 35, width: 752, height: 1052, radius: 34 };
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#0e0c09";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    warfoDrawTexture(context, bounds);
+
+    context.save();
+    context.strokeStyle = "#d2bd7d";
+    context.lineWidth = 7;
+    warfoRoundedRectPath(context, bounds.x + 13, bounds.y + 13, bounds.width - 26, bounds.height - 26, Math.max(0, bounds.radius - 10));
+    context.stroke();
+    context.strokeStyle = "rgba(88, 58, 25, 0.95)";
+    context.lineWidth = 2;
+    warfoRoundedRectPath(context, bounds.x + 23, bounds.y + 23, bounds.width - 46, bounds.height - 46, Math.max(0, bounds.radius - 16));
+    context.stroke();
+    context.restore();
+
+    warfoDrawPortrait(context, cardData, image);
+
+    const teamName = cardData.showTeamName ? cardData.teamName : "";
+    context.textAlign = "left";
+    context.textBaseline = "middle";
+    context.fillStyle = "#f3e8c7";
+    const teamSize = warfoFitFont(context, teamName, 330, 43, "brothers-regular");
+    context.font = "bold " + teamSize + "px brothers-regular";
+    context.fillText(teamName, 78, 102);
+
+    context.fillStyle = "#d2bd7d";
+    context.font = "bold 24px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.GP"), 78, 178);
+    context.fillStyle = "#f7efd8";
+    context.font = "bold 36px brothers-regular";
+    context.fillText(String(cardData.footer || "—"), 78, 216);
+
+    context.strokeStyle = "rgba(210, 189, 125, 0.85)";
+    context.lineWidth = 3;
+    context.beginPath();
+    context.moveTo(78, 252);
+    context.lineTo(385, 252);
+    context.stroke();
+
+    context.fillStyle = "rgba(210, 189, 125, 0.20)";
+    warfoRoundedRectPath(context, 78, 276, 305, 92, 12);
+    context.fill();
+    context.strokeStyle = "#9e8249";
+    context.lineWidth = 2;
+    context.stroke();
+    context.fillStyle = "#eee4c4";
+    context.font = "bold 24px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.player_name"), 96, 304);
+    context.font = "20px franklin-gothic-book";
+    context.fillStyle = "#c8b98f";
+    context.fillText(i18next.t("card.action.style_warfo"), 96, 342);
+
+    context.fillStyle = "rgba(0, 0, 0, 0.34)";
+    warfoRoundedRectPath(context, 64, 403, 694, 166, 18);
+    context.fill();
+    context.strokeStyle = "#9e8249";
+    context.lineWidth = 3;
+    context.stroke();
+
+    const statTypes = ["movement", "strength", "agility", "passing", "armour"];
+    const statValues = [cardData.ma, cardData.st, cardData.ag, cardData.pa, cardData.av];
+    const statKeys = ["MA", "ST", "AG", "PA", "AV"];
+    statTypes.forEach(function (type, index) {
+        const cx = 133 + index * 139;
+        if (index > 0) {
+            context.strokeStyle = "rgba(210, 189, 125, 0.28)";
+            context.lineWidth = 2;
+            context.beginPath();
+            context.moveTo(cx - 69, 422);
+            context.lineTo(cx - 69, 551);
+            context.stroke();
+        }
+        warfoDrawStatIcon(context, type, cx, 463);
+        context.fillStyle = "#f5ecd2";
+        context.textAlign = "center";
+        context.font = "bold 34px brothers-regular";
+        const suffix = index >= 2 && Number(statValues[index]) > 0 ? "+" : "";
+        const displayValue = Number(statValues[index]) > 0 ? String(statValues[index]) + suffix : "—";
+        context.fillText(displayValue, cx, 526);
+        context.fillStyle = "#bba66d";
+        context.font = "bold 16px franklin-gothic-book";
+        context.fillText(i18next.t("card.caracteristics." + statKeys[index]), cx, 550);
+    });
+
+    context.save();
+    context.fillStyle = "#d3c08a";
+    context.beginPath();
+    context.moveTo(76, 613);
+    context.lineTo(113, 585);
+    context.lineTo(708, 585);
+    context.lineTo(746, 613);
+    context.lineTo(708, 641);
+    context.lineTo(113, 641);
+    context.closePath();
+    context.fill();
+    context.fillStyle = "#211a12";
+    context.textAlign = "center";
+    const nameSize = warfoFitFont(context, cardData.cardName, 570, 46, "brothers-regular");
+    context.font = "bold " + nameSize + "px brothers-regular";
+    context.fillText(String(cardData.cardName || ""), 411, 615);
+    context.restore();
+
+    context.textAlign = "left";
+    context.fillStyle = "#d2bd7d";
+    context.font = "bold 27px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.skills_traits").toUpperCase(), 78, 690);
+    context.fillStyle = "#f0e8d2";
+    context.font = "25px franklin-gothic-book";
+    warfoWrapText(context, cardData.cardText, 78, 728, 666, 31, 4);
+
+    let lowerY = 855;
+    if (String(cardData.keywords || "").trim()) {
+        context.fillStyle = "#bba66d";
+        context.font = "italic 21px franklin-gothic-book";
+        warfoWrapText(context, cardData.keywords, 78, lowerY, 666, 26, 2);
+        lowerY += 58;
+    }
+
+    context.fillStyle = "#d2bd7d";
+    context.font = "bold 25px brothers-regular";
+    context.fillText(i18next.t("card.caracteristics.player_development").toUpperCase(), 78, lowerY);
+    context.fillStyle = "#f0e8d2";
+    context.font = "20px franklin-gothic-book";
+    const primaryLabel = i18next.t("card.caracteristics.primary") + ": ";
+    const secondaryLabel = i18next.t("card.caracteristics.secondary") + ": ";
+    warfoWrapText(context, primaryLabel + warfoSkillList(cardData, "p"), 78, lowerY + 36, 666, 25, 2);
+    warfoWrapText(context, secondaryLabel + warfoSkillList(cardData, "s"), 78, lowerY + 88, 666, 25, 2);
+
+    context.textAlign = "right";
+    context.fillStyle = "rgba(210, 189, 125, 0.66)";
+    context.font = "italic 16px franklin-gothic-book";
+    context.fillText("Prototype inspiré de dede_51 / WarFo", 744, 1055);
+
+    if (dashedBorder) {
+        context.save();
+        context.strokeStyle = "#f4ead0";
+        context.lineWidth = 2;
+        context.setLineDash([8, 8]);
+        context.strokeRect(35, 35, 752, 1052);
+        context.restore();
+    }
+}
+
 render = function (cardData) {
+    if (window.BloodBowlCardStyles?.current() === "warfo") {
+        renderWarfoCard(cardData).catch(console.error);
+        return;
+    }
     // First the textured background
     getContext().drawImage(document.getElementById(cardData.backgroundType), 0, 0, getCanvas().width, getCanvas().height);
 

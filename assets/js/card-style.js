@@ -11,6 +11,10 @@
         classic: {
             frame: "assets/img/card/bloodbowl_frame_old.png",
             star_frame: "assets/img/card/bloodbowl_specialplayer_frame_old.png"
+        },
+        warfo: {
+            frame: "assets/img/card/bloodbowl_frame.png",
+            star_frame: "assets/img/card/bloodbowl_specialplayer_frame.png"
         }
     };
 
@@ -37,6 +41,9 @@
         const settings = Object.assign({ persist: true, redraw: false }, options);
         const selectedStyle = normalizeStyle(style);
         const select = document.getElementById("cardStyle");
+        const availableStyle = selectedStyle === "warfo" && !select?.querySelector('option[value="warfo"]')
+            ? defaultStyle
+            : selectedStyle;
         const imagesToLoad = [];
 
         if (settings.persist) {
@@ -44,12 +51,12 @@
         }
 
         if (select) {
-            select.value = selectedStyle;
+            select.value = availableStyle;
         }
 
         ["frame", "star_frame"].forEach((imageId) => {
             const image = document.getElementById(imageId);
-            const source = styles[selectedStyle][imageId];
+            const source = styles[availableStyle][imageId];
             if (!image || !source) return;
 
             if (!image.src.endsWith(source)) {
