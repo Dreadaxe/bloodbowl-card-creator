@@ -216,3 +216,28 @@ select.form-select option:checked {
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
 }
+
+.buy-me-a-coffee {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    color: #111;
+    background-color: #ffdd00;
+    border-color: #ffdd00;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.buy-me-a-coffee:hover,
+.buy-me-a-coffee:focus {
+    color: #111;
+    background-color: #ffe74f;
+    border-color: #ffe74f;
+}
+
+.buy-me-a-coffee-logo {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+    flex: 0 0 auto;
+}
