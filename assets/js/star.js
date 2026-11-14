@@ -343,6 +343,25 @@ function drawNumber(num,x, y, plus){
     }
 }
 
+function waitForImageElement(image) {
+    if (image.complete && image.naturalWidth > 0) {
+        return Promise.resolve(image);
+    }
+    return new Promise((resolve, reject) => {
+        image.addEventListener("load", () => resolve(image), { once: true });
+        image.addEventListener("error", reject, { once: true });
+    });
+}
+
+function loadCanvasImage(src) {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = reject;
+        image.src = src;
+    });
+}
+
 render = async function (cardData) {
     await document.fonts.ready;
     await pageReady();
@@ -480,22 +499,24 @@ async function renderStarDataForPrint(cardData, options = {}) {
     };
 }
 
-async function renderStarPresetForPrint(file, options = {}) {
+async function fetchStarPreset(file) {
     const response = await fetch("assets/star/" + file);
     if (!response.ok) {
         throw new Error(`Unable to load ${file} (${response.status})`);
     }
     const cardData = await response.json();
+    if (!window.BloodBowlStarLocales) return cardData;
+    return BloodBowlStarLocales.localizeCardData(cardData, file);
+}
+
+async function renderStarPresetForPrint(file, options = {}) {
+    const cardData = await fetchStarPreset(file);
     return renderStarDataForPrint(cardData, options);
 }
 
 async function loadStarPresetForEditing(file) {
     await waitForI18n();
-    const response = await fetch("assets/star/" + file);
-    if (!response.ok) {
-        throw new Error(`Unable to load ${file} (${response.status})`);
-    }
-    const cardData = await response.json();
+    const cardData = await fetchStarPreset(file);
     document.getElementById("removeBorder").checked = false;
     document.getElementById("dashLine").checked = false;
     await writeControls(cardData);
@@ -536,5 +557,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (params.get("embedded") === "1") {
         document.querySelector("nav")?.classList.add("d-none");
     }
-});
 
+    waitForI18n().then(async () => {
+        if (!window.BloodBowlStarLocales) return;
+        const select = document.getElementById("preset");
+        if (!select) return;
+        const presets = [...select.options].map(option => ({ file: option.value, name: option.textContent }));
+        const localized = await BloodBowlStarLocales.localizePresetList(presets);
+        localized.forEach((preset, index) => {
+            select.options[index].textContent = preset.name;
+        });
+    }).catch(console.error);
+});
