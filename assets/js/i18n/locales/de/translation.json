@@ -24,7 +24,10 @@
             "reset_all": "Alles zurücksetzen",
             "choose_preset": "Voreinstellung wählen",
             "load_preset": "Voreinstellung laden",
-            "preset_notice": "Diese Voreinstellungen geben Daten aus offiziellen Publikationen wieder. Sie sind für Nutzer gedacht, die die entsprechenden Bücher besitzen, und ersetzen nicht die offiziellen Regeln."
+            "preset_notice": "Diese Voreinstellungen geben Daten aus offiziellen Publikationen wieder. Sie sind für Nutzer gedacht, die die entsprechenden Bücher besitzen, und ersetzen nicht die offiziellen Regeln.",
+            "preset_search_placeholder": "Team oder Position eingeben…",
+            "no_preset_match": "Keine passende Voreinstellung",
+            "player_preset_source": "Profile der dritten Saison, nach Team gruppiert, mit BBTC abgeglichen und anhand der geprüften NRData-Zuordnungen übersetzt."
         },
         "caracteristics": {
             "player_stats": "Spielerstatistiken",
